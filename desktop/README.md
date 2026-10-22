@@ -1,3 +1,19 @@
+# DPN PhaseGate v1.0 — Optical Evidence and Timebase Lab
+
+<img src="../assets/pg01-optical-evidence-v1.0.svg" width="100%" alt="DPN v1.0 native optical evidence and bench timebase pipeline"/>
+
+**New Optical Evidence screen (ten total):** operator-confirmed local Camera A/B previews, independently consented JPEG frame capture, hash/audit manifest per station and actual host frame-arrival jitter diagnostics. No webcam automatically starts, and camera source/exposure time synchronization is **not** claimed.
+
+**Download:** open [PhaseGate Windows EXE builds](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/native-windows-exe.yml), choose the latest successful run and download `DPN-PhaseGate-Native-Windows-v1.0` from Artifacts. The matching preview bundle includes the new Optical Lab screenshot. Unzip and double-click `DPN-PhaseGate.exe`; Python and a browser are not required on the user's PC.
+
+**Permissions:** Only allow cameras you own or are authorized to view. A second approval is required before recording. The app stores JPEG stills locally in user-chosen `BENCH_OPTICAL_*` directories, with hashes. There is no cloud upload, automatic webcam recording, audio, object tracking or actual physical experiment.
+
+[**Full operator guide and timebase limitations →**](../docs/engineering/PG01-OPTICAL-EVIDENCE-v1.0.md)
+
+---
+
+## v0.9 AURORA interface foundation
+
 # DPN PhaseGate v0.9 — AURORA Native Research Command Center
 
 **The interface has been extensively rebuilt and is still a native Windows EXE, not a browser wrapper.**
