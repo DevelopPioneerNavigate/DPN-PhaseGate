@@ -178,9 +178,9 @@ class AuroraHero(QFrame):
         actions.setSpacing(10)
         from desktop.window_helpers import button
         enter=button("OPEN HARDWARE LAB   →")
-        enter.clicked.connect(self.station_requested.emit)
+        enter.clicked.connect(lambda: self.station_requested.emit())
         research=button("EVIDENCE VAULT   ↗",True)
-        research.clicked.connect(self.evidence_requested.emit)
+        research.clicked.connect(lambda: self.evidence_requested.emit())
         actions.addWidget(enter)
         actions.addWidget(research)
         actions.addStretch()
