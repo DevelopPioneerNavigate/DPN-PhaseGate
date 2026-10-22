@@ -1,2 +1,5 @@
 PySide6-Essentials==6.12.0
 pyinstaller==6.22.3
+
+# USB serial sensor ingestion. No remote services or network features.
+pyserial==3.5
