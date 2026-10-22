@@ -19,6 +19,7 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import qVersion
 from desktop.model import VERSION, MODE, DISCLAIMER, DOC_BASE, inventory, literature, simulated_samples, export_demo
 from desktop.widgets import C, Surface, Metric, OrbitalGate, Station, TrendChart, text_label, panel_layout
+from desktop.hardware_page import HardwareLab
 
 
 def ui_button(text, secondary=False):
@@ -131,7 +132,7 @@ class ResearchWindow(QMainWindow):
         rail_col.addWidget(heading_rule())
         rail_col.addSpacing(12)
         for name,ico in [
-            ("Command Center","◈"),("Station Matrix","◎"),
+            ("Command Center","◈"),("Station Matrix","◎"),("Hardware Lab","▦"),
             ("Signal Analytics","⌁"),("Research Vault","▣"),
             ("Experiment Ledger","▤"),("System Diagnostics","⚙"),
             ("Preferences","◇"),
@@ -145,8 +146,8 @@ class ResearchWindow(QMainWindow):
             self.nav[name]=btn
         rail_col.addStretch()
         rail_col.addWidget(heading_rule())
-        rail_col.addWidget(text_label("●  DEMONSTRATION MODE",11,"cyan",True))
-        rail_col.addWidget(text_label("Native desktop • no browser\nNo hardware connections\nNo physical matter transfer",10))
+        rail_col.addWidget(text_label("●  SIM GRAPHS / USB LAB",11,"cyan",True))
+        rail_col.addWidget(text_label("Native desktop • no browser\nLive USB RAW only in Hardware Lab\nNo physical matter transfer",10))
         root.addWidget(self.rail)
         body=QWidget()
         body_col=QVBoxLayout(body)
@@ -159,7 +160,7 @@ class ResearchWindow(QMainWindow):
         row.setContentsMargins(29,0,29,0)
         row.addWidget(text_label("DPN   /   RESEARCH OPERATIONS   /   PHASEGATE",11,"muted",True))
         row.addStretch()
-        row.addWidget(text_label("●  SYNTHETIC ONLY",11,"cyan",True))
+        row.addWidget(text_label("●  SIM CHARTS / USB RAW LAB",11,"cyan",True))
         self.clock=text_label("",11,"muted",True)
         row.addSpacing(21)
         row.addWidget(self.clock)
@@ -170,6 +171,7 @@ class ResearchWindow(QMainWindow):
         pages=[
             ("Command Center",self.overview_page()),
             ("Station Matrix",self.stations_page()),
+            ("Hardware Lab",self.hardware_page()),
             ("Signal Analytics",self.analytics_page()),
             ("Research Vault",self.research_page()),
             ("Experiment Ledger",self.experiments_page()),
@@ -203,8 +205,8 @@ class ResearchWindow(QMainWindow):
         card=Surface()
         row=QHBoxLayout(card)
         row.setContentsMargins(15,11,15,11)
-        row.addWidget(text_label("⚠  SYNTHETIC DATA — NO PORTAL OR PHYSICAL EQUIPMENT CONNECTED. "
-                                 "NOT AN EXPERIMENT.",11,"amber",True))
+        row.addWidget(text_label("⚠  DEMO GRAPHS ARE SYNTHETIC. REAL USB RAW COUNTS APPEAR ONLY IN HARDWARE LAB. "
+                                 "NO OBJECT TELEPORTATION.",11,"amber",True))
         return card
 
     def overview_page(self):
@@ -252,7 +254,7 @@ class ResearchWindow(QMainWindow):
         box=panel_layout(status,20,13)
         for title,desc,accent in [
             ("01 / SCIENTIFIC PROGRAM","Physics literature and hypotheses indexed.","cyan"),
-            ("02 / PG-01 INSTRUMENTATION","Hardware design only. No sensor connected.","violet"),
+            ("02 / PG-01 INSTRUMENTATION","Optional manual USB RAW monitoring in Hardware Lab.","violet"),
             ("03 / QUANTUM INTERPRETATION","Quantum information is not macroscopic matter.","amber")]:
             box.addWidget(text_label(title,12,accent,True))
             box.addWidget(text_label(desc,11))
@@ -298,6 +300,10 @@ class ResearchWindow(QMainWindow):
         col.addWidget(card)
         col.addStretch()
         return host
+
+    def hardware_page(self):
+        self.hardware_lab = HardwareLab()
+        return self.hardware_lab
 
     def analytics_page(self):
         host,col=self.page("DIGITAL SIGNAL INTELLIGENCE","SIGNAL ANALYTICS",
@@ -420,8 +426,8 @@ class ResearchWindow(QMainWindow):
             ("OS",platform.system()+" "+platform.release()),
             ("Execution mode","SYNTHETIC / OFFLINE"),
             ("Network services","None; this desktop app runs without a server"),
-            ("Connected instruments","0"),
-            ("Recording / experiment writes","DISABLED"),
+            ("Connected instruments","Only manually paired in Hardware Lab"),
+            ("Recording / experiment writes","Manual BENCH-only capture; no experiment writes"),
             ("Actual transfer findings","NONE")
         ]
         card=Surface()
@@ -548,6 +554,12 @@ class ResearchWindow(QMainWindow):
             f"\nActual run records: {data['experiments']}")
         QMessageBox.information(self,"PhaseGate Integrity",title+"\n\n"+report+
                                 "\n\nA readable registry does NOT establish a physics result.")
+
+
+    def closeEvent(self, event):
+        if hasattr(self, "hardware_lab"):
+            self.hardware_lab.shutdown()
+        super().closeEvent(event)
 
 
 def app_icon():

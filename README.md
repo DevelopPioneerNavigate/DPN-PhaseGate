@@ -41,7 +41,18 @@ The complete research library now has visual guides, labelled concept blueprints
 
 **[Open the complete PhaseGate Visual Research Atlas →](docs/VISUAL-ATLAS.md)**
 
-### Native Windows App — PhaseGate Research Operations v0.6
+### PG-01 v0.7 — USB Hardware Lab / Real Raw Acquisition
+
+**Now developed:** The native Windows EXE includes an eighth screen, **Hardware Lab**, where an operator can explicitly select two independent USB serial ports and view actual **RAW HX711 ADC counts** transmitted from properly inspected Raspberry Pi Pico 2 stations. This is a measurement/monitoring capability — not teleportation.
+
+| Native EXE | Firmware + wiring | Raw data audit |
+|---|---|---|
+| **[Download latest successful v0.7 Windows artifact](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/native-windows-exe.yml)** | [Pico 2 / HX711 MicroPython guide](firmware/pico2_hx711/README.md) | [Bench-capture verification](tools/verify_bench_capture.py) |
+| [Full Hardware Lab manual](desktop/README.md) | [PG-01 vetted design constraints](docs/engineering/PG01-PROTOTYPE-SPECS-v0.5.md) | BENCH_*.jsonl + SHA-256 only, not experimental results |
+
+**Scientific and device status:** Software integration is implemented and tested using simulated USB frames. **No physical sensor hardware has been connected or validated by this project yet.** The Command Center charts and portal rings remain explicitly SYNTHETIC. Actual USB data appear only in Hardware Lab, as uncalibrated sensor counts. USB frame checksums are not cryptographic evidence and do not imply physical matter transport.
+
+### Native Windows App — PhaseGate Research Operations v0.6 (desktop foundation)
 
 **Major upgrade:** the primary PhaseGate software is now a **true PySide6/Qt native Windows desktop application**, replacing the basic browser console as our development focus. Animated orbital graphics, seven functional screens, diagnostics, source explorer, custom icon, real window controls, research inventory and offline operation. **All station telemetry remains clearly marked as SYNTHETIC**; no portal or connected instruments exist.
 

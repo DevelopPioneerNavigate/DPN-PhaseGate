@@ -10,6 +10,8 @@ def main(argv=None):
     parser.add_argument("--smoke-test", action="store_true")
     parser.add_argument("--self-test", action="store_true")
     parser.add_argument("--screenshot", type=Path, default=None)
+    parser.add_argument("--screenshot-hardware", type=Path, default=None,
+                        help="capture the real USB Hardware Lab on the Qt native interface")
     args = parser.parse_args(argv)
 
     from PySide6.QtCore import QTimer
@@ -42,6 +44,17 @@ def main(argv=None):
                         raise OSError("Qt screenshot is empty")
                 except OSError:
                     result = 3
+            if args.screenshot_hardware:
+                try:
+                    window.navigate("Hardware Lab")
+                    application.processEvents()
+                    args.screenshot_hardware.parent.mkdir(parents=True, exist_ok=True)
+                    if not window.grab().save(str(args.screenshot_hardware), "PNG"):
+                        raise OSError("Qt Hardware Lab screenshot could not be saved")
+                    if args.screenshot_hardware.stat().st_size < 1000:
+                        raise OSError("Qt Hardware Lab screenshot is empty")
+                except (OSError, ValueError):
+                    result = 4
             window.close()
             application.exit(result)
         QTimer.singleShot(900, complete)

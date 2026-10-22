@@ -71,3 +71,8 @@ References:
 5. Independently review safety and preregister null/control protocol before any real physical experiment.
 
 **No working object-transfer mechanism, experimental data or physical prototype is claimed.**
+
+
+## v0.7 — Real USB RAW hardware support added
+
+**Software integration is complete but no physical hardware has been verified or connected during development.** The native application now includes a [Hardware Lab](../../desktop/README.md) for operator-assigned USB serial ports. The [Pico 2 firmware](../../firmware/pico2_hx711/README.md) sends uncalibrated signed 24-bit sensor counts. Live USB values are not displayed in grams or compared to simulated graphs. Actual experiment files are never generated automatically; deliberate capture produces a separate **BENCH_*.jsonl + SHA-256** pair. Firmware and supply selection must undergo qualified low-voltage electrical review before assembly. Simulator and real RAW readings remain isolated.
