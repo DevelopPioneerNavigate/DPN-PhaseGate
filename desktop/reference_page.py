@@ -155,12 +155,11 @@ class ReferenceEventLab(QWidget):
         options.addWidget(self.analyze)
         sv.addLayout(options)
         self.same_epoch=QCheckBox(
-            "I confirm both captures used the SAME HOST without reboot and share an "
-            "overlapping monotonic clock epoch (operator declaration; not independently verified).")
+            "Same PC • no reboot • overlapping capture windows (operator declaration)")
         self.same_epoch.setChecked(False)
         sv.addWidget(self.same_epoch)
         sv.addWidget(text_label(
-            "Unchecked = no B−A time difference reported. A declaration alone never proves "
+            "Default OFF: no B−A time difference. A declaration alone never proves "
             "exposure synchronization or shared-flash identity.",11,"amber"))
         col.addWidget(setup)
         graph=Surface("referenceChart")
