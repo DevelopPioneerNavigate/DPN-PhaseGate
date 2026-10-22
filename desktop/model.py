@@ -9,10 +9,10 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-VERSION = "0.6.0"
+VERSION = "0.7.0"
 MODE = "SYNTHETIC"
 DISCLAIMER = (
-    "SIMULATION ONLY — NO PHYSICAL HARDWARE CONNECTED. "
+    "SIMULATED CHARTS — optional LIVE USB RAW bench measurements in Hardware Lab. "
     "NO OBJECT TELEPORTATION HAS BEEN OBSERVED OR VERIFIED."
 )
 DOC_BASE = "https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/blob/main/"
