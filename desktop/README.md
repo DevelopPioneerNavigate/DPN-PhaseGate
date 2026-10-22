@@ -1,3 +1,19 @@
+# DPN PhaseGate v0.9 — AURORA Native Research Command Center
+
+**The interface has been extensively rebuilt and is still a native Windows EXE, not a browser wrapper.**
+
+[**Explore the complete AURORA design guide**](../docs/design/AURORA-v0.9.md) · [GitHub Actions Windows Downloads](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/native-windows-exe.yml)
+
+The primary experience now includes a multi-layer hand-drawn AURORA research field, new cinematic research mission hero, richer station illustrations, redesigned application navigation, and a four-stage research-readiness rail. Use **Ctrl+K** to open the keyboard command palette, **Ctrl+1–9** to switch workspaces, or **F11** for an immersive presentation.
+
+**Standalone EXE:** download `DPN-PhaseGate-Native-Windows-v0.9` from the latest successful Windows workflow run (under Artifacts), unzip and launch `DPN-PhaseGate.exe`. The screenshot bundle is `DPN-PhaseGate-Native-Preview-v0.9`. Neither requires a browser, external API token or Python installation at runtime.
+
+**Scientific boundary:** AURORA's glowing geometry is **concept artwork, not a real portal**. The Command Center/Station Matrix/Signal Analytics are SYNTHETIC; only an explicitly connected Hardware Lab displays live, uncalibrated USB RAW counts. Calibration profiles are unreviewed estimates, recordings remain operator-selected witness inventories, and no physical transport experiment has been performed.
+
+---
+
+## v0.8 foundation — Calibration, USB Quality & Witness Evidence
+
 # DPN PhaseGate v0.8 — Calibration, USB Quality & Witness Evidence
 
 [**New: v0.8 Illustrated Calibration + Witness Guide**](../docs/engineering/PG01-CALIBRATION-AND-WITNESS-v0.8.md)
