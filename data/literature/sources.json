@@ -67,6 +67,83 @@
       "url": "https://inqnet.caltech.edu/wormhole2022/",
       "claim": "Research team states no physical rupture of spacetime was made.",
       "non_claim": "The result is not an actual traversable ambient-spacetime portal."
+    },
+    {
+      "id": "SRC-007",
+      "title": "Author Correction: Traversable wormhole dynamics on a quantum processor",
+      "authors": "Jafferis et al.",
+      "year": 2025,
+      "type": "peer_reviewed",
+      "doi": "10.1038/s41586-025-08788-4",
+      "url": "https://doi.org/10.1038/s41586-025-08788-4",
+      "claim": "The 2022 paper's Fig. 3b caption was clarified to describe averaging over all fermions.",
+      "non_claim": "A caption correction does not establish an actual macroscopic traversable wormhole."
+    },
+    {
+      "id": "SRC-008",
+      "title": "Experiments implementing small commuting models lack gravitational features",
+      "authors": "Kobrin, Schuster and Yao",
+      "year": 2025,
+      "type": "peer_reviewed",
+      "doi": "10.1038/s41586-025-08939-7",
+      "url": "https://doi.org/10.1038/s41586-025-08939-7",
+      "claim": "Published Matters Arising critique challenges whether the small commuting model displays gravity-like features.",
+      "non_claim": "A critique of a quantum simulation is not a finding that physical two-way object portals exist or are constructible."
+    },
+    {
+      "id": "SRC-009",
+      "title": "Reply to: Experiments implementing small commuting models lack gravitational features",
+      "authors": "Jafferis et al.",
+      "year": 2025,
+      "type": "peer_reviewed",
+      "doi": "10.1038/s41586-025-08995-z",
+      "url": "https://doi.org/10.1038/s41586-025-08995-z",
+      "claim": "Authors argue the relevant two-sided teleportation process, rather than every Hamiltonian process, merits the proposed holographic interpretation.",
+      "non_claim": "Does not claim an actual macroscopic object travelled through physical space via a wormhole."
+    },
+    {
+      "id": "SRC-010",
+      "title": "NIST Handbook 44: Specifications, Tolerances and Other Technical Requirements for Weighing and Measuring Devices (2026 Ed.)",
+      "authors": "Minnich et al., National Institute of Standards and Technology",
+      "year": 2026,
+      "type": "institutional_explainer",
+      "doi": null,
+      "url": "https://www.nist.gov/publications/nist-handbook-44-specifications-tolerances-and-other-technical-requirements-weighing-18",
+      "claim": "NIST publishes technical requirements concerning accurate and repeatable weighing-device performance.",
+      "non_claim": "Commercial measurement requirements do not by themselves certify a custom PhaseGate load-cell system."
+    },
+    {
+      "id": "SRC-011",
+      "title": "Overview of the Recommended Guide for Determining and Reporting Uncertainties for Balances and Scales",
+      "authors": "Val R. Miller, NIST",
+      "year": 2002,
+      "type": "institutional_explainer",
+      "doi": null,
+      "url": "https://www.nist.gov/publications/overview-recommended-guide-determining-and-reporting-uncertainties-balances-and-scales",
+      "claim": "Scale calibration uncertainty must be assessed and reported rather than assumed from nominal digit resolution.",
+      "non_claim": "Higher ADC count resolution alone does not establish accurate mass or a novel physical effect."
+    },
+    {
+      "id": "SRC-012",
+      "title": "Raspberry Pi Camera Module 3 product information",
+      "authors": "Raspberry Pi Ltd",
+      "year": null,
+      "type": "institutional_explainer",
+      "doi": null,
+      "url": "https://www.raspberrypi.com/products/camera-module-3/",
+      "claim": "Camera Module 3 offers a 12-megapixel Sony IMX708 autofocus camera with standard and wide fields of view.",
+      "non_claim": "Camera footage alone cannot prove spatial matter transfer and image clocks require synchronization validation."
+    },
+    {
+      "id": "SRC-013",
+      "title": "HX711 24-Bit Analog-to-Digital Converter for Weigh Scales datasheet",
+      "authors": "Avia Semiconductor",
+      "year": null,
+      "type": "other",
+      "doi": null,
+      "url": "https://e2e.ti.com/cfs-file/__key/communityserver-discussions-components-files/73/HX711.pdf",
+      "claim": "HX711 is a load-cell ADC with pin-based serial interface and selectable 10 or 80 samples per second nominal output.",
+      "non_claim": "ADC bit depth and nominal samples per second do not guarantee true physical mass precision or event fidelity."
     }
   ]
 }
