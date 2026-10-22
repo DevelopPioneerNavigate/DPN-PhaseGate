@@ -1,4 +1,13 @@
 # Registered research questions
+
+**[Physics guide](PHYSICS-COMMAND.md) · [Evidence workflow](EVIDENCE-WORKFLOW.md)**
+
+<img src="../../assets/phasegate-research-pipeline.svg" width="100%" alt="How research questions become experiments"/>
+
+> **Visual interpretation:** Turn a question into a measurable, falsifiable hypothesis, source evidence and approved protocol before collecting experimental data.
+
+---
+
 **RQ-001:** What independent measurements uniquely establish *same-object* identity across stations?
 **RQ-002:** What assumptions do proposed traversable-wormhole solutions require, and do they predict a physical macroscopic gate?
 **RQ-003:** What conventional routes or anomalies can mimic disappearance/reappearance?
