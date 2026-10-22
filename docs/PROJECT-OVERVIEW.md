@@ -3,6 +3,10 @@
 
 > **DPN Technology / Advanced Research** — Project PhaseGate asks whether intact macroscopic objects could ever be transferred between disconnected physical locations in both directions. This is a scientific investigation of a currently unverified capability, **not** an existing teleportation system.
 
+<img src="../assets/phasegate-evidence-ladder.svg" alt="Scientific evidence ladder from theory to unverified physical-object transfer" width="100%">
+
+**[Visual research atlas](VISUAL-ATLAS.md)** · **[Blueprint gallery](engineering/PG-01-BLUEPRINTS.md)** · **[Physics guide](physics/PHYSICS-COMMAND.md)**
+
 ## The idea in one minute
 
 | Vision | Current reality | Our responsible next step |
@@ -12,6 +16,8 @@
 **What success would eventually require:** independent proof that the same object crossed, that no hidden ordinary route or replacement explains the observation, that timing and evidence are sound, and that external teams can reproduce it.
 
 **What success does not mean:** paired video displays, optical portals, a digital twin, quantum state teleportation, CGI, concealed transportation, or simulator behavior. None demonstrates intact object transfer.
+
+<img src="../assets/pg01-blueprint-top.svg" alt="Measurement station A and B with no physical transit route" width="100%">
 
 ## Three coordinated programs
 
