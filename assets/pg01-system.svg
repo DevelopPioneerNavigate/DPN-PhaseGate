@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" role="img" aria-labelledby="ct cd">
+<title id="ct">PG-01 scientific measurement architecture</title><desc id="cd">Station A and Station B have independent cameras, sensors and logs, which send data to an evidence console. Only recorded information flows, not physical matter.</desc>
+<defs><linearGradient id="cbg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#111B32"/><stop offset="1" stop-color="#0A1020"/></linearGradient><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0L7 3.5L0 7Z" fill="#45CFEA"/></marker></defs>
+<rect width="1200" height="320" rx="18" fill="#0C1223"/>
+<g font-family="Segoe UI,Arial,sans-serif">
+<rect x="28" y="42" width="314" height="228" rx="16" fill="url(#cbg)" stroke="#44D7E9" stroke-width="2"/>
+<rect x="886" y="42" width="286" height="228" rx="16" fill="url(#cbg)" stroke="#B08AFF" stroke-width="2"/>
+<rect x="414" y="66" width="401" height="179" rx="17" fill="url(#cbg)" stroke="#698EB8" stroke-width="2"/>
+<circle cx="79" cy="91" r="23" fill="#45D7ED" fill-opacity=".15" stroke="#45D7ED" stroke-width="2"/>
+<text x="79" y="98" text-anchor="middle" font-size="23" font-weight="800" fill="#64EBF9">A</text>
+<circle cx="931" cy="91" r="23" fill="#B394FF" fill-opacity=".14" stroke="#B394FF" stroke-width="2"/>
+<text x="931" y="98" text-anchor="middle" font-size="23" font-weight="800" fill="#D5C7FF">B</text>
+<text x="114" y="97" font-size="20" font-weight="750" fill="#E7F4FF">STATION A</text>
+<text x="966" y="97" font-size="20" font-weight="750" fill="#E9E0FF">STATION B</text>
+<path d="M60 115H315M911 115H1147M442 136H787" stroke="#536685"/>
+<text x="60" y="148" font-size="16" fill="#DCE7FB">Camera + witness view</text>
+<text x="60" y="179" font-size="16" fill="#DCE7FB">Load cell / ADC</text>
+<text x="60" y="210" font-size="16" fill="#DCE7FB">UTC + local event log</text>
+<text x="60" y="241" font-size="13" fill="#7FB9D8">Physical inspection required</text>
+<text x="911" y="148" font-size="16" fill="#DCE7FB">Camera + witness view</text>
+<text x="911" y="179" font-size="16" fill="#DCE7FB">Load cell / ADC</text>
+<text x="911" y="210" font-size="16" fill="#DCE7FB">UTC + local event log</text>
+<text x="911" y="241" font-size="13" fill="#B0A1DB">Independent instruments</text>
+<text x="615" y="108" text-anchor="middle" font-size="21" font-weight="800" fill="#F0F4FF">EVIDENCE CONSOLE</text>
+<text x="614" y="165" text-anchor="middle" font-size="16" fill="#C6D9F2">Time correlation • integrity hashes</text>
+<text x="614" y="193" text-anchor="middle" font-size="16" fill="#C6D9F2">Calibration • experiment records</text>
+<text x="614" y="223" text-anchor="middle" font-size="12" fill="#95AACA">Local prototype design only</text>
+<path d="M342 147H405" stroke="#45CFEA" stroke-width="2.5" marker-end="url(#arrow)"/>
+<path d="M886 192H828" stroke="#B394FF" stroke-width="2.5"/>
+<path d="M828 192L839 186M828 192l11 6" stroke="#B394FF" stroke-width="2.5"/>
+<text x="361" y="132" font-size="10.5" fill="#87DDE8">DATA</text>
+<text x="831" y="177" font-size="10.5" fill="#CAAFFF">DATA</text>
+<path d="M384 280H829" stroke="#455978" stroke-width="1.5" stroke-dasharray="7 7"/>
+<text x="604" y="301" font-size="13.5" text-anchor="middle" letter-spacing="1" fill="#D6A58C">NO PHYSICAL OBJECT TRANSFER BETWEEN STATIONS</text>
+</g></svg>
