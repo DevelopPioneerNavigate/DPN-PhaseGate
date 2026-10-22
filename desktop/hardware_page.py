@@ -185,7 +185,7 @@ class HardwareLab(QWidget):
             station=event.station
             reader=self.readers.get(station)
             # Ignore queued old-port messages after operator explicitly reconnects a station.
-            if reader is None or reader.port!=event.port:
+            if reader is None or reader.port!=event.port or reader.session_id!=event.session_id:
                 continue
             if self.recording:
                 try:
