@@ -20,6 +20,14 @@ PhaseGate is an **R&D program**, not an existing matter-transmitting machine. Pi
 | Help research | [Issues](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/issues) | Source-backed, falsifiable questions |
 | Run test checks locally | [Validation guide](qa/validation.md) | Software green ≠ physics confirmed |
 
+## Run the actual PC console (synthetic-only)
+
+The PhaseGate v0.5 Research Console is now working locally with **software-generated** station data; no physical test has taken place.
+
+- [Console documentation](../console/README.md)
+- [Windows double-click launcher](../START_PHASEGATE_CONSOLE.bat)
+- [Hardware selection and proposed signal map](engineering/PG01-PROTOTYPE-SPECS-v0.5.md)
+
 ## Quick local setup
 
 ```bash
