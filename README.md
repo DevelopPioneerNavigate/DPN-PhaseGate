@@ -41,6 +41,18 @@ The complete research library now has visual guides, labelled concept blueprints
 
 **[Open the complete PhaseGate Visual Research Atlas →](docs/VISUAL-ATLAS.md)**
 
+### PG-01 v1.1 — Reference Event & Timing Analysis
+
+<img src="assets/pg01-reference-event-v1.1.svg" width="100%" alt="DPN native reference event analysis workflow comparing hash-verified dual-camera light changes without claiming physical synchronization"/>
+
+**New eleventh native screen:** reference-light brightness detection on **existing** consented A/B BENCH camera captures, audit of original frame hashes, original-frame-index charts, honest host-after-read interval brackets and separate BENCH-only analysis exports. The app still **does not** infer a synchronized camera exposure, authenticate the original scene or demonstrate physical-object transfer.
+
+| Windows standalone v1.1 | Guided evidence procedure | Reference analysis source |
+|---|---|---|
+| [Latest successful v1.1 EXE / native preview artifacts](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/native-windows-exe.yml) | [PG-01 Reference Event v1.1](docs/engineering/PG01-REFERENCE-EVENT-v1.1.md) | [Detection model and integrity rules](desktop/reference_event.py) |
+
+The 11-page AURORA command palette (Ctrl+K) now includes **Reference Events**. No actual reference flash test has been performed by this software release. **Source data tests are synthetic, not experimental evidence.**
+
 ### PG-01 v1.0 — Optical Evidence & Timebase Lab
 
 <img src="assets/pg01-optical-evidence-v1.0.svg" width="100%" alt="DPN v1.0 optical system architecture diagram of two opt-in local USB cameras, Qt workstation and hashed bench evidence"/>
