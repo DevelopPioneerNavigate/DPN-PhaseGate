@@ -21,6 +21,7 @@ from desktop.hardware import BenchRecorder, SerialReader, available_ports
 from desktop.calibration import CalibrationError, load_profile, estimate
 from desktop.timing_quality import CadenceHealth
 from desktop.window_helpers import button
+from desktop.aurora import LabBanner
 
 
 class HardwareLab(QWidget):
@@ -53,6 +54,9 @@ class HardwareLab(QWidget):
         col.setSpacing(17)
         col.addWidget(text_label("PG-01  /  REAL USB ACQUISITION  /  BENCH ONLY",11,"cyan",True))
         col.addWidget(text_label("HARDWARE LAB",31,"text",True))
+        col.addWidget(LabBanner("HARDWARE / USB INTEGRATION",
+            "Two explicitly selected sensor ports, strict RAW-frame validation and safety-scoped recording.",
+            "#61DFF2"))
         col.addWidget(text_label("Connect approved, independently inspected Pico 2 sensor endpoints."
                                  " Raw counts are real only when connected; optional profile estimates are UNREVIEWED.",12))
         warn=Surface("hardwareWarning")
