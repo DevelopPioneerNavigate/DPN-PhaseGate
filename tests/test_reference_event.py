@@ -39,7 +39,7 @@ class ReferenceTests(unittest.TestCase):
             root=Path(tmp)
             a=make_capture(root,"A",[20]*7+[215]*5,2_000_000_000)
             b=make_capture(root,"B",[20]*8+[215]*4,2_000_000_000)
-            result=build_review(a,b,region_a="FULL",region_b="FULL")
+            result=build_review(a,b,region_a="FULL",region_b="FULL",same_host_epoch_declared=True)
             comp=result["comparison"]
             self.assertEqual(comp["state"],"PAIR OF UNVERIFIED HOST RECEIPT TRANSITIONS")
             self.assertEqual(comp["station_a"]["onset"]["first_bright_index"],7)
@@ -49,6 +49,27 @@ class ReferenceTests(unittest.TestCase):
             self.assertIsNone(comp["physical_event_time_difference_ms"])
             self.assertFalse(comp["camera_clocks_synchronized"])
             self.assertFalse(comp["declared_shared_light_event_confirmed"])
+
+    def test_cross_host_timing_withheld_by_default(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            a=make_capture(root,"A",[20]*7+[210]*5)
+            b=make_capture(root,"B",[20]*8+[210]*4)
+            report=build_review(a,b)["comparison"]
+            self.assertEqual(report["state"],
+                             "CROSS-CAMERA TIMING WITHHELD / HOST EPOCH NOT DECLARED")
+            self.assertIsNone(report["host_receipt_bracket_delta_ms"])
+            self.assertFalse(report["same_host_epoch_declared_by_operator"])
+
+    def test_nonoverlapping_capture_clocks_withheld_even_if_declared(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            a=make_capture(root,"A",[20]*7+[210]*5,base=2_000_000_000)
+            b=make_capture(root,"B",[20]*7+[210]*5,base=20_000_000_000)
+            report=build_review(a,b,same_host_epoch_declared=True)["comparison"]
+            self.assertEqual(report["state"],
+                             "CROSS-CAMERA TIMING WITHHELD / NONOVERLAPPING RECEIPT WINDOWS")
+            self.assertIsNone(report["host_receipt_bracket_delta_ms"])
 
     def test_flat_or_single_spike_is_inconclusive(self):
         with tempfile.TemporaryDirectory() as tmp:
