@@ -2,7 +2,7 @@
 
 <img src="../assets/pg01-reference-event-v1.1.svg" width="100%" alt="DPN Technology PG-01 reference flash event analysis system"/>
 
-**Eleventh native AURORA workstation: Reference Events.** Select two operator-recorded and SHA-256 verified `BENCH_OPTICAL_*` directories, choose an image region for each camera, detect a sustained bright flash after baseline, view separate brightness traces and report bounded **HOST POST-READ RECEIPT intervals only**.
+**Eleventh native AURORA workstation: Reference Events.** Cross-camera time subtraction is **OFF by default** and requires an explicit operator declaration of a shared, uninterrupted computer monotonic epoch with overlapping recording windows; still not verified camera synchronization.  Select two operator-recorded and SHA-256 verified `BENCH_OPTICAL_*` directories, choose an image region for each camera, detect a sustained bright flash after baseline, view separate brightness traces and report bounded **HOST POST-READ RECEIPT intervals only**.
 
 **Download the native Windows EXE:** open [PhaseGate Windows build artifacts](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/native-windows-exe.yml), select the latest **successful** run, download `DPN-PhaseGate-Native-Windows-v1.1`, extract `DPN-PhaseGate.exe` and launch it. The `DPN-PhaseGate-Native-Preview-v1.1` artifact also contains a screenshot of the new native Reference Event Lab.
 
