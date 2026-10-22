@@ -1,12 +1,17 @@
 # Start here | Find what matters in 30 seconds
 [← Back to PhaseGate](../README.md) · [Full overview](PROJECT-OVERVIEW.md)
 
+<img src="../assets/phasegate-research-pipeline.svg" alt="How PhaseGate links research sources to approved experiment records" width="100%">
+
+**Prefer pictures?** [Open the Visual Research Atlas](VISUAL-ATLAS.md) for engineering blueprints, research diagrams, and a guided route through the repository.
+
 PhaseGate is an **R&D program**, not an existing matter-transmitting machine. Pick the task you came here to do:
 
 | I want to... | Open this | First thing to check |
 |---|---|---|
 | Understand the project | [Project overview](PROJECT-OVERVIEW.md) | Vision vs. demonstrated science |
 | Review quantum/wormhole claims | [Physics baseline](physics/baseline.md) | What experiments actually demonstrated |
+| Browse **actual illustrations** and vendor equipment photos | [Blueprint gallery](engineering/PG-01-BLUEPRINTS.md) | Explicitly labelled conceptual drawings and sourced component references |
 | See the device concept | [PG-01 architecture](engineering/PG-01-architecture.md) | Station A/B measurement pathways |
 | Plan hardware | [Implementation plan](engineering/PG01-IMPLEMENTATION-PLAN.md) | Dependencies and unresolved requirements |
 | Check instrument candidates | [Selection matrix](engineering/PG-01-bom.csv) | Compatibility and calibration requirements |
