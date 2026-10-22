@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DPN PhaseGate actual conducted experiment",
+  "type": "object",
+  "required": [
+    "id",
+    "hypothesis_id",
+    "protocol_path",
+    "status",
+    "started_at",
+    "ended_at",
+    "operator",
+    "witness",
+    "safety_review",
+    "calibration_ids",
+    "controls",
+    "measurements",
+    "evidence",
+    "conclusion"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^PG-[0-9]{8}-[0-9]{3}$"
+    },
+    "hypothesis_id": {
+      "type": "string"
+    },
+    "protocol_path": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "completed",
+        "aborted"
+      ]
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ended_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "operator": {
+      "type": "string"
+    },
+    "witness": {
+      "type": "string"
+    },
+    "safety_review": {
+      "type": "object",
+      "required": [
+        "approved",
+        "review_id"
+      ],
+      "properties": {
+        "approved": {
+          "const": true
+        },
+        "review_id": {
+          "type": "string"
+        }
+      }
+    },
+    "calibration_ids": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    },
+    "controls": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object"
+      }
+    },
+    "measurements": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object"
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "uri",
+          "sha256"
+        ],
+        "properties": {
+          "uri": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        }
+      }
+    },
+    "conclusion": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

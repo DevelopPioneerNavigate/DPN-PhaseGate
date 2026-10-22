@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DPN PhaseGate hypothesis registry",
+  "type": "object",
+  "required": [
+    "version",
+    "hypotheses"
+  ],
+  "properties": {
+    "version": {
+      "const": 1
+    },
+    "hypotheses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "status",
+          "source_ids",
+          "statement",
+          "falsifier",
+          "prediction",
+          "limitations"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^H-PG-[0-9]{3}$"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "proposed",
+              "theoretical",
+              "testing",
+              "contradicted",
+              "literature_supported",
+              "replicated"
+            ]
+          },
+          "source_ids": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "statement": {
+            "type": "string"
+          },
+          "falsifier": {
+            "type": "string"
+          },
+          "prediction": {
+            "type": "string"
+          },
+          "limitations": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
