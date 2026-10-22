@@ -1,5 +1,14 @@
 # PG-01 scale calibration and offline analysis
 
+**[Data flow](../physics/EVIDENCE-WORKFLOW.md) · [Engineering plan](../engineering/PG01-IMPLEMENTATION-PLAN.md)**
+
+<img src="../../assets/pg01-dataflow-diagram.svg" width="100%" alt="From calibrated sensor to verifiable data"/>
+
+> **Visual guide:** The software fits sensor measurements but cannot establish mass-transfer accuracy or prove an unusual physics effect.
+
+---
+
+
 This is measurement engineering, not teleportation research evidence.
 
 ## Scientific baseline
