@@ -6,6 +6,8 @@ No background network calls, fonts, stock images or external assets required.
 """
 from __future__ import annotations
 
+from desktop.model import VERSION
+
 import math
 from PySide6.QtCore import Qt, QRectF, QPointF, QTimer, Signal
 from PySide6.QtGui import (
@@ -186,7 +188,7 @@ class AuroraHero(QFrame):
         actions.addStretch()
         left.addLayout(actions)
         left.addStretch()
-        meta=QLabel("●  RESEARCH ACTIVE          ◌  NO PORTAL VERIFIED          /          v1.0")
+        meta=QLabel(f"●  RESEARCH ACTIVE          ◌  NO PORTAL VERIFIED          /          v{VERSION}")
         meta.setObjectName("heroMeta")
         left.addWidget(meta)
         layout.addLayout(left,7)
@@ -355,5 +357,5 @@ class LabBanner(QFrame):
                    Qt.TextFlag.TextWordWrap|Qt.AlignmentFlag.AlignTop,self.subtext)
         p.setFont(QFont("Consolas",9,QFont.Weight.DemiBold))
         p.setPen(qcolor(self.accent))
-        p.drawText(QRectF(w-186,14,161,19),Qt.AlignmentFlag.AlignRight,"DPN / PG-01   v1.0")
+        p.drawText(QRectF(w-186,14,161,19),Qt.AlignmentFlag.AlignRight,f"DPN / PG-01   v{VERSION}")
         p.end()

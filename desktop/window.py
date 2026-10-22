@@ -22,6 +22,7 @@ from desktop.widgets import C, Surface, Metric, OrbitalGate, Station, TrendChart
 from desktop.hardware_page import HardwareLab
 from desktop.evidence_page import EvidenceLab
 from desktop.optical_page import OpticalLab
+from desktop.reference_page import ReferenceEventLab
 from desktop.aurora import AuroraHero, PipelineRail, CommandPalette
 
 
@@ -90,7 +91,7 @@ class ResearchWindow(QMainWindow):
             key=QShortcut(QKeySequence("Ctrl+"+str(i)),self)
             key.activated.connect(lambda label=name:self.navigate(label))
             self._keyboard_shortcuts.append(key)
-        if len(self.pages)==10:
+        if len(self.pages)>=10:
             key=QShortcut(QKeySequence("Ctrl+0"),self)
             key.activated.connect(lambda:self.navigate(self.pages[9]))
             self._keyboard_shortcuts.append(key)
@@ -162,7 +163,7 @@ class ResearchWindow(QMainWindow):
         rail_col=QVBoxLayout(self.rail)
         rail_col.setContentsMargins(15,27,13,20)
         rail_col.setSpacing(5)
-        logo=text_label("◈  DPN / 10",25,"text",True)
+        logo=text_label("◈  DPN / PG-01",22,"text",True)
         rail_col.addWidget(logo)
         rail_col.addWidget(text_label("D E V E L O P   /   P I O N E E R",9,"cyan",True))
         rail_col.addWidget(text_label("N A V I G A T E",9,"violet",True))
@@ -171,27 +172,39 @@ class ResearchWindow(QMainWindow):
         rail_col.addWidget(heading_rule())
         rail_col.addSpacing(12)
         rail_col.addWidget(text_label("  NAVIGATION  /  CTRL + K",10,"muted",True))
+        nav_widget=QWidget()
+        nav_widget.setObjectName("navContent")
+        nav_col=QVBoxLayout(nav_widget)
+        nav_col.setContentsMargins(0,0,4,0)
+        nav_col.setSpacing(3)
         for name,ico in [
             ("Command Center","◈"),("Station Matrix","◎"),("Hardware Lab","▦"),
-            ("Optical Evidence","◉"),
+            ("Optical Evidence","◉"),("Reference Events","⌖"),
             ("Calibration & Evidence","◇"),
             ("Signal Analytics","⌁"),("Research Vault","▣"),
             ("Experiment Ledger","▤"),("System Diagnostics","⚙"),
             ("Preferences","◇"),
         ]:
             if name=="Hardware Lab":
-                rail_col.addSpacing(7)
-                rail_col.addWidget(text_label("  INSTRUMENTS / EVIDENCE",9,"violet",True))
+                nav_col.addSpacing(7)
+                nav_col.addWidget(text_label("  INSTRUMENTS / EVIDENCE",9,"violet",True))
             elif name=="System Diagnostics":
-                rail_col.addSpacing(7)
-                rail_col.addWidget(text_label("  SYSTEM & DISPLAY",9,"violet",True))
+                nav_col.addSpacing(7)
+                nav_col.addWidget(text_label("  SYSTEM & DISPLAY",9,"violet",True))
             btn=QPushButton(f"{ico}     {name}")
             btn.setProperty("role","nav")
             btn.setCheckable(True)
             btn.setCursor(Qt.CursorShape.PointingHandCursor)
             btn.clicked.connect(lambda checked=False, s=name:self.navigate(s))
-            rail_col.addWidget(btn)
+            nav_col.addWidget(btn)
             self.nav[name]=btn
+        nav_scroll=QScrollArea()
+        nav_scroll.setObjectName("navScroll")
+        nav_scroll.setWidgetResizable(True)
+        nav_scroll.setFrameShape(QFrame.Shape.NoFrame)
+        nav_scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        nav_scroll.setWidget(nav_widget)
+        rail_col.addWidget(nav_scroll,1)
         rail_col.addStretch()
         rail_col.addWidget(heading_rule())
         rail_col.addWidget(text_label("●  SIM GRAPHS / USB LAB",11,"cyan",True))
@@ -226,6 +239,7 @@ class ResearchWindow(QMainWindow):
             ("Station Matrix",self.stations_page()),
             ("Hardware Lab",self.hardware_page()),
             ("Optical Evidence",self.optical_page()),
+            ("Reference Events",self.reference_page()),
             ("Calibration & Evidence",self.evidence_page()),
             ("Signal Analytics",self.analytics_page()),
             ("Research Vault",self.research_page()),
@@ -373,6 +387,10 @@ class ResearchWindow(QMainWindow):
     def optical_page(self):
         self.optical_lab=OpticalLab()
         return self.optical_lab
+
+    def reference_page(self):
+        self.reference_lab=ReferenceEventLab()
+        return self.reference_lab
 
     def evidence_page(self):
         self.evidence_lab=EvidenceLab()
@@ -647,6 +665,8 @@ class ResearchWindow(QMainWindow):
             self.evidence_lab.shutdown()
         if hasattr(self,"optical_lab"):
             self.optical_lab.shutdown()
+        if hasattr(self,"reference_lab"):
+            self.reference_lab.shutdown()
         super().closeEvent(event)
 
 

@@ -6,6 +6,12 @@
 
 > **Scientific status:** Physical two-way transport of intact objects is **not demonstrated**. PG-01 is a conceptual *measurement* station design, not a working portal.
 
+## NEW / v1.1 Reference flash and host timing analysis
+
+<img src="../assets/pg01-reference-event-v1.1.svg" width="100%" alt="Reference flash detection with two SHA-256 verified camera streams and unsynchronized host receipt timing"/>
+
+[Reference Event Lab v1.1 walkthrough →](engineering/PG01-REFERENCE-EVENT-v1.1.md) · **No independently verified shared-flash trial or synchronized exposure offset exists yet.**
+
 ## NEW / v1.0 Native camera observation and receipt-time audit
 
 <img src="../assets/pg01-optical-evidence-v1.0.svg" width="100%" alt="Dual opt-in USB cameras, local JPEG bench recording, SHA-256 evidence and honest unsynchronized timing limits"/>

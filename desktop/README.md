@@ -1,3 +1,19 @@
+# DPN PhaseGate v1.1 — Reference Event & Timing Analysis
+
+<img src="../assets/pg01-reference-event-v1.1.svg" width="100%" alt="DPN Technology PG-01 reference flash event analysis system"/>
+
+**Eleventh native AURORA workstation: Reference Events.** Cross-camera time subtraction is **OFF by default** and requires an explicit operator declaration of a shared, uninterrupted computer monotonic epoch with overlapping recording windows; still not verified camera synchronization.  Select two operator-recorded and SHA-256 verified `BENCH_OPTICAL_*` directories, choose an image region for each camera, detect a sustained bright flash after baseline, view separate brightness traces and report bounded **HOST POST-READ RECEIPT intervals only**.
+
+**Download the native Windows EXE:** open [PhaseGate Windows build artifacts](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/native-windows-exe.yml), select the latest **successful** run, download `DPN-PhaseGate-Native-Windows-v1.1`, extract `DPN-PhaseGate.exe` and launch it. The `DPN-PhaseGate-Native-Preview-v1.1` artifact also contains a screenshot of the new native Reference Event Lab.
+
+**Scientific boundary:** Camera source, exposure, USB/driver latency and simultaneity remain unknown. An apparent difference between flash arrivals is **NOT physical event-time difference** and is not proof of a portal, transport or synchronized cameras. Only independently sourced recordings are accepted; no camera is opened by this analysis page.
+
+[Full Reference Events operator procedure and limitations →](../docs/engineering/PG01-REFERENCE-EVENT-v1.1.md)
+
+---
+
+## v1.0 Optical Evidence foundation
+
 # DPN PhaseGate v1.0 — Optical Evidence and Timebase Lab
 
 <img src="../assets/pg01-optical-evidence-v1.0.svg" width="100%" alt="DPN v1.0 native optical evidence and bench timebase pipeline"/>

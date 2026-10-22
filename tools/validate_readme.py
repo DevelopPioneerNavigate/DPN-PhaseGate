@@ -18,6 +18,7 @@ PAGE_PATHS = (
     "docs/engineering/PG-01-BLUEPRINTS.md",
     "docs/engineering/PG01-CALIBRATION-AND-WITNESS-v0.8.md",
     "docs/engineering/PG01-OPTICAL-EVIDENCE-v1.0.md",
+    "docs/engineering/PG01-REFERENCE-EVENT-v1.1.md",
     "docs/physics/PHYSICS-COMMAND.md",
     "docs/physics/EVIDENCE-WORKFLOW.md",
     "docs/safety/SAFETY-COMMAND.md",

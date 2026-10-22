@@ -12,6 +12,8 @@ def main(argv=None):
     parser.add_argument("--screenshot", type=Path, default=None)
     parser.add_argument("--screenshot-evidence", type=Path, default=None,
                         help="capture Calibration and Evidence Lab native page")
+    parser.add_argument("--screenshot-reference", type=Path, default=None,
+                        help="capture offline Reference Event Lab with no camera access")
     parser.add_argument("--screenshot-optical", type=Path, default=None,
                         help="capture opt-in Optical Evidence Lab without opening any camera")
     parser.add_argument("--screenshot-hardware", type=Path, default=None,
@@ -94,6 +96,19 @@ def main(argv=None):
                         raise OSError("Camera opened during native screenshot smoke test")
                 except (OSError,ValueError):
                     result = 7
+            if args.screenshot_reference:
+                try:
+                    window.navigate("Reference Events")
+                    application.processEvents()
+                    args.screenshot_reference.parent.mkdir(parents=True, exist_ok=True)
+                    if not window.grab().save(str(args.screenshot_reference),"PNG"):
+                        raise OSError("Reference Event Lab screenshot not saved")
+                    if args.screenshot_reference.stat().st_size < 1000:
+                        raise OSError("Reference screenshot empty")
+                    if window.optical_lab.workers:
+                        raise OSError("Camera opened during reference smoke test")
+                except (OSError,ValueError):
+                    result = 8
             window.close()
             application.exit(result)
         QTimer.singleShot(900, complete)
