@@ -1,65 +1,65 @@
-# DPN PhaseGate v0.6 — Native Windows Research Console
+# DPN PhaseGate v0.7 — Real USB Instrument Monitoring
 
-[Main repository](../README.md) · [Research atlas](../docs/VISUAL-ATLAS.md) · [PG-01 specs](../docs/engineering/PG01-PROTOTYPE-SPECS-v0.5.md)
+[Main repository](../README.md) · [Firmware and flashing](../firmware/pico2_hx711/README.md) · [PG-01 electrical design review](../docs/engineering/PG01-PROTOTYPE-SPECS-v0.5.md) · [Visual atlas](../docs/VISUAL-ATLAS.md)
 
-**Windows-native Qt application, not a browser page, Electron wrapper or localhost server.** The previous web prototype is retained separately in `console/` as historical reference.
+**What is real in this release:** the native Windows application can now enumerate COM ports, manually connect one port to Station A and another to Station B, read/check raw MicroPython HX711 frames, detect corrupted/out-of-order/stale data and intentionally save unverified bench captures.
 
-> **Scientific limitation:** All station readings are SYNTHETIC. No sensors, cameras or portal hardware are connected; no actual experiment or physical-object transfer is claimed.
+**What remains unbuilt/unverified:** the physical sensor stations, camera installation, sensor calibration, independent clock synchronization, laboratory safety approval, real PhaseGate experiments, and any physical-object teleportation mechanism. The old animated orbital visualizations and charts remain **SYNTHETIC ONLY** and never show real bench samples.
 
-## Download the .exe
+## 1 — Download the native EXE
 
-Open **[GitHub Actions: PhaseGate Native Windows EXE](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/native-windows-exe.yml)**. Choose the latest **successful** run and download the **DPN-PhaseGate-Native-Windows-v0.6** artifact under Artifacts. Extract `DPN-PhaseGate.exe` and double-click it. **No Python installation or browser is needed to run the built EXE.**
+Open the [PhaseGate Windows EXE workflow](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/native-windows-exe.yml), choose a **green** run with this v0.7 branch or later merged main, and download **DPN-PhaseGate-Native-Windows-v0.7** from its Artifacts section. Extract and double-click `DPN-PhaseGate.exe` on Windows; it does not require a browser or Python installation. The app is not code-signed; verify its GitHub origin and Windows warning details before opening.
 
-The same workflow also publishes **DPN-PhaseGate-Native-Preview-v0.6**, an actual screenshot rendered by Qt during the Windows smoke test. These artifacts expire after 30 days; new successful runs create fresh downloadable artifacts.
+The app uses `PySide6-Essentials==6.12.0`, `pyserial==3.5` and a pinned PyInstaller build on Windows. Bundled dependencies stay inside the EXE. No background cloud services, remote network ports, tokens or subscriptions.
 
-**Windows SmartScreen:** An unsigned executable can show a caution prompt. Verify the origin, commit, CI run and file hash before launch. Do not disable antivirus to bypass security warnings. Code signing will require a later authenticated release process.
+## 2 — Operator workflow (hardware not included)
 
-## Build or run from source
+1. **Do not connect an improvised circuit.** Review the actual breakout board's VCC/VDD logic levels, rated 3.3V GPIO, strain gauge wiring and certified low-voltage power with a qualified electrical reviewer.
+2. Install the [official Pico 2 MicroPython firmware](https://micropython.org/download/RPI_PICO2/), then review and save `firmware/pico2_hx711/main.py` on one controller with `STATION_ID="A"` and another with `STATION_ID="B"`. Review the [dedicated firmware guide](../firmware/pico2_hx711/README.md).
+3. Once assembled and physically inspected, plug both Pico USB connectors into the PC. Note the actual Windows COM numbers and independent physical stations.
+4. Open **Hardware Lab** (the eighth native screen), click **REFRESH PORTS**, select the correct COM device for A and B and **CONNECT** each. No device opens automatically.
+5. Live frames display **signed 24-bit RAW COUNTS only**. Status changes to **LIVE USB / RAW**, **STALE**, **FAULT**, or **PORT CLOSED**. A frame whose claimed station does not match your selected port mapping is rejected.
+6. For a real bench capture, select **START BENCH RECORDING** and confirm the warning. Save to a new `BENCH_*.jsonl` path of your choice. Stop recording to close, count samples and generate `BENCH_*.sha256` alongside it.
+7. Optional offline check: `python tools/verify_bench_capture.py BENCH_example.jsonl`. A passing check confirms structural integrity, not calibration, equipment authenticity or science.
 
-Install Python 3.12+ on Windows:
+## 3 — Separate scientific data states
+
+| Source | Native view | Unit | Scientific status |
+|---|---|---|---|
+| Demo math generator | Command Center, Station Matrix, Signal Analytics | Fictional grams | SYNTHETIC / not evidence |
+| Operator-connected Pico USB | **Hardware Lab only** | Raw signed ADC counts | LIVE USB RAW / uncalibrated |
+| Explicit `BENCH_*.jsonl` | Raw bench capture outside experiment manifest | Counts and time metadata | UNVERIFIED BENCH |
+| Approved actual run manifest | Experiment Ledger, read-only | Traceable completed studies | Empty until a real approved experiment |
+
+**Never mistake bench readings for successful physical transfer.** No proof of object identity, instrument calibration, security provenance or temporal causality is implied by live data.
+
+## 4 — Robustness and scientific traceability
+
+- One manually selected USB COM port per station; duplicate port assignments are blocked.
+- Per-connection random session IDs protect against queued events from a previous port session appearing as new data.
+- Protocol `PG1|station|sequence|uptime_ms|signed24_counts|RAW|xor_hex\n` (maximum 160 bytes, strict ASCII and checksum, station match and 24-bit bounds).
+- Sequence gaps, counter rollbacks, packet corruption, loss of USB and silent/stale links are surfaced as faults rather than synthesized readings.
+- Host captures include UTC with milliseconds and monotonic nanosecond clock, but **Pico and PC clocks are not synchronized** and the current implementation does not estimate offset/drift. These timestamps must not be used to conclude cross-station timing.
+- Serial XOR checksum is **not cryptographic authentication**. SHA-256 sidecars detect post-capture modification but cannot verify sensor provenance or a physical effect.
+- Real USB acquisition is strictly **read-only at the protocol level**: no serial commands or hardware actuation. The optional local capture feature writes only user-requested BENCH files.
+- No application feature writes to `data/experiments/manifest.json`; experimental claims require independent scientific protocol, safety review and evidence.
+
+## 5 — Windows development checks
 
 ```powershell
 python -m pip install -r desktop/requirements.txt
-python -m desktop
-```
-
-Build on Windows:
-
-```powershell
-python tools/generate_desktop_icon.py
-python -m PyInstaller --noconfirm --clean --onefile --windowed --name "DPN-PhaseGate" --icon build/phasegate.ico --add-data "data;data" launch_phasegate.py
-```
-
-The resulting application lives at `dist/DPN-PhaseGate.exe`.
-
-## Native screens
-
-| Desktop screen | Working functionality |
-|---|---|
-| Command Center | Animated DPN orbital emblem, metrics, signal trace and navigation |
-| Station Matrix | Independent A/B station cards, mock telemetry, real readiness disclosure |
-| Signal Analytics | Hand-painted waveform plots and deterministic demo values |
-| Research Vault | Real bundled primary-literature bibliography with source opening |
-| Experiment Ledger | Read-only real-run count, explicit evidence and control requirements |
-| System Diagnostics | Qt/Python/OS information, integrity check and labeled mock JSON export |
-| Preferences | Actual animation toggle, data refresh interval and demo export |
-
-## Security and data integrity
-
-- Desktop application uses **no HTTP server**, open TCP ports, accounts or background services.
-- Read-only bundled scientific data is included via PyInstaller `--add-data "data;data"`.
-- Actual run manifest remains unchanged; export explicitly requires `SYNTHETIC_` names and provenance.
-- A validated Python/QPainter desktop UI does not demonstrate matter teleportation.
-- No live USB connection, physical hardware control, device drivers or camera capture.
-- Before commercial/proprietary redistribution, evaluate the LGPL obligations of Qt/PySide6 and dependency terms; the project does not grant others a license to DPN intellectual property.
-
-## Quality
-
-```powershell
 python tools/validate_research.py
 python -m unittest discover -s tests -v
 python tools/validate_readme.py
-python launch_phasegate.py --smoke-test --screenshot build/test.png
+python -m desktop
 ```
 
-GitHub Actions runs on a Windows host, creates a native UI screenshot, packages a true windowed single-file EXE, and performs a packaged self-test before publishing download artifacts.
+Firmware syntax validation runs in CI without requiring a physical Pico, but **does not prove electrical compatibility or correct sensor operation**.
+
+## 6 — Development order after v0.7
+
+1. Confirm exact board revisions, select safe rated power and obtain qualified hardware safety review.
+2. Bench-test a single approved load cell with documented reference masses and noise/linearity measurements.
+3. Add a separate validated calibration profile UI with explicit units, measured uncertainty and expiry, without changing original raw records.
+4. Add separate local camera capture and device clock-offset characterization.
+5. Continue falsifiable physics hypotheses and preregistered sham controls independently of the station interface.
