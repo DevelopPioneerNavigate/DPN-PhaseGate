@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+.env.*
+scratch/
+tmp/
+data/raw-local/
+*.key
+*.secret

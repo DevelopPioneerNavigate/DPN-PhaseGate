@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "hypotheses": [
+    {
+      "id": "H-PG-001",
+      "title": "Isolated paired stations show no macroscopic transfer in null trials",
+      "status": "proposed",
+      "source_ids": [
+        "SRC-001",
+        "SRC-002",
+        "SRC-003"
+      ],
+      "statement": "In isolated instrumented stations without ordinary transport, controlled null trials will show no verified material transfer.",
+      "falsifier": "Blind, independently repeated and calibrated verification of a marked intact object's transfer with conventional explanations excluded.",
+      "prediction": "No genuine object appears at B during sham runs; characterize sensor false positives and drift.",
+      "limitations": "Null control establishes measurement reliability, not a portal mechanism."
+    },
+    {
+      "id": "H-PG-002",
+      "title": "Quantum teleportation is not matter teleportation",
+      "status": "literature_supported",
+      "source_ids": [
+        "SRC-001",
+        "SRC-002"
+      ],
+      "statement": "Standard quantum teleportation moves quantum-state information rather than the original macroscopic object.",
+      "falsifier": "Peer-validated physical transport of original macroscopic matter in a standard quantum teleportation protocol.",
+      "prediction": "Protocol utilizes entanglement and classical communication, without aperture-based object transfer.",
+      "limitations": "Terminology distinction, not a new physical apparatus hypothesis."
+    }
+  ]
+}
