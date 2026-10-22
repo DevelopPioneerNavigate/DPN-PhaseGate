@@ -12,6 +12,8 @@ def main(argv=None):
     parser.add_argument("--screenshot", type=Path, default=None)
     parser.add_argument("--screenshot-evidence", type=Path, default=None,
                         help="capture Calibration and Evidence Lab native page")
+    parser.add_argument("--screenshot-optical", type=Path, default=None,
+                        help="capture opt-in Optical Evidence Lab without opening any camera")
     parser.add_argument("--screenshot-hardware", type=Path, default=None,
                         help="capture the real USB Hardware Lab on the Qt native interface")
     args = parser.parse_args(argv)
@@ -78,6 +80,20 @@ def main(argv=None):
                         raise OSError("Qt calibration screenshot empty")
                 except (OSError, ValueError):
                     result = 5
+            if args.screenshot_optical:
+                try:
+                    window.navigate("Optical Evidence")
+                    application.processEvents()
+                    args.screenshot_optical.parent.mkdir(parents=True, exist_ok=True)
+                    if not window.grab().save(str(args.screenshot_optical), "PNG"):
+                        raise OSError("Optical page screenshot not saved")
+                    if args.screenshot_optical.stat().st_size < 1000:
+                        raise OSError("Optical page screenshot empty")
+                    # No camera preview or recording is started by screenshots.
+                    if window.optical_lab.workers:
+                        raise OSError("Camera opened during native screenshot smoke test")
+                except (OSError,ValueError):
+                    result = 7
             window.close()
             application.exit(result)
         QTimer.singleShot(900, complete)

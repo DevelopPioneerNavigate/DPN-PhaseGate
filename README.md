@@ -41,6 +41,18 @@ The complete research library now has visual guides, labelled concept blueprints
 
 **[Open the complete PhaseGate Visual Research Atlas →](docs/VISUAL-ATLAS.md)**
 
+### PG-01 v1.0 — Optical Evidence & Timebase Lab
+
+<img src="assets/pg01-optical-evidence-v1.0.svg" width="100%" alt="DPN v1.0 optical system architecture diagram of two opt-in local USB cameras, Qt workstation and hashed bench evidence"/>
+
+**New tenth native workstation:** Select and explicitly authorize independent USB camera previews for Stations A/B, start and stop local JPEG still-frame recordings only with separate permission, and verify frame-by-frame SHA-256 evidence plus independent host-arrival jitter. No automatic webcam access, uploading, audio, or scientific promotion of bench records.
+
+| Download standalone native EXE | Guided camera setup | Auditable evidence source |
+|---|---|---|
+| **[PhaseGate v1.0 Windows builds](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/native-windows-exe.yml)** | [Optical Evidence Lab v1.0](docs/engineering/PG01-OPTICAL-EVIDENCE-v1.0.md) | [Source code / optical integrity checker](desktop/optical.py) |
+
+**Known limits:** Host camera timestamps occur **after** camera `read()`, not at exposure. Driver buffering, camera clock offsets and actual simultaneity remain **unknown**. JPEG recordings are `BENCH_OPTICAL_*` files, **not verified teleportation evidence**. Camera and wiring have not been physically validated by software tests.
+
 ### AURORA v0.9 — A Completely Reimagined Native Windows Experience
 
 **A genuine native Qt application, completely redesigned** around DPN's research identity: a luminous 3D-style orbital *concept artwork*, modern mission control, scientific readiness rail, expressive cyan/violet engineering panels, fast page search, immersive fullscreen mode, and stronger styling across the Hardware and Evidence Labs.
