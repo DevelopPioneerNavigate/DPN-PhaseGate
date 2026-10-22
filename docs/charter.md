@@ -1,4 +1,13 @@
 # PhaseGate Program Charter | PG-CH-001
+
+**[Visual Atlas](VISUAL-ATLAS.md) · [Roadmap](roadmap.md) · [Research questions](physics/questions.md)**
+
+<img src="../assets/phasegate-evidence-ladder.svg" width="100%" alt="Research charter: north-star versus present evidence"/>
+
+> **Visual interpretation:** Our north-star is independently verified intact material transport. The current program documents a question—not a demonstrated mechanism.
+
+---
+
 **Owner:** DPN Technology · **Inception:** 2026-10-22 · **Status:** Research stage
 ## North-star outcome
 The *same* independently marked macroscopic object physically enters gateway A and appears at isolated gateway B, then the reverse, without ordinary transit, duplication, substitution, or concealed mechanical movement. This goal has **no experimentally demonstrated method** as of this review and must not be presented as feasible on a schedule.
