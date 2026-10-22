@@ -20,6 +20,7 @@ from PySide6.QtCore import qVersion
 from desktop.model import VERSION, MODE, DISCLAIMER, DOC_BASE, inventory, literature, simulated_samples, export_demo
 from desktop.widgets import C, Surface, Metric, OrbitalGate, Station, TrendChart, text_label, panel_layout
 from desktop.hardware_page import HardwareLab
+from desktop.evidence_page import EvidenceLab
 
 
 def ui_button(text, secondary=False):
@@ -133,6 +134,7 @@ class ResearchWindow(QMainWindow):
         rail_col.addSpacing(12)
         for name,ico in [
             ("Command Center","◈"),("Station Matrix","◎"),("Hardware Lab","▦"),
+            ("Calibration & Evidence","◇"),
             ("Signal Analytics","⌁"),("Research Vault","▣"),
             ("Experiment Ledger","▤"),("System Diagnostics","⚙"),
             ("Preferences","◇"),
@@ -172,6 +174,7 @@ class ResearchWindow(QMainWindow):
             ("Command Center",self.overview_page()),
             ("Station Matrix",self.stations_page()),
             ("Hardware Lab",self.hardware_page()),
+            ("Calibration & Evidence",self.evidence_page()),
             ("Signal Analytics",self.analytics_page()),
             ("Research Vault",self.research_page()),
             ("Experiment Ledger",self.experiments_page()),
@@ -304,6 +307,10 @@ class ResearchWindow(QMainWindow):
     def hardware_page(self):
         self.hardware_lab = HardwareLab()
         return self.hardware_lab
+
+    def evidence_page(self):
+        self.evidence_lab=EvidenceLab()
+        return self.evidence_lab
 
     def analytics_page(self):
         host,col=self.page("DIGITAL SIGNAL INTELLIGENCE","SIGNAL ANALYTICS",
@@ -559,6 +566,8 @@ class ResearchWindow(QMainWindow):
     def closeEvent(self, event):
         if hasattr(self, "hardware_lab"):
             self.hardware_lab.shutdown()
+        if hasattr(self,"evidence_lab"):
+            self.evidence_lab.shutdown()
         super().closeEvent(event)
 
 
