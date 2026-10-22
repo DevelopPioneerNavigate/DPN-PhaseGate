@@ -41,6 +41,22 @@ The complete research library now has visual guides, labelled concept blueprints
 
 **[Open the complete PhaseGate Visual Research Atlas →](docs/VISUAL-ATLAS.md)**
 
+### PG-01 Research Console v0.5
+
+**Now implemented:** a responsive, locally running DPN-themed demonstration console. It shows two **simulated** measurement stations, a moving synthetic chart, project record counts, demo audit events and a clearly marked synthetic-only export. No hardware, cameras, transfer events or actual experiment logging are connected.
+
+<img src="assets/pg01-hardware-v0.5.svg" width="100%" alt="Conceptual paired load-cell station hardware architecture with USB connections to a local PC"/>
+
+| Run on Windows | Engineering specifications | Electrical signal drawing |
+|---|---|---|
+| **[Double-click START_PHASEGATE_CONSOLE.bat](START_PHASEGATE_CONSOLE.bat)** (after cloning) | [PG-01 prototype parts and sizing](docs/engineering/PG01-PROTOTYPE-SPECS-v0.5.md) | [Proposed HX711 / Pico 2 signal map](assets/pg01-interface-pinout-v0.5.svg) |
+
+For a terminal launch (Python 3.12+, no extra packages):
+
+    python -m console.server --port 8765
+
+Then open **http://127.0.0.1:8765**. This is a local, read-only synthetic demonstration; don't expose it to the internet. **[Full console instructions →](console/README.md)**
+
 ### Pick your path
 
 | **01 / EXPLORE** | **02 / ENGINEER** | **03 / VERIFY** |

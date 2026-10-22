@@ -58,3 +58,14 @@ For **actual equipment photographs**, photographs of variants, schematics and me
 ### Next gate
 
 Finalize the [PG-01 Implementation Plan](PG01-IMPLEMENTATION-PLAN.md) scope and draft a signed independent instrument/safety design review **before** hardware construction.
+
+
+## 07 · PG-01 v0.5 electronic architecture
+
+<img src="../../assets/pg01-hardware-v0.5.svg" width="100%" alt="Two proposed sensor endpoints and a separate local research PC"/>
+
+## 08 · Proposed data-clock signals only
+
+<img src="../../assets/pg01-interface-pinout-v0.5.svg" width="100%" alt="Suggested Pico GP14 DOUT and GP15 SCK logic pins; all power connections pending safety verification"/>
+
+**Detailed components, indicative vendor costs, provisional sizes and electrical limits:** [PG-01 Prototype Specifications v0.5](PG01-PROTOTYPE-SPECS-v0.5.md). Signals are an unapproved interface proposal; do not wire power without an exact board revision and qualified review.
