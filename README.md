@@ -6,8 +6,8 @@
 
 ## Research navigation
 - [Program charter](docs/charter.md) · [Roadmap](docs/roadmap.md) · [Physics evidence](docs/physics/baseline.md) · [Feasibility register](docs/physics/feasibility.md)
-- [Research questions](docs/physics/questions.md) · [Literature review rules](docs/physics/review-protocol.md)
-- [Engineering requirements](docs/engineering/requirements.md) · [PG-01 instrumentation](docs/engineering/PG-01.md)
+- [Research questions](docs/physics/questions.md) · [Literature review rules](docs/physics/review-protocol.md) · [2025 quantum-wormhole scrutiny](docs/physics/2025-wormhole-scrutiny.md)
+- [Engineering requirements](docs/engineering/requirements.md) · [PG-01 instrumentation](docs/engineering/PG-01.md) · [PG-01 architecture](docs/engineering/PG-01-architecture.md) · [Equipment selection register](docs/engineering/PG-01-bom.csv)
 - [Safety policy](docs/safety/safety.md) · [Risk register](docs/safety/risks.md) · [Decision register](docs/governance/decisions.md)
 - [Research data registry](data/README.md) · [Sources](data/literature/sources.json) · [Hypotheses](data/hypotheses/hypotheses.json) · [Experiment manifest](data/experiments/manifest.json)
 
@@ -29,12 +29,25 @@
 5. Run: python tools/validate_research.py and python -m unittest discover -s tests -v.
 6. Open a pull request; validation is structural, **not proof of scientific feasibility**.
 
+## Research v0.2 additions (proposed)
+- New 2025 paper correction, peer-reviewed critique and author response: SRC-007–009. These do **not** demonstrate a physical portal.
+- PG-01 pair-station design, unselected component register, blinded null-trial draft (not authorized), and calibration procedures.
+- Offline, standard-library-only calibration utility with synthetic-only fixtures. It cannot prove object transfer.
+- Detailed safety and evidence-chain criteria; do not commit mock experiments to the real manifest.
+
+Calibration commands:
+```sh
+python tools/pg01_calibration.py calibrate examples/SYNTHETIC-pg01-calibration.csv
+python tools/pg01_calibration.py sha256 examples/SYNTHETIC-pg01-calibration.csv
+```
+
 ## Primary literature
 - [Bennett et al., PRL 1993](https://doi.org/10.1103/PhysRevLett.70.1895) — quantum-state teleportation.
 - [IBM Quantum learning module](https://qiskit.qotlabs.org/learning/courses/basics-of-quantum-information/entanglement-in-action/quantum-teleportation) — information ≠ physical matter.
 - [Gao/Jafferis/Wall, JHEP 2017](https://doi.org/10.1007/JHEP12(2017)151) — theoretical wormholes in a specific model.
 - [Jafferis et al., Nature 2022](https://doi.org/10.1038/s41586-022-05424-3) — quantum-processor wormhole-like dynamics.
 - [Caltech experiment Q&A](https://inqnet.caltech.edu/wormhole2022/) — explicitly no physical spacetime rupture.
+- [Nature 2025 critique](https://doi.org/10.1038/s41586-025-08939-7) and [author reply](https://doi.org/10.1038/s41586-025-08995-z) — interpretation remains scientifically debated.
 - [NASA wormhole explainer](https://science.gsfc.nasa.gov/attic/cosmicopia.gsfc.nasa.gov/qa_sp_sl.html) — no evidence for physical wormholes or method to construct one.
 
 **Governance:** Private scientific notebook, immutable research history through Git commits. Do not commit source PDFs without redistribution rights, secrets, sensitive data, or unreviewed hazardous plans.
