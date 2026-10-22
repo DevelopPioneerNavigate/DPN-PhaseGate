@@ -16,6 +16,7 @@ PAGE_PATHS = (
     "README.md",
     "docs/VISUAL-ATLAS.md",
     "docs/engineering/PG-01-BLUEPRINTS.md",
+    "docs/engineering/PG01-CALIBRATION-AND-WITNESS-v0.8.md",
     "docs/physics/PHYSICS-COMMAND.md",
     "docs/physics/EVIDENCE-WORKFLOW.md",
     "docs/safety/SAFETY-COMMAND.md",

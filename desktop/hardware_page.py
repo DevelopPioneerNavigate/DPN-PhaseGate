@@ -18,6 +18,8 @@ from PySide6.QtWidgets import (
 
 from desktop.widgets import Surface, panel_layout, text_label, C
 from desktop.hardware import BenchRecorder, SerialReader, available_ports
+from desktop.calibration import CalibrationError, load_profile, estimate
+from desktop.timing_quality import CadenceHealth
 from desktop.window_helpers import button
 
 
@@ -35,6 +37,9 @@ class HardwareLab(QWidget):
         self.status_labels = {}
         self.count_labels = {}
         self.details = {}
+        self.profiles = {"A": None, "B": None}
+        self.estimate_labels = {}
+        self.cadence = {"A": CadenceHealth(), "B": CadenceHealth()}
         self._build()
         self.refresh_ports()
         self.timer=QTimer(self)
@@ -49,7 +54,7 @@ class HardwareLab(QWidget):
         col.addWidget(text_label("PG-01  /  REAL USB ACQUISITION  /  BENCH ONLY",11,"cyan",True))
         col.addWidget(text_label("HARDWARE LAB",31,"text",True))
         col.addWidget(text_label("Connect approved, independently inspected Pico 2 sensor endpoints."
-                                 " Raw counts are uncalibrated measurements, NOT grams or transport events.",12))
+                                 " Raw counts are real only when connected; optional profile estimates are UNREVIEWED.",12))
         warn=Surface("hardwareWarning")
         v=panel_layout(warn,16,7)
         v.addWidget(text_label("LIVE USB DATA ≠ VERIFIED EXPERIMENT",14,"amber",True))
@@ -96,6 +101,12 @@ class HardwareLab(QWidget):
             d=text_label("No board connected. No calibration. No claim of transfer.",11)
             box.addWidget(d)
             self.details[station]=d
+            profile_btn=button("LOAD BENCH CALIBRATION",True)
+            profile_btn.clicked.connect(lambda checked=False,s=station:self.load_station_profile(s))
+            box.addWidget(profile_btn)
+            estimated=text_label("NO PROFILE — RAW COUNTS ONLY",11,"amber",True)
+            box.addWidget(estimated)
+            self.estimate_labels[station]=estimated
             pair.addWidget(card,1)
         col.addLayout(pair)
         info=Surface("hardwareInfo")
@@ -103,6 +114,9 @@ class HardwareLab(QWidget):
         box.addWidget(text_label("RELIABILITY & FRAME INTEGRITY",13,"cyan",True))
         self.overview=text_label("A: offline  |  B: offline  |  Queue: idle",12)
         box.addWidget(self.overview)
+        self.timing_overview=text_label(
+            "Station A / B: timing samples unavailable. Device clocks NOT synchronized.",11,"amber")
+        box.addWidget(self.timing_overview)
         box.addWidget(text_label("Stale after 2.5 seconds without valid frames. "
                                 "XOR detects some accidental corruption, not tampering. "
                                 "Clocks are NOT synchronized between stations.",11))
@@ -126,6 +140,27 @@ class HardwareLab(QWidget):
         rc.addWidget(self.record_label)
         col.addWidget(record_panel)
         col.addStretch()
+
+    def load_station_profile(self, station):
+        filename,_=QFileDialog.getOpenFileName(
+            self,"Load unreviewed bench profile for Station "+station,
+            "","Bench Calibration JSON (*.json)")
+        if not filename:
+            return
+        try:
+            profile=load_profile(filename,station)
+        except (CalibrationError,OSError) as exc:
+            QMessageBox.warning(self,"Invalid or expired calibration profile",str(exc))
+            self.profiles[station]=None
+            self.estimate_labels[station].setText("PROFILE REJECTED — RAW COUNTS ONLY")
+            return
+        self.profiles[station]=profile
+        self.estimate_labels[station].setText(
+            "PROFILE LOADED (UNREVIEWED); awaiting live RAW counts")
+        QMessageBox.information(self,"Calibration disclosure",
+            "Loaded a station-matched, in-date BENCH regression profile. "
+            "Mass displays will be marked ESTIMATE / NOT CERTIFIED. "
+            "Calibration uncertainty is not established by curve fitting alone.")
 
     def refresh_ports(self):
         try:
@@ -164,6 +199,7 @@ class HardwareLab(QWidget):
         self.status_labels[station].setText("CONNECTING")
         self.count_labels[station].setText("WAITING")
         self.last_message[station]="Port opening..."
+        self.cadence[station]=CadenceHealth()
         reader.start()
 
     def disconnect_station(self,station,quiet=False):
@@ -196,6 +232,20 @@ class HardwareLab(QWidget):
             if event.kind=="sample":
                 self.recv[station]+=1
                 self.count_labels[station].setText(f"{event.sample.raw_counts:+d} counts")
+                self.cadence[station].observe(
+                    event.sample.device_uptime_ms,event.host_monotonic_ns)
+                profile=self.profiles[station]
+                if profile is not None:
+                    try:
+                        mass=estimate(profile,event.sample.raw_counts,station)
+                        self.estimate_labels[station].setText(
+                            f"BENCH ESTIMATE: {mass['estimate_g']:.4f} g • "
+                            "UNREVIEWED / NOT CERTIFIED")
+                    except CalibrationError as exc:
+                        self.estimate_labels[station].setText(
+                            "ESTIMATE SUPPRESSED: "+str(exc)[:95])
+                else:
+                    self.estimate_labels[station].setText("RAW COUNTS ONLY — NO PROFILE")
                 self.status_labels[station].setText("LIVE USB / RAW")
                 self.last_message[station]=f"Sequence {event.sample.sequence}, Pico uptime {event.sample.device_uptime_ms} ms"
             elif event.kind=="connection":
@@ -220,6 +270,16 @@ class HardwareLab(QWidget):
             f"{self.readers[station].gaps if station in self.readers else 0} missing"
             for station in ("A","B"))
         self.overview.setText(line+f"   |   pending UI frames: {self.events.qsize()}")
+        parts=[]
+        for station in ("A","B"):
+            report=self.cadence[station].summary()
+            if report["interval_samples"] < 3:
+                parts.append(station+": CLOCK UNCHARACTERIZED")
+            else:
+                parts.append(f"{station}: host-arrival jitter "
+                             f"{report['arrival_jitter_ms']:.1f} ms")
+        self.timing_overview.setText(
+            "  |  ".join(parts)+"  /  UNSYNCHRONIZED CLOCKS — NO CROSS-STATION TIMING CLAIMS")
 
     def start_recording(self):
         if self.recording is not None:

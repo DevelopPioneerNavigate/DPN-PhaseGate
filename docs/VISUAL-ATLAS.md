@@ -6,6 +6,12 @@
 
 > **Scientific status:** Physical two-way transport of intact objects is **not demonstrated**. PG-01 is a conceptual *measurement* station design, not a working portal.
 
+## NEW / Calibration and independent witness evidence
+
+<img src="../assets/pg01-calibration-evidence-v0.8.svg" width="100%" alt="DPN PhaseGate v0.8 metrology, witness recordings and bench data provenance"/>
+
+**[Explore the guided Calibration & Witness Evidence Lab →](engineering/PG01-CALIBRATION-AND-WITNESS-v0.8.md)**. Estimates remain unreviewed and the independent witness data stay out of the real experiment manifest.
+
 ## 01 — The engineering station concept
 
 <img src="../assets/pg01-blueprint-front.svg" alt="PG-01 front elevation conceptual measurement enclosure and logger" width="100%">

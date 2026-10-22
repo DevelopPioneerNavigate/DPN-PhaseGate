@@ -10,6 +10,8 @@ def main(argv=None):
     parser.add_argument("--smoke-test", action="store_true")
     parser.add_argument("--self-test", action="store_true")
     parser.add_argument("--screenshot", type=Path, default=None)
+    parser.add_argument("--screenshot-evidence", type=Path, default=None,
+                        help="capture Calibration and Evidence Lab native page")
     parser.add_argument("--screenshot-hardware", type=Path, default=None,
                         help="capture the real USB Hardware Lab on the Qt native interface")
     args = parser.parse_args(argv)
@@ -55,6 +57,17 @@ def main(argv=None):
                         raise OSError("Qt Hardware Lab screenshot is empty")
                 except (OSError, ValueError):
                     result = 4
+            if args.screenshot_evidence:
+                try:
+                    window.navigate("Calibration & Evidence")
+                    application.processEvents()
+                    args.screenshot_evidence.parent.mkdir(parents=True, exist_ok=True)
+                    if not window.grab().save(str(args.screenshot_evidence), "PNG"):
+                        raise OSError("Qt Calibration & Evidence screenshot missing")
+                    if args.screenshot_evidence.stat().st_size < 1000:
+                        raise OSError("Qt calibration screenshot empty")
+                except (OSError, ValueError):
+                    result = 5
             window.close()
             application.exit(result)
         QTimer.singleShot(900, complete)
