@@ -17,7 +17,7 @@ v1.0 stores operator-consented still frames (at most four images per second) wit
 3. Open the **Reference Events** workstation in the native application (or press Ctrl+K and search). Select A and B archive folders; select a broad image region containing the reference stimulus (CENTER, FULL, TOP, BOTTOM, LEFT, RIGHT).
 4. Adjust minimum brightness rise in grayscale levels, default 22. The algorithm uses the **first five frames as dark baseline** with a median/MAD noise estimate and requires at least **two sustained bright frames**. If event timing is too early, baseline is saturated, flashes are ambiguous or no sustained change occurs, the result is *inconclusive*.
 5. Choose **Analyze Two Bench Captures**. The background worker verifies the SHA-256 of every source JPEG and its original manifest before calculating brightness. It then plots each channel's grayscale trace by **original frame index**. The chart does not use a fraudulent exposure-time axis.
-6. If both transitions are found, the report gives a **B-minus-A host-receipt interval bracket** between the last dark and first bright stored frames. If not, it reports inconclusive detection.
+6. The B-minus-A comparison is **disabled by default**. It can be requested only after the operator explicitly declares that both captures came from the **same host without reboot**, and the stored monotonic windows overlap. Even then, it is merely an unverified host-receipt interval bracket, not an exposure-time estimate. Without the declaration, the system withholds cross-station timing; without both transitions, it reports inconclusive detection.
 7. Optionally export a new `BENCH_REFERENCE_*.json` and companion SHA-256. This does **not** modify original optical evidence or the approved experiment manifest.
 
 ## What is computed (and what is not)
@@ -32,7 +32,7 @@ v1.0 stores operator-consented still frames (at most four images per second) wit
 | Physical event simultaneity | **UNKNOWN** | No ground-truth common event identity or camera latency calibration |
 | Teleportation | **NO RESULT** | Light-flash reference alone cannot establish matter transfer |
 
-A report of `[−300, +300] ms` (example only) is a **host receipt interval**, not a claim that the photons or physical objects moved between stations in that interval. Software alone cannot bound unknown camera exposure timing, rolling shutter delay, USB buffers or mechanical response.
+A report of `[−300, +300] ms` (example only) is a **host receipt interval** available only after the operator confirms a shared host epoch, not a claim that the photons or physical objects moved between stations in that interval. Software alone cannot bound unknown camera exposure timing, rolling shutter delay, USB buffers or mechanical response.
 
 ## Integrity and retention
 
