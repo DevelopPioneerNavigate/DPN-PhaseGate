@@ -189,7 +189,7 @@ def build_review(source_a,source_b,region_a="CENTER",region_b="CENTER",contrast=
 def save_review(review,output):
     """Exclusive-write analysis separate from originals and real experiment records."""
     path=Path(output)
-    if not path.name.startswith("BENCH_REFERENCE_") or path.suffix.lower()!="json":
+    if not path.name.startswith("BENCH_REFERENCE_") or path.suffix.lower()!=".json":
         raise ReferenceError("analysis filename must be BENCH_REFERENCE_*.json")
     if review.get("comparison",{}).get("schema")!=SCHEMA:
         raise ReferenceError("cannot save unknown analysis schema")
