@@ -41,6 +41,18 @@ The complete research library now has visual guides, labelled concept blueprints
 
 **[Open the complete PhaseGate Visual Research Atlas →](docs/VISUAL-ATLAS.md)**
 
+### PG-01 v0.8 — Calibration & Witness Evidence Lab
+
+<img src="assets/pg01-calibration-evidence-v0.8.svg" width="100%" alt="DPN technology visual engineering map showing USB sensor counts, station calibration, independent witness files and separate bench records"/>
+
+**New native ninth screen:** create versioned per-station reference-mass calibration profiles, load them for range-limited **UNREVIEWED BENCH ESTIMATE** displays in Hardware Lab, review USB arrival-cadence problems and inventory independently recorded witness footage by SHA-256 *without importing the video*. Full Qt/Windows smoke coverage and tests.
+
+| Get the Windows EXE | Read the visual guide | Test safely |
+|---|---|---|
+| [Latest successful PhaseGate v0.8 EXE build](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/native-windows-exe.yml) | [PG-01 Calibration & Witness v0.8](docs/engineering/PG01-CALIBRATION-AND-WITNESS-v0.8.md) | [Synthetic-only reference CSV fixture](examples/SYNTHETIC-pg01-v0.8-reference-worksheet.csv) |
+
+**No physical device, actual reference-mass calibration, clock synchronization or matter teleportation was verified during software development.** Existing command-center graphics remain synthetic and never become real experiment records.
+
 ### PG-01 v0.7 — USB Hardware Lab / Real Raw Acquisition
 
 **Now developed:** The native Windows EXE includes an eighth screen, **Hardware Lab**, where an operator can explicitly select two independent USB serial ports and view actual **RAW HX711 ADC counts** transmitted from properly inspected Raspberry Pi Pico 2 stations. This is a measurement/monitoring capability — not teleportation.
