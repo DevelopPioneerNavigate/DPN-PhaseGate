@@ -6,10 +6,10 @@ from PySide6.QtGui import QColor, QPen, QBrush, QPainter, QFont, QConicalGradien
 from PySide6.QtWidgets import QFrame, QLabel, QVBoxLayout, QHBoxLayout, QWidget, QSizePolicy
 
 
-C = {"bg": "#090E1B", "surface": "#111C30", "surface2": "#192741",
-     "border": "#253853", "violet": "#B282FF", "cyan": "#4EDBEE",
-     "text": "#EAF4FF", "muted": "#8BA4C0", "amber": "#FFBE84",
-     "green": "#56DBB3"}
+C = {"bg": "#0A0F1C", "surface": "#18243A", "surface2": "#1C3049",
+     "border": "#354668", "violet": "#BC8DFF", "cyan": "#64DFF2",
+     "text": "#F1F6FF", "muted": "#A2B4D1", "amber": "#FFC392",
+     "green": "#6AE8C7"}
 
 
 def color(hexval, alpha=None):
@@ -38,8 +38,9 @@ class Surface(QFrame):
     def __init__(self, name="surface", parent=None):
         super().__init__(parent)
         self.setObjectName(name)
-        self.setStyleSheet("#%s {background: %s; border: 1px solid %s; border-radius: 17px;}"
-                           % (name, C["surface"], C["border"]))
+        self.setStyleSheet("#%s {background:qlineargradient(x1:0,y1:0,x2:1,y2:1,"
+                           "stop:0 #1B2942, stop:1 #111C30); "
+                           "border:1px solid #354765;border-radius:17px;}" % name)
 
 
 class Metric(Surface):
@@ -55,96 +56,25 @@ class Metric(Surface):
         col.addStretch()
 
 
-class OrbitalGate(QWidget):
-    """Original painted portal-shaped measurement emblem, not a hardware depiction."""
+from desktop.aurora import GateField
+
+
+class OrbitalGate(GateField):
+    """Luminous native field illustration; entirely synthetic concept art."""
     def __init__(self, station="A", compact=False, parent=None):
         super().__init__(parent)
-        self.station = station
-        self.compact = compact
-        self.motion = True
-        self.angle = 0
-        self.setMinimumHeight(155 if compact else 240)
-        self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
-        self.timer = QTimer(self)
-        self.timer.setInterval(33)
-        self.timer.timeout.connect(self.advance)
-        self.timer.start()
-
-    def set_motion(self, value: bool):
-        self.motion = bool(value)
-        if self.motion:
-            self.timer.start()
-        else:
-            self.timer.stop()
-        self.update()
-
-    def advance(self):
-        self.angle = (self.angle + .47) % 360
-        self.update()
-
-    def sizeHint(self):
-        return QSize(340, 260)
-
-    def paintEvent(self, event):
-        p = QPainter(self)
-        p.setRenderHint(QPainter.RenderHint.Antialiasing)
-        w,h = self.width(),self.height()
-        radius = min(w * .33, h * .40)
-        cx,cy = w/2, h/2
-        base = C["cyan"] if self.station == "A" else C["violet"]
-        glow = color(base, 38)
-        radial = QRadialGradient(cx, cy, radius*1.30)
-        radial.setColorAt(0,color("#183355" if self.station=="A" else "#2A1D4A",225))
-        radial.setColorAt(.65,color(base,17))
-        radial.setColorAt(1,color(base,0))
-        p.setPen(Qt.PenStyle.NoPen)
-        p.setBrush(radial)
-        p.drawEllipse(QPointF(cx,cy),radius*1.35,radius*1.35)
-        for factor,thick,alpha in [(1.12,16,20),(1.045,11,34),(.98,3,185),(.84,1,83)]:
-            pen=QPen(color(base,alpha),thick)
-            p.setPen(pen)
-            p.setBrush(Qt.BrushStyle.NoBrush)
-            p.drawEllipse(QPointF(cx,cy),radius*factor,radius*factor)
-        p.save()
-        p.translate(cx,cy)
-        p.rotate(self.angle)
-        pen=QPen(color(base,245),4.4)
-        pen.setCapStyle(Qt.PenCapStyle.RoundCap)
-        p.setPen(pen)
-        for start,span in [(4,54),(95,36),(171,57),(280,31)]:
-            rr = radius*.99
-            p.drawArc(QRectF(-rr,-rr,rr*2,rr*2),int(start*16),int(span*16))
-        p.rotate(-self.angle*1.72)
-        p.setPen(QPen(color(base,135),1.3,Qt.PenStyle.DashLine))
-        rr=radius*.76
-        p.drawEllipse(QPointF(0,0),rr,rr)
-        for a in range(8):
-            theta=math.pi*a/4
-            r=radius*.89
-            x,y=math.cos(theta)*r,math.sin(theta)*r
-            p.setPen(Qt.PenStyle.NoPen)
-            p.setBrush(color(base,180))
-            p.drawEllipse(QPointF(x,y),2.8,2.8)
-        p.restore()
-        p.setPen(QPen(color("#A3D2FF",90),1))
-        p.drawLine(QPointF(cx-radius*.52,cy),QPointF(cx+radius*.52,cy))
-        p.drawLine(QPointF(cx,cy-radius*.52),QPointF(cx,cy+radius*.52))
-        p.setPen(color(C["text"]))
-        font=QFont("Segoe UI",18 if self.compact else 24,QFont.Weight.Bold)
-        p.setFont(font)
-        p.drawText(QRectF(cx-radius*.45,cy-22,radius*.90,44),Qt.AlignmentFlag.AlignCenter,self.station)
-        p.setFont(QFont("Consolas",8,QFont.Weight.DemiBold))
-        p.setPen(color(base))
-        p.drawText(QRectF(cx-80,cy+radius*.56,160,18),Qt.AlignmentFlag.AlignCenter,"SYNTHETIC // 00")
-        p.end()
+        self.station=station
+        self.scene_label="STATION "+station
+        self.compact=compact
+        self.setMinimumHeight(230 if not compact else 155)
 
 
 class Station(Surface):
     def __init__(self, name, label):
         super().__init__("station")
         self.name = name
-        self.setMinimumHeight(325)
-        col=panel_layout(self,18,3)
+        self.setMinimumHeight(365)
+        col=panel_layout(self,20,7)
         top=QHBoxLayout()
         top.addWidget(text_label("STATION  "+name,13,"text",True))
         top.addStretch()
@@ -158,7 +88,8 @@ class Station(Surface):
         self.mass=text_label("--.---- g",24,"cyan" if name=="A" else "violet",True)
         measure.addWidget(self.mass)
         col.addLayout(measure)
-        col.addWidget(text_label("NO DEVICE LINK  •  NOT A MEASUREMENT",10,"muted"))
+        col.addWidget(text_label("SCENE MODE  /  SYNTHETIC CONCEPT VISUALIZATION",10,"amber",True))
+        col.addWidget(text_label("No portal mechanism, live feed or physical transfer in this view.",10,"muted"))
 
 
 class TrendChart(QWidget):
@@ -176,9 +107,12 @@ class TrendChart(QWidget):
         p=QPainter(self)
         p.setRenderHint(QPainter.RenderHint.Antialiasing)
         w,h=self.width(),self.height()
-        p.fillRect(self.rect(),color("#0D172A"))
+        background=QLinearGradient(0,0,w,h)
+        background.setColorAt(0,color("#121F36"))
+        background.setColorAt(1,color("#1B2343"))
+        p.fillRect(self.rect(),QBrush(background))
         plot=QRectF(56,32,max(60,w-80),max(80,h-65))
-        p.setPen(QPen(color("#263C59"),1))
+        p.setPen(QPen(color("#334660",90),1))
         for n in range(6):
             y=plot.top()+n*plot.height()/5
             p.drawLine(QPointF(plot.left(),y),QPointF(plot.right(),y))
@@ -193,7 +127,10 @@ class TrendChart(QWidget):
             half=plot.height()*.5
             for ix,(channel,center,amp,col) in enumerate([
                 (0,42.,.7,C["cyan"]), (1,0.,.08,C["violet"])]):
-                p.setPen(QPen(color(col),2.4))
+                p.setPen(QPen(color(col,60),7.0))
+                # outer line glow underlays the crisp real sample trace
+                # introduced as a separate painter pass below
+                p.setPen(QPen(color(col),2.5))
                 last=None
                 for i,points in enumerate(self.samples):
                     value=points[channel]
@@ -217,6 +154,3 @@ class TrendChart(QWidget):
                    Qt.AlignmentFlag.AlignRight,"NO REAL SENSOR FEED")
         p.end()
 
-
-class Eyebrow(text_label.__class__ if False else QLabel):
-    pass

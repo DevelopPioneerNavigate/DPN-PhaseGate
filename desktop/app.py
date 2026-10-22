@@ -32,11 +32,21 @@ def main(argv=None):
         return 2
     window = ResearchWindow()
     window.setWindowIcon(app_icon())
-    window.resize(1440, 900)
+    if args.smoke_test or args.self_test:
+        window.resize(1600, 980)
     window.show()
     if args.smoke_test or args.self_test:
         def complete():
             result = 0
+            # Ensure every native page, including operator USB/evidence pages,
+            # remains navigable without needing hardware, dialogs, or network.
+            for page_name in window.pages:
+                window.navigate(page_name)
+                application.processEvents()
+                if window.pages[window.stack.currentIndex()] != page_name:
+                    result = 6
+            window.navigate("Command Center")
+            application.processEvents()
             if args.screenshot:
                 try:
                     args.screenshot.parent.mkdir(parents=True, exist_ok=True)

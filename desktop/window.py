@@ -9,7 +9,7 @@ import webbrowser
 from datetime import datetime, timezone
 from pathlib import Path
 from PySide6.QtCore import Qt, QTimer, QUrl, QSize
-from PySide6.QtGui import QColor, QIcon, QPainter, QPixmap, QDesktopServices
+from PySide6.QtGui import QColor, QIcon, QPainter, QPixmap, QDesktopServices, QKeySequence, QShortcut
 from PySide6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QFrame, QLabel, QPushButton,
     QVBoxLayout, QHBoxLayout, QGridLayout, QScrollArea, QStackedWidget,
@@ -21,6 +21,7 @@ from desktop.model import VERSION, MODE, DISCLAIMER, DOC_BASE, inventory, litera
 from desktop.widgets import C, Surface, Metric, OrbitalGate, Station, TrendChart, text_label, panel_layout
 from desktop.hardware_page import HardwareLab
 from desktop.evidence_page import EvidenceLab
+from desktop.aurora import AuroraHero, PipelineRail, CommandPalette
 
 
 def ui_button(text, secondary=False):
@@ -60,8 +61,8 @@ class ResearchWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("DPN PhaseGate — Research Operations // Native v"+VERSION)
-        self.resize(1470,920)
-        self.setMinimumSize(1080,720)
+        self.resize(1560,960)
+        self.setMinimumSize(1100,750)
         self.setObjectName("ResearchWindow")
         self.frame=180
         self.motion=True
@@ -77,42 +78,73 @@ class ResearchWindow(QMainWindow):
         self.timer.timeout.connect(self.tick)
         self.timer.start(1100)
         self.tick()
+        self._keyboard_shortcuts=[]
+        shortcut=QShortcut(QKeySequence("Ctrl+K"),self)
+        shortcut.activated.connect(self.open_palette)
+        self._keyboard_shortcuts.append(shortcut)
+        fullscreen=QShortcut(QKeySequence("F11"),self)
+        fullscreen.activated.connect(self.toggle_immersive)
+        self._keyboard_shortcuts.append(fullscreen)
+        for i,name in enumerate(self.pages[:9],1):
+            key=QShortcut(QKeySequence("Ctrl+"+str(i)),self)
+            key.activated.connect(lambda label=name:self.navigate(label))
+            self._keyboard_shortcuts.append(key)
 
     def apply_theme(self):
         self.setStyleSheet("""
-        QMainWindow {background: #080E1A; color: #E8F2FF;}
-        QWidget {font-family: 'Segoe UI'; color: #E8F2FF; font-size: 12px;}
-        QFrame#leftRail {background: #0D1728; border-right: 1px solid #293952;}
-        QFrame#topBar {background: #0C1527; border-bottom: 1px solid #2A3B55;}
-        QFrame#hero {background: qlineargradient(x1:0,y1:0,x2:1,y2:1,stop:0 #182543,stop:.6 #17213D,stop:1 #2A1B44);
-                     border: 1px solid #514C83; border-radius: 22px;}
-        QFrame#surface, QFrame#metric, QFrame#station {
-            background: #131E32; border:1px solid #293B57; border-radius: 17px;
-        }
-        QFrame#station {background: #142038; border: 1px solid #375471;}
-        QPushButton {border-radius: 9px; padding: 9px 15px; font-weight: 700;
-                     background: #8F67DD; border: 1px solid #AE85FC;}
-        QPushButton:hover {background: #A576FB; border-color: #D7BAFF;}
-        QPushButton[variant="secondary"] {background: #1D2A46; border: 1px solid #354967;}
-        QPushButton[variant="secondary"]:hover {background:#2A3A5C;border-color:#57CFE5;}
-        QPushButton[role="nav"] {background: transparent; border: 1px solid transparent;
-                    text-align: left; font-weight: 600; color: #9BB0CC; padding: 12px 16px;}
-        QPushButton[role="nav"]:checked {background: #252B50; border: 1px solid #63569B;
-                    border-left: 3px solid #B38CFF; color:#F3F7FF;}
-        QPushButton[role="nav"]:hover {background: #1E2A45; color: #F3F7FF;}
-        QScrollArea, QScrollArea > QWidget > QWidget {background: transparent; border: 0;}
-        QScrollBar:vertical {background:#101B2F;width:8px;}
-        QScrollBar::handle:vertical {background:#4D5F81;border-radius:4px;min-height:35px;}
-        QTableWidget {background:#111E33; alternate-background-color:#17253C;
-                      border:1px solid #2E4463;gridline-color:#24334B;selection-background-color:#544478;}
-        QHeaderView::section {background:#1C2C49; color:#BBCEE7;border:0;
-                              border-right:1px solid #293B56;padding:9px;font-weight:bold;}
-        QComboBox {background:#1C2B46; border:1px solid #3B5175; border-radius:7px;padding:8px;}
-        QComboBox QAbstractItemView {background:#17233B;color:#ECF3FF;selection-background-color:#55467B;}
-        QCheckBox {spacing:12px;font-size:13px;}
+        QMainWindow { background:#080E1A; }
+        QWidget { font-family:'Segoe UI';color:#EEF3FF;font-size:12px; }
+        QFrame#leftRail {background:qlineargradient(x1:0,y1:0,x2:0,y2:1,
+            stop:0 #0E1527,stop:1 #0B1020); border-right:1px solid #28354D;}
+        QFrame#topBar {background:#101729;border-bottom:1px solid #303C56;}
+        QFrame#pipelineRail {background:#141E33;border:1px solid #334665;border-radius:13px;}
+        QFrame#surface,QFrame#metric,QFrame#station {
+            background:qlineargradient(x1:0,y1:0,x2:1,y2:1,stop:0 #19253D,stop:1 #111B2F);
+            border:1px solid #334462; border-radius:16px;}
+        QFrame#station {border:1px solid #465E84;}
+        QFrame#missionDock {background:#172137;border:1px solid #38496B;border-radius:15px;}
+        QPushButton {border-radius:10px;padding:10px 17px;font-size:12px;font-weight:750;
+            background:#8362E7;border:1px solid #AB85F4;color:#FBF8FF;}
+        QPushButton:hover {background:#9B71F6;border-color:#C4A4FF;}
+        QPushButton:pressed {background:#6946BF;}
+        QPushButton:disabled {background:#242D42;color:#7787A5;border-color:#364459;}
+        QPushButton[variant="secondary"] {background:#232E49;border:1px solid #4B5875;}
+        QPushButton[variant="secondary"]:hover {background:#2B3A5B;border-color:#66CFED;}
+        QPushButton[role="nav"] {background:transparent;border:1px solid transparent;
+           border-radius:10px;text-align:left;color:#96AACC;
+           font-size:12px;font-weight:600;padding:11px 17px;}
+        QPushButton[role="nav"]:hover {background:#1C2945;color:#ECF5FF;}
+        QPushButton[role="nav"]:checked {background:qlineargradient(x1:0,y1:0,x2:1,y2:0,
+           stop:0 #352856,stop:1 #222A48);border:1px solid #595180;
+           border-left:3px solid #A87CFF;color:#F8F5FF;}
+        QScrollArea,QScrollArea > QWidget > QWidget {background:transparent;border:0;}
+        QScrollBar:vertical {width:8px;background:#131D30;border:0;}
+        QScrollBar::handle:vertical {background:#586A90;border-radius:4px;min-height:38px;}
+        QScrollBar::add-line:vertical,QScrollBar::sub-line:vertical {height:0px;}
+        QTableWidget {background:#141E32;alternate-background-color:#1B2A43;
+           border:1px solid #334A68;gridline-color:#2D3F59;selection-background-color:#514879;}
+        QHeaderView::section {background:#212E49;color:#BBD1EC;border:0;
+           border-right:1px solid #354966;padding:10px;font-weight:750;}
+        QComboBox,QLineEdit,QTextEdit,QSpinBox,QDoubleSpinBox {
+           background:#1C2A43;color:#EEF6FF;border:1px solid #435779;border-radius:9px;
+           padding:8px;selection-background-color:#7F5AC4;}
+        QComboBox:hover,QLineEdit:hover,QTextEdit:hover {border-color:#7B89B7;}
+        QComboBox QAbstractItemView {background:#1D2A43;color:#F0F5FF;
+           selection-background-color:#645393;}
+        QCheckBox {spacing:12px;font-size:12px;}
         QCheckBox::indicator {width:17px;height:17px;}
+        QDialog#commandPalette {background:#101B30;border:1px solid #695894;}
+        QLineEdit#paletteSearch {padding:14px;font-size:15px;border-color:#7F69C3;}
+        QListWidget#paletteList {background:#18243C;border:1px solid #344967;
+          font-size:13px;padding:5px;selection-background-color:#443D7A;}
+        QLabel#heroKicker {color:#6BE4F3;font-size:10px;font-weight:800;letter-spacing:2px;
+            border-radius:8px;background:#203A55;padding:7px 10px;}
+        QLabel#heroHeading {font-size:30px;font-weight:900;letter-spacing:-0.7px;color:#F1F6FF;
+            background:transparent;}
+        QLabel#heroDescription {font-size:13px;line-height:1.35;color:#C3D2EE;background:transparent;}
+        QLabel#heroMeta {font-size:10px;color:#94B8D1;font-weight:700;background:transparent;}
         """)
-
+        
     def build_ui(self):
         host=QWidget()
         self.setCentralWidget(host)
@@ -121,17 +153,19 @@ class ResearchWindow(QMainWindow):
         root.setSpacing(0)
         self.rail=QFrame()
         self.rail.setObjectName("leftRail")
-        self.rail.setFixedWidth(254)
+        self.rail.setFixedWidth(244)
         rail_col=QVBoxLayout(self.rail)
-        rail_col.setContentsMargins(19,28,17,24)
-        rail_col.setSpacing(7)
-        logo=text_label("◉  DPN",28,"text",True)
+        rail_col.setContentsMargins(15,27,13,20)
+        rail_col.setSpacing(5)
+        logo=text_label("◈  DPN / 09",25,"text",True)
         rail_col.addWidget(logo)
-        rail_col.addWidget(text_label("DEVELOP  •  PIONEER  •  NAVIGATE",9,"cyan",True))
-        rail_col.addSpacing(22)
-        rail_col.addWidget(text_label("PHASEGATE / RESEARCH",10,"violet",True))
+        rail_col.addWidget(text_label("D E V E L O P   /   P I O N E E R",9,"cyan",True))
+        rail_col.addWidget(text_label("N A V I G A T E",9,"violet",True))
+        rail_col.addSpacing(21)
+        rail_col.addWidget(text_label("WORKSPACE  /  RESEARCH OPERATIONS",10,"violet",True))
         rail_col.addWidget(heading_rule())
         rail_col.addSpacing(12)
+        rail_col.addWidget(text_label("  NAVIGATION  /  CTRL + K",10,"muted",True))
         for name,ico in [
             ("Command Center","◈"),("Station Matrix","◎"),("Hardware Lab","▦"),
             ("Calibration & Evidence","◇"),
@@ -139,6 +173,12 @@ class ResearchWindow(QMainWindow):
             ("Experiment Ledger","▤"),("System Diagnostics","⚙"),
             ("Preferences","◇"),
         ]:
+            if name=="Hardware Lab":
+                rail_col.addSpacing(7)
+                rail_col.addWidget(text_label("  INSTRUMENTS / EVIDENCE",9,"violet",True))
+            elif name=="System Diagnostics":
+                rail_col.addSpacing(7)
+                rail_col.addWidget(text_label("  SYSTEM & DISPLAY",9,"violet",True))
             btn=QPushButton(f"{ico}     {name}")
             btn.setProperty("role","nav")
             btn.setCheckable(True)
@@ -157,12 +197,17 @@ class ResearchWindow(QMainWindow):
         body_col.setSpacing(0)
         top=QFrame()
         top.setObjectName("topBar")
-        top.setFixedHeight(70)
+        top.setFixedHeight(65)
         row=QHBoxLayout(top)
         row.setContentsMargins(29,0,29,0)
-        row.addWidget(text_label("DPN   /   RESEARCH OPERATIONS   /   PHASEGATE",11,"muted",True))
+        row.addWidget(text_label("◈   MISSION CONTROL     /     PHASEGATE     /     PG-01",11,"muted",True))
         row.addStretch()
-        row.addWidget(text_label("●  SIM CHARTS / USB RAW LAB",11,"cyan",True))
+        quick=ui_button("⌕  GO TO…    Ctrl+K",True)
+        quick.setMinimumHeight(33)
+        quick.clicked.connect(self.open_palette)
+        row.addWidget(quick)
+        row.addSpacing(12)
+        row.addWidget(text_label("●  SIMULATED SCENE  /  RAW DATA ISOLATED",10,"cyan",True))
         self.clock=text_label("",11,"muted",True)
         row.addSpacing(21)
         row.addWidget(self.clock)
@@ -197,10 +242,10 @@ class ResearchWindow(QMainWindow):
         host=QWidget()
         host.setStyleSheet("background: transparent;")
         col=QVBoxLayout(host)
-        col.setContentsMargins(35,31,35,35)
-        col.setSpacing(19)
+        col.setContentsMargins(30,22,30,31)
+        col.setSpacing(14)
         col.addWidget(text_label(kicker,10,"cyan",True))
-        col.addWidget(text_label(title,31,"text",True))
+        col.addWidget(text_label(title,28,"text",True))
         col.addWidget(text_label(subtitle,12,"muted"))
         return host,col
 
@@ -213,65 +258,75 @@ class ResearchWindow(QMainWindow):
         return card
 
     def overview_page(self):
-        host,col=self.page("RESEARCH OPERATIONS // HOME","PHASEGATE / COMMAND CENTER",
-                           "A scientific investigation made tangible through precision instrumentation.")
-        hero=QFrame()
-        hero.setObjectName("hero")
-        hero.setMinimumHeight(260)
-        row=QHBoxLayout(hero)
-        row.setContentsMargins(30,18,16,18)
-        left=QVBoxLayout()
-        left.setSpacing(11)
-        left.addWidget(text_label("PROJECT PG–01   •   RESEARCH STAGE",11,"cyan",True))
-        left.addWidget(text_label("ENGINEERING THE\nUNKNOWN.",31,"text",True))
-        left.addWidget(text_label("Twin measurement stations. Recorded evidence. "
-                                  "Scientific rigor. No unsupported claims.",13))
-        buttons=QHBoxLayout()
-        first=ui_button("OPEN STATION MATRIX  →")
-        first.clicked.connect(lambda:self.navigate("Station Matrix"))
-        second=ui_button("RESEARCH VAULT",True)
-        second.clicked.connect(lambda:self.navigate("Research Vault"))
-        buttons.addWidget(first)
-        buttons.addWidget(second)
-        left.addLayout(buttons)
-        left.addStretch()
-        row.addLayout(left,3)
-        self.hero_gate=OrbitalGate("PG",compact=False)
-        row.addWidget(self.hero_gate,2)
-        self.gates.append(self.hero_gate)
-        col.addWidget(hero)
+        host,col=self.page(
+            "MISSION CONTROL  /  DPN SCIENTIFIC OPERATIONS",
+            "PHASEGATE  /  OVERVIEW",
+            "Precision instrumentation • Evidence integrity • Research readiness"
+        )
+        # Original cinematic native Qt scene, not a PNG and not browser content.
+        self.aurora_hero=AuroraHero()
+        self.aurora_hero.station_requested.connect(lambda:self.navigate("Hardware Lab"))
+        self.aurora_hero.evidence_requested.connect(lambda:self.navigate("Calibration & Evidence"))
+        col.addWidget(self.aurora_hero)
+        self.gates.append(self.aurora_hero.field)
         col.addWidget(self.warning())
+        timeline=PipelineRail()
+        col.addWidget(timeline)
+        status_title=QHBoxLayout()
+        status_title.addWidget(section_heading("PROGRAM INTELLIGENCE  /  RESEARCH NOT REALITY",
+                                               "Research at a glance"))
+        status_title.addStretch()
+        go=ui_button("EXPLORE ALL SYSTEMS   →",True)
+        go.clicked.connect(lambda:self.navigate("Station Matrix"))
+        status_title.addWidget(go)
+        col.addLayout(status_title)
         stat=QHBoxLayout()
+        stat.setSpacing(13)
         self.overview_metrics=[
-            Metric("REGISTERED SOURCES",self.count_text("sources"),"Research sources","cyan"),
-            Metric("HYPOTHESES",self.count_text("hypotheses"),"Research claims","violet"),
-            Metric("ACTUAL RUNS",self.count_text("experiments"),"Verified log count","text"),
-            Metric("OBJECT TRANSFER","NOT VERIFIED","No observed transport","amber"),
+            Metric("PRIMARY SOURCES",self.count_text("sources"),
+                   "Read-only literature index","cyan"),
+            Metric("HYPOTHESES",self.count_text("hypotheses"),
+                   "Scientific research registry","violet"),
+            Metric("REAL RUN RECORDS",self.count_text("experiments"),
+                   "Approved experiment manifest","text"),
+            Metric("MATTER TRANSFER","NOT VERIFIED",
+                   "No demonstrated physical portal","amber"),
         ]
-        for s in self.overview_metrics:
-            stat.addWidget(s,1)
+        for widget in self.overview_metrics:
+            stat.addWidget(widget,1)
         col.addLayout(stat)
-        col.addWidget(section_heading("LIVE SYSTEM INTELLIGENCE","Evidence and instrument readiness"))
-        lower=QHBoxLayout()
-        status=Surface()
-        box=panel_layout(status,20,13)
-        for title,desc,accent in [
-            ("01 / SCIENTIFIC PROGRAM","Physics literature and hypotheses indexed.","cyan"),
-            ("02 / PG-01 INSTRUMENTATION","Optional manual USB RAW monitoring in Hardware Lab.","violet"),
-            ("03 / QUANTUM INTERPRETATION","Quantum information is not macroscopic matter.","amber")]:
-            box.addWidget(text_label(title,12,accent,True))
-            box.addWidget(text_label(desc,11))
-            box.addWidget(heading_rule())
-        box.addStretch()
-        lower.addWidget(status,3)
-        trend=Surface()
-        v=panel_layout(trend,17,6)
-        v.addWidget(text_label("SYNTHETIC SENSOR TRACE  //  A / B",12,"cyan",True))
-        self.overview_chart=TrendChart()
-        self.charts.append(self.overview_chart)
-        v.addWidget(self.overview_chart,1)
-        lower.addWidget(trend,4)
-        col.addLayout(lower)
+        bottom=QHBoxLayout()
+        bottom.setSpacing(13)
+        trace=Surface()
+        trace_col=panel_layout(trace,20,8)
+        head=QHBoxLayout()
+        head.addWidget(text_label("SIGNAL INTELLIGENCE",13,"cyan",True))
+        head.addStretch()
+        head.addWidget(text_label("100% SIMULATED / DEMO",10,"amber",True))
+        trace_col.addLayout(head)
+        chart=TrendChart()
+        self.overview_chart=chart
+        self.charts.append(chart)
+        trace_col.addWidget(chart,1)
+        drill=ui_button("OPEN SIGNAL ANALYTICS",True)
+        drill.clicked.connect(lambda:self.navigate("Signal Analytics"))
+        trace_col.addWidget(drill,0,Qt.AlignmentFlag.AlignRight)
+        bottom.addWidget(trace,7)
+        mission=Surface()
+        mission_col=panel_layout(mission,20,12)
+        mission_col.addWidget(text_label("NEXT RESEARCH GATES",13,"violet",True))
+        for name,description,colr in [
+            ("01  HARDWARE REVIEW","Unapproved power / GPIO and mounting","amber"),
+            ("02  CALIBRATION","Operator estimates • not certified","violet"),
+            ("03  WITNESS TIMING","No synchronized device clocks","cyan"),
+            ("04  EXPERIMENT","Not authorized or recorded","amber"),
+        ]:
+            mission_col.addWidget(text_label(name,11,colr,True))
+            mission_col.addWidget(text_label(description,11,"muted"))
+            mission_col.addWidget(heading_rule())
+        mission_col.addStretch()
+        bottom.addWidget(mission,5)
+        col.addLayout(bottom)
         col.addStretch()
         return host
 
@@ -493,6 +548,17 @@ class ResearchWindow(QMainWindow):
     def count_text(self,key):
         value=self.record.get(key)
         return str(value) if isinstance(value,int) else "UNAVAILABLE"
+
+    def open_palette(self):
+        palette=CommandPalette(self.pages,self)
+        palette.chosen.connect(self.navigate)
+        palette.exec()
+
+    def toggle_immersive(self):
+        if self.isFullScreen():
+            self.showNormal()
+        else:
+            self.showFullScreen()
 
     def navigate(self,name):
         self.stack.setCurrentIndex(self.pages.index(name))
