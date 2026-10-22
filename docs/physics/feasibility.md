@@ -1,4 +1,13 @@
 # Feasibility matrix
+
+**[Physics guide](PHYSICS-COMMAND.md) · [Engineering boundaries](../engineering/PG-01-architecture.md)**
+
+<img src="../../assets/phasegate-evidence-ladder.svg" width="100%" alt="Feasibility is not a prototype recipe"/>
+
+> **Visual interpretation:** Each approach below should be judged by the kind of evidence it produces. Mathematical or information transfer methods do not establish a buildable physical aperture.
+
+---
+
 | Approach | Demonstrated result | Open barrier to intact object transfer | Posture |
 |---|---|---|---|
 | Quantum teleportation | Transfer of quantum states/information | No transport of original macroscopic matter; no gate | Read and model |
