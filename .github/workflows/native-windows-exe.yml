@@ -34,7 +34,9 @@ jobs:
       - name: Smoke-test real native Qt window and capture screenshot
         shell: pwsh
         run: |
-          $env:QT_QPA_PLATFORM = "offscreen"
+          $env:QT_QPA_PLATFORM = "windows"
+          python -c 'from PySide6.QtWidgets import QApplication; from PySide6.QtGui import QFontDatabase; app=QApplication([]); print("Native Qt Windows font families:", len(QFontDatabase.families()))'
+          if ($LASTEXITCODE -ne 0) { throw "Native Windows Qt font preflight failed" }
           python launch_phasegate.py --smoke-test --screenshot build/PhaseGate-Native-Preview.png
           if ($LASTEXITCODE -ne 0) { throw "Native Qt smoke test failed" }
           if (-not (Test-Path "build/PhaseGate-Native-Preview.png")) { throw "Missing screenshot" }
@@ -50,7 +52,7 @@ jobs:
       - name: Start and inspect the packaged EXE
         shell: pwsh
         run: |
-          $env:QT_QPA_PLATFORM = "offscreen"
+          $env:QT_QPA_PLATFORM = "windows"
           $exe = (Resolve-Path "dist/DPN-PhaseGate.exe").Path
           $p = Start-Process -FilePath $exe -ArgumentList "--self-test" -Wait -PassThru
           if ($p.ExitCode -ne 0) { throw "Packaged EXE failed self-test: $($p.ExitCode)" }
