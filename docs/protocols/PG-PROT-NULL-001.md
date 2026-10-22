@@ -1,5 +1,14 @@
 # PG-PROT-NULL-001 | Proposed blinded paired-station null study
 
+**[Evidence workflow](../physics/EVIDENCE-WORKFLOW.md) · [Safety guide](../safety/SAFETY-COMMAND.md)**
+
+<img src="../../assets/phasegate-research-pipeline.svg" width="100%" alt="Pre-registered sham and null controls"/>
+
+> **Visual guide:** This remains a draft instrumentation test. No real physical experiment or transfer event has occurred, and the diagram does not authorize testing.
+
+---
+
+
 **STATE: DRAFT, NOT AUTHORIZED TO PERFORM.** No data collected; no PhaseGate apparatus exists. Formal preregistration requires a versioned signed protocol and real qualified safety review.
 
 **Question:** When isolated stations A and B have no physical transit path, can we operate an observation workflow without falsely classifying a sensor glitch, lighting event, substitution or timing issue as an object crossing?
