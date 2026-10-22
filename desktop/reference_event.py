@@ -140,7 +140,7 @@ def find_flash(series, contrast=22.0, min_consecutive=2):
                      "first_bright_brightness":first_bright["brightness"]}}
 
 
-def compare_reference_events(series_a,series_b,contrast=22.0):
+def compare_reference_events(series_a,series_b,contrast=22.0,same_host_epoch_declared=False):
     """Return post-read host interval comparisons, NOT physical camera offset."""
     if series_a["station"]!="A" or series_b["station"]!="B":
         raise ReferenceError("comparison requires Station A and B independently")
@@ -152,6 +152,7 @@ def compare_reference_events(series_a,series_b,contrast=22.0):
             "b_manifest_sha256":series_b["source_manifest_sha256"],
             "regions":{"A":series_a["region"],"B":series_b["region"]},
             "declared_shared_light_event_confirmed":False,
+            "same_host_epoch_declared_by_operator":bool(same_host_epoch_declared),
             "actual_exposure_offset_ms":None,
             "physical_event_time_difference_ms":None,
             "camera_clocks_synchronized":False,
@@ -161,6 +162,17 @@ def compare_reference_events(series_a,series_b,contrast=22.0):
                             "under a pre-registered reference protocol before time-offset claims."}
     if fa["onset"] is None or fb["onset"] is None:
         result["state"]="INCONCLUSIVE / NO PAIR OF VALID TRANSITIONS"
+        result["host_receipt_bracket_delta_ms"]=None
+        return result
+    if not same_host_epoch_declared:
+        result["state"]="CROSS-CAMERA TIMING WITHHELD / HOST EPOCH NOT DECLARED"
+        result["host_receipt_bracket_delta_ms"]=None
+        result["review_action"]="Declare same host and uninterrupted monotonic epoch only after inspecting both recordings. "+result["review_action"]
+        return result
+    times_a=[f["host_after_read_ns"] for f in series_a["frames"]]
+    times_b=[f["host_after_read_ns"] for f in series_b["frames"]]
+    if max(times_a[0],times_b[0]) > min(times_a[-1],times_b[-1]):
+        result["state"]="CROSS-CAMERA TIMING WITHHELD / NONOVERLAPPING RECEIPT WINDOWS"
         result["host_receipt_bracket_delta_ms"]=None
         return result
     a,b=fa["onset"],fb["onset"]
@@ -175,10 +187,11 @@ def compare_reference_events(series_a,series_b,contrast=22.0):
     return result
 
 
-def build_review(source_a,source_b,region_a="CENTER",region_b="CENTER",contrast=22.0):
+def build_review(source_a,source_b,region_a="CENTER",region_b="CENTER",contrast=22.0,
+                 same_host_epoch_declared=False):
     a=inspect_capture(source_a,region_a)
     b=inspect_capture(source_b,region_b)
-    result=compare_reference_events(a,b,contrast)
+    result=compare_reference_events(a,b,contrast,same_host_epoch_declared)
     result["created_utc"]=datetime.now(timezone.utc).isoformat().replace("+00:00","Z")
     result["calculation"]=(
         "Each ROI's grayscale mean; first five frames set a robust dark baseline; "
