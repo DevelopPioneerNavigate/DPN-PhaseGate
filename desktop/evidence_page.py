@@ -17,6 +17,7 @@ from PySide6.QtWidgets import (
 
 from desktop.widgets import Surface, panel_layout, text_label
 from desktop.window_helpers import button
+from desktop.aurora import LabBanner
 from desktop.calibration import CalibrationError, fit, parse_worksheet, save_profile
 from desktop.witness import WitnessError, inventory_source, save_inventory
 
@@ -56,6 +57,9 @@ class EvidenceLab(QWidget):
         col.setSpacing(18)
         col.addWidget(text_label("PG-01 / MEASUREMENT ASSURANCE / STATION EVIDENCE",11,"cyan",True))
         col.addWidget(text_label("CALIBRATION & WITNESS LAB",30,"text",True))
+        col.addWidget(LabBanner("EVIDENCE / MEASUREMENT ASSURANCE",
+            "Traceable operator inputs, unreviewed calibration estimates, private witness file custody.",
+            "#BE8BFF"))
         col.addWidget(text_label(
             "Prepare station-specific scale regression files and hash independent camera recordings. "
             "Calibration is not certified and video is not a verified physics event.",12))
