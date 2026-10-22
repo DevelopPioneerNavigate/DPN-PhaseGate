@@ -163,7 +163,7 @@ class ResearchWindow(QMainWindow):
         rail_col=QVBoxLayout(self.rail)
         rail_col.setContentsMargins(15,27,13,20)
         rail_col.setSpacing(5)
-        logo=text_label("◈  DPN / 10",25,"text",True)
+        logo=text_label("◈  DPN / PG-01",22,"text",True)
         rail_col.addWidget(logo)
         rail_col.addWidget(text_label("D E V E L O P   /   P I O N E E R",9,"cyan",True))
         rail_col.addWidget(text_label("N A V I G A T E",9,"violet",True))
