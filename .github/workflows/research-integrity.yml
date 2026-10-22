@@ -28,6 +28,8 @@ jobs:
         run: python tools/validate_research.py
       - name: Offline regression tests
         run: python -m unittest discover -s tests -v
+      - name: Verify DPN README navigation and SVG assets
+        run: python tools/validate_readme.py
       - name: Post honest research inventory
         if: always()
         run: python tools/research_summary.py >> "$GITHUB_STEP_SUMMARY"
