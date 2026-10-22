@@ -1,4 +1,13 @@
 # Decision log
+
+**[Visual Atlas](../VISUAL-ATLAS.md) · [Charter](../charter.md)**
+
+<img src="../../assets/phasegate-research-pipeline.svg" width="100%" alt="How decisions connect to evidence"/>
+
+> **Visual guide:** A design proposal is not a physics experiment or a validation of a portal.
+
+---
+
 | ID | Date | Decision | Rationale | Status |
 |---|---|---|---|---|
 | ADR-001 | 2026-10-22 | Research objective is bidirectional macroscopic object transfer | Explicit project goal, not an established capability | Accepted |

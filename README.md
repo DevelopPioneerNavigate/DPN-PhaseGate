@@ -11,7 +11,7 @@
 ![Prototype](https://img.shields.io/badge/PG--01-PAPER%20DESIGN-32BCD5?style=flat-square)
 ![Physical Transfer](https://img.shields.io/badge/MATTER%20TRANSFER-UNVERIFIED-DF9E69?style=flat-square)
 
-**[PROJECT OVERVIEW](docs/PROJECT-OVERVIEW.md)** · **[START HERE](docs/START-HERE.md)** · **[ENGINEERING](docs/engineering/PG-01-architecture.md)** · **[RESEARCH DATA](data/README.md)** · **[ISSUES](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/issues)**
+**[VISUAL ATLAS](docs/VISUAL-ATLAS.md)** · **[PROJECT OVERVIEW](docs/PROJECT-OVERVIEW.md)** · **[START HERE](docs/START-HERE.md)** · **[ENGINEERING](docs/engineering/PG-01-architecture.md)** · **[RESEARCH DATA](data/README.md)** · **[ISSUES](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/issues)**
 
 </div>
 
@@ -27,6 +27,19 @@
 
 > [!IMPORTANT]
 > **Evidence boundary:** Quantum teleportation transfers quantum information, not intact macroscopic objects. Our planned PG-01 equipment measures and documents experiments; it does not physically transport matter. A green software check validates data structure, **not** a breakthrough in physics.
+
+### Illustrated research atlas
+
+The complete research library now has visual guides, labelled concept blueprints, an evidence ladder and direct links to manufacturer hardware photographs. **Start with the diagrams, then use the detailed scientific notes.**
+
+| Explore our engineering drawings | Understand evidence and scientific limits |
+|:--|:--|
+| <img src="assets/pg01-blueprint-front.svg" alt="PG-01 concept front elevation" width="100%"> | <img src="assets/phasegate-evidence-ladder.svg" alt="Six levels of scientific evidence" width="100%"> |
+| **[View the complete blueprint set →](docs/engineering/PG-01-BLUEPRINTS.md)** | **[Explore the physics guide →](docs/physics/PHYSICS-COMMAND.md)** |
+
+<img src="assets/phasegate-research-pipeline.svg" alt="From literature and hypotheses to experimental records and independent review" width="100%">
+
+**[Open the complete PhaseGate Visual Research Atlas →](docs/VISUAL-ATLAS.md)**
 
 ### Pick your path
 

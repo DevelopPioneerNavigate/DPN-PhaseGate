@@ -1,4 +1,13 @@
 # PG-01 Implementation Plan | Design review package
+
+**[Blueprints](PG-01-BLUEPRINTS.md) · [Architecture](PG-01-architecture.md) · [Safety](../safety/SAFETY-COMMAND.md)**
+
+<img src="../../assets/pg01-blueprint-top.svg" width="100%" alt="Layout decisions precede prototype assembly"/>
+
+> **Visual guide:** Hardware dimensions, sample range, controller and power supply remain open design decisions; no real apparatus has been constructed.
+
+---
+
 [← Project overview](../PROJECT-OVERVIEW.md) · [System architecture](PG-01-architecture.md) · [Inventory](PG-01-bom.csv)
 
 **Purpose:** take a paired **measurement platform** from paper architecture to safe, independently verifiable data capture. **Not a two-way matter portal.**

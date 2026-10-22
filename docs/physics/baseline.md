@@ -1,4 +1,13 @@
 # Physics baseline | Reviewed 2026-10-22
+
+**[Physics guide](PHYSICS-COMMAND.md) · [2025 critical debate](2025-wormhole-scrutiny.md) · [Visual Atlas](../VISUAL-ATLAS.md)**
+
+<img src="../../assets/phasegate-evidence-ladder.svg" width="100%" alt="Science evidence levels"/>
+
+> **Visual interpretation:** The figure separates an educational idea, a mathematical model, an analogue, a controlled observation, replication and the as-yet-unverified claim of intact object transfer.
+
+---
+
 ## Verified science
 **Quantum teleportation** transfers a quantum state using entanglement and classical communications; it does not send a macroscopic physical object. Source IDs SRC-001, SRC-002.
 ## Theoretical physics, not engineering

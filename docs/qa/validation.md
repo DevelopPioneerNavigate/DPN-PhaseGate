@@ -1,4 +1,13 @@
 # Data integrity green gate
+
+**[Evidence workflow](../physics/EVIDENCE-WORKFLOW.md) · [Research data](../../data/README.md)**
+
+<img src="../../assets/phasegate-research-pipeline.svg" width="100%" alt="What the automated checks do and do not establish"/>
+
+> **Visual guide:** Passing CI verifies links, files and registry structure; it does not validate experimental authenticity, instrument calibration or a scientific breakthrough.
+
+---
+
 This project uses only Python 3.12 standard library for automated checks; no paid services, API keys, external Python packages or AI tokens are required to run validation.
 
 Local commands:

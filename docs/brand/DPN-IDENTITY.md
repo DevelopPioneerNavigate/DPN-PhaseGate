@@ -1,4 +1,13 @@
 # DPN PhaseGate identity standards
+
+**[Visual Atlas](../VISUAL-ATLAS.md) · [PG-01 Blueprints](../engineering/PG-01-BLUEPRINTS.md)**
+
+<img src="../../assets/phasegate-evidence-ladder.svg" width="100%" alt="DPN PhaseGate identity system"/>
+
+> **Visual guide:** Use cyan for measurement/data, violet for engineering and amber to mark unverified claims. Illustrations are conceptual, not hardware photographs.
+
+---
+
 [← Command center](../../README.md)
 
 ## Design language

@@ -1,4 +1,13 @@
 # Risk register
+
+**[Safety command](SAFETY-COMMAND.md) · [Experiment protocol](../protocols/PG-PROT-NULL-001.md)**
+
+<img src="../../assets/phasegate-safety-gates.svg" width="100%" alt="How safety mitigations are verified"/>
+
+> **Visual guide:** Every listed risk stays open until the relevant hardware-specific mitigation and responsible reviewer have been documented.
+
+---
+
 | ID | Risk | Safeguard | Status |
 |---|---|---|---|
 | HZ-001 | Electrical/fire hazard | Low-voltage rated supplies, inspection, protection | Open |
