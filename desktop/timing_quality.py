@@ -30,8 +30,9 @@ class CadenceHealth:
         if len(self.points)<3:
             return {"state":"INSUFFICIENT SAMPLES","interval_samples":0,
                     "absolute_clock_offset_known":False,"synchronized":False}
-        device=[(b[0]-a[0]) for a,b in zip(self.points,self.points[1:])]
-        host=[(b[1]-a[1])/1e6 for a,b in zip(self.points,self.points[1:])]
+        entries = tuple(self.points)  # deque does not implement slice indexing
+        device=[(b[0]-a[0]) for a,b in zip(entries,entries[1:])]
+        host=[(b[1]-a[1])/1e6 for a,b in zip(entries,entries[1:])]
         if not device or min(device)<=0 or min(host)<=0:
             return {"state":"COUNTER ANOMALY","interval_samples":0,
                     "absolute_clock_offset_known":False,"synchronized":False}
