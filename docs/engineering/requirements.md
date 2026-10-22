@@ -1,4 +1,13 @@
 # Requirements PG-REQ-001
+
+**[Blueprint gallery](PG-01-BLUEPRINTS.md) · [Implementation plan](PG01-IMPLEMENTATION-PLAN.md)**
+
+<img src="../../assets/pg01-blueprint-front.svg" width="100%" alt="Hardware components and evidence requirements"/>
+
+> **Visual guide:** R-series long-term scientific requirements cannot be checked off by building the I-series measurement instruments. Drawings remain not to scale.
+
+---
+
 ## Ultimate research requirements (currently no design solution)
 R-001 Physical entry/exit of same uniquely tagged intact object A -> B and B -> A.
 R-002 Independent verification of no ordinary path, duplicate, substitution, or stage trick.
