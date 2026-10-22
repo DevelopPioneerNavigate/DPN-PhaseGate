@@ -1,5 +1,14 @@
 # 2025 scientific scrutiny of the quantum-processor 'wormhole' result
 
+**[Physics guide](PHYSICS-COMMAND.md) · [Full scientific baseline](baseline.md)**
+
+<img src="../../assets/phasegate-evidence-ladder.svg" width="100%" alt="What the quantum-processor result did—and did not—establish"/>
+
+> **Visual interpretation:** The contested 2022/2025 wormhole-inspired work concerns a constrained **quantum-information analogue** (L2), not a physical opening for a macroscopic object (L5). The cited 2025 correction and subsequent critique/reply remain important context.
+
+---
+
+
 **PhaseGate review:** 2026-10-22. **Scientific scope:** theoretical and quantum-information interpretations, *not a constructed spacetime portal*.
 
 ## The paper and what it measured
