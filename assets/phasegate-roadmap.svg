@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 206" role="img" aria-labelledby="rt rd">
+<title id="rt">PhaseGate staged program roadmap</title><desc id="rd">Research knowledge base is established, measurement engineering is in design, safe calibration trials are planned, and macroscopic transfer remains an unverified long-term research objective.</desc>
+<rect width="1200" height="206" rx="16" fill="#0D1426"/>
+<path d="M126 78h946" stroke="#3B4B68" stroke-width="9" stroke-linecap="round"/>
+<path d="M126 78h313" stroke="#41D9ED" stroke-width="9" stroke-linecap="round"/>
+<g font-family="Segoe UI,Arial,sans-serif" text-anchor="middle">
+<circle cx="130" cy="78" r="19" fill="#41D8EA" stroke="#D1FCFF" stroke-width="3"/>
+<path d="m120 78 7 7 13-16" fill="none" stroke="#0A1931" stroke-width="4" stroke-linecap="round"/>
+<circle cx="440" cy="78" r="19" fill="#AC87FF" stroke="#E6DBFF" stroke-width="3"/>
+<text x="440" y="85" font-size="19" font-weight="700" fill="#111329">2</text>
+<circle cx="753" cy="78" r="19" fill="#263552" stroke="#6983A9" stroke-width="3"/>
+<text x="753" y="85" font-size="19" font-weight="700" fill="#CAD8F0">3</text>
+<circle cx="1065" cy="78" r="19" fill="#263552" stroke="#6983A9" stroke-width="3"/>
+<text x="1065" y="85" font-size="19" font-weight="700" fill="#CAD8F0">4</text>
+<text x="130" y="130" fill="#F3F7FF" font-weight="700" font-size="17">FOUNDATION</text>
+<text x="130" y="151" fill="#87A8C9" font-size="13">Research library</text>
+<text x="130" y="171" fill="#5FE0EB" font-size="12">Established</text>
+<text x="440" y="130" fill="#F3F7FF" font-weight="700" font-size="17">ENGINEERING</text>
+<text x="440" y="151" fill="#87A8C9" font-size="13">PG-01 plans</text>
+<text x="440" y="171" fill="#B69FFF" font-size="12">In design</text>
+<text x="753" y="130" fill="#F3F7FF" font-weight="700" font-size="17">VALIDATION</text>
+<text x="753" y="151" fill="#87A8C9" font-size="13">Calibration and controls</text>
+<text x="753" y="171" fill="#8EA8CA" font-size="12">Not performed</text>
+<text x="1065" y="130" fill="#F3F7FF" font-weight="700" font-size="17">DISCOVERY</text>
+<text x="1065" y="151" fill="#87A8C9" font-size="13">Physical transfer research</text>
+<text x="1065" y="171" fill="#8EA8CA" font-size="12">Unverified</text>
+</g></svg>

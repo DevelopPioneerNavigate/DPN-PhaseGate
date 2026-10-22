@@ -1,11 +1,23 @@
-# Research roadmap
-| Gate | Deliverable | Exit criterion | State |
+# DPN PhaseGate · Research roadmap
+
+[← Command center](../README.md) · [Program overview](PROJECT-OVERVIEW.md) · [PG-01 implementation](engineering/PG01-IMPLEMENTATION-PLAN.md)
+
+| Gate | Stage | Exit criteria | Current state |
 |---|---|---|---|
-| R0 | Source and hypothesis register, safety policy, integrity checks | Green structural CI and reviewed methodology | In progress |
-| R1 | Annotated physics literature and critiques | Source-backed claims and alternative explanations | Planned |
-| R2 | PG-01 paired measuring-station design | Instrument specifications and qualified safety review | Planned |
-| R3 | Calibration and blinded *null* trials | Verified sensor uncertainty and controls | Planned |
-| R4 | Mechanism-specific quantitative theory | Falsifiable prediction distinct from known processes and peer critique | Research-dependent |
-| R5 | Exploratory physics experiment | Preregistered safe protocol, evidentiary and independent supervision | Not authorized |
-| R6 | Independent reproduction | Transparent repeatable evidence and external verification | Not authorized |
-No scientific basis exists for promising a date for physical-object teleportation. Building PG-01 creates scientific measurement capability **not** a physical transport mechanism.
+| **R0** | Research foundation | Source IDs, hypotheses, templates, CI data integrity | **Established** · v0.1 merged |
+| **R1** | Critical physics literature | Primary papers, corrections and competing views reviewed | **Active** · 13 registered sources |
+| **R2** | PG-01 instrumentation design | Component selection, diagrams, compatibility and qualified safety review | **In design** · not built |
+| **R3** | Calibration and baseline null trial | Preregistered controls, documented measurement uncertainty | **Not started** |
+| **R4** | Falsifiable mechanism research | Quantitative prediction distinct from known mechanisms; independent theoretical review | **No supported mechanism identified** |
+| **R5** | Exploratory experiment | Safety-reviewed, preregistered physical test if justified | **Not authorized** |
+| **R6** | Independent replication | Verifiable real transfer if ever observed and independently confirmed | **Not achieved** |
+
+## Current priorities
+
+- [Issue #2 — Define proof of physical-object transfer](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/issues/2)
+- [Issue #3 — Review teleportation and wormhole scientific literature](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/issues/3)
+- [Issue #4 — Develop PG-01 station engineering design](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/issues/4)
+- [Issue #5 — Research evidence governance](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/issues/5)
+- [Issue #6 — Physical laboratory safety and qualified review](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/issues/6)
+
+**Critical distinction:** R0–R3 create a research capability, **not** a spacetime portal. No scientifically justified completion date exists for physical-object teleportation. Negative/null results remain valuable.
