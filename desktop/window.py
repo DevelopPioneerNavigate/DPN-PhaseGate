@@ -165,6 +165,7 @@ class ResearchWindow(QMainWindow):
         rail_col.addWidget(text_label("WORKSPACE  /  RESEARCH OPERATIONS",10,"violet",True))
         rail_col.addWidget(heading_rule())
         rail_col.addSpacing(12)
+        rail_col.addWidget(text_label("  NAVIGATION  /  CTRL + K",10,"muted",True))
         for name,ico in [
             ("Command Center","◈"),("Station Matrix","◎"),("Hardware Lab","▦"),
             ("Calibration & Evidence","◇"),
@@ -172,6 +173,12 @@ class ResearchWindow(QMainWindow):
             ("Experiment Ledger","▤"),("System Diagnostics","⚙"),
             ("Preferences","◇"),
         ]:
+            if name=="Hardware Lab":
+                rail_col.addSpacing(7)
+                rail_col.addWidget(text_label("  INSTRUMENTS / EVIDENCE",9,"violet",True))
+            elif name=="System Diagnostics":
+                rail_col.addSpacing(7)
+                rail_col.addWidget(text_label("  SYSTEM & DISPLAY",9,"violet",True))
             btn=QPushButton(f"{ico}     {name}")
             btn.setProperty("role","nav")
             btn.setCheckable(True)
@@ -195,6 +202,11 @@ class ResearchWindow(QMainWindow):
         row.setContentsMargins(29,0,29,0)
         row.addWidget(text_label("◈   MISSION CONTROL     /     PHASEGATE     /     PG-01",11,"muted",True))
         row.addStretch()
+        quick=ui_button("⌕  GO TO…    Ctrl+K",True)
+        quick.setMinimumHeight(33)
+        quick.clicked.connect(self.open_palette)
+        row.addWidget(quick)
+        row.addSpacing(12)
         row.addWidget(text_label("●  SIMULATED SCENE  /  RAW DATA ISOLATED",10,"cyan",True))
         self.clock=text_label("",11,"muted",True)
         row.addSpacing(21)
