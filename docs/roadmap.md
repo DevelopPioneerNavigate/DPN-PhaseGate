@@ -1,5 +1,14 @@
 # DPN PhaseGate · Research roadmap
 
+**[Visual Atlas](VISUAL-ATLAS.md) · [PG-01 blueprint gallery](engineering/PG-01-BLUEPRINTS.md)**
+
+<img src="../assets/phasegate-roadmap.svg" width="100%" alt="Current research and engineering stages"/>
+
+> **Visual interpretation:** Read the gate table below together with this visual roadmap. R0 is established; R1/R2 are active research and conceptual design; no physical trials have occurred.
+
+---
+
+
 [← Command center](../README.md) · [Program overview](PROJECT-OVERVIEW.md) · [PG-01 implementation](engineering/PG01-IMPLEMENTATION-PLAN.md)
 
 | Gate | Stage | Exit criteria | Current state |
