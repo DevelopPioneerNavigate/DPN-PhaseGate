@@ -35,7 +35,7 @@ jobs:
         shell: pwsh
         run: |
           $env:QT_QPA_PLATFORM = "windows"
-          python -c "from PySide6.QtGui import QFontDatabase; from PySide6.QtWidgets import QApplication; a=QApplication([]); families=QFontDatabase.families(); print(\"Qt font families:\",len(families)); print(\"Segoe UI available:\",\"Segoe UI\" in families)"
+          python -c 'from PySide6.QtWidgets import QApplication; from PySide6.QtGui import QFontDatabase; app=QApplication([]); print("Native Qt Windows font families:", len(QFontDatabase.families()))'
           if ($LASTEXITCODE -ne 0) { throw "Native Windows Qt font preflight failed" }
           python launch_phasegate.py --smoke-test --screenshot build/PhaseGate-Native-Preview.png
           if ($LASTEXITCODE -ne 0) { throw "Native Qt smoke test failed" }
