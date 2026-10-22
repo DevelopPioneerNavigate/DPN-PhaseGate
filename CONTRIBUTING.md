@@ -1,0 +1,2 @@
+# Contributing
+Create a Research Question, Experiment Proposal, or Safety Review issue. Link primary sources and concrete hypotheses; distinguish models from observations. Preregister all physical experiments and gain real safety approval before working. Never add synthetic observations to real experiment manifest. Log null and failed results. Run offline validation and unit tests, then create a reviewable PR. All work is subject to DPN Technology's ownership and permission requirements.

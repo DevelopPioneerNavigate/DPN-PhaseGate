@@ -1,0 +1,39 @@
+{
+  "_synthetic_example_only": true,
+  "id": "PG-20990101-001",
+  "hypothesis_id": "H-PG-001",
+  "protocol_path": "docs/protocols/EXAMPLE.md",
+  "status": "completed",
+  "started_at": "2099-01-01T12:00:00Z",
+  "ended_at": "2099-01-01T12:10:00Z",
+  "operator": "SYNTHETIC ONLY",
+  "witness": "SYNTHETIC ONLY",
+  "safety_review": {
+    "approved": true,
+    "review_id": "EXAMPLE-NOT-VALID"
+  },
+  "calibration_ids": [
+    "FAKE-CAL"
+  ],
+  "controls": [
+    {
+      "name": "SHAM",
+      "outcome": "SYNTHETIC"
+    }
+  ],
+  "measurements": [
+    {
+      "quantity": "mass",
+      "unit": "g",
+      "value": 0,
+      "uncertainty": 0.1
+    }
+  ],
+  "evidence": [
+    {
+      "uri": "synthetic/NOT-REAL.csv",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    }
+  ],
+  "conclusion": "DEMONSTRATION DATA, NOT A REAL RUN."
+}

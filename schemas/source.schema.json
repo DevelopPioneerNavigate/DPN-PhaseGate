@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DPN PhaseGate source registry",
+  "type": "object",
+  "required": [
+    "version",
+    "reviewed_on",
+    "sources"
+  ],
+  "properties": {
+    "version": {
+      "const": 1
+    },
+    "reviewed_on": {
+      "type": "string",
+      "format": "date"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "authors",
+          "year",
+          "type",
+          "doi",
+          "url",
+          "claim",
+          "non_claim"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^SRC-[0-9]{3}$"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 5
+          },
+          "authors": {
+            "type": "string",
+            "minLength": 5
+          },
+          "year": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "type": {
+            "enum": [
+              "peer_reviewed",
+              "institutional_explainer",
+              "preprint",
+              "book",
+              "other"
+            ]
+          },
+          "doi": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "claim": {
+            "type": "string"
+          },
+          "non_claim": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

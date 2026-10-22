@@ -1,0 +1,32 @@
+name: Safety Review
+description: Physical apparatus hazard review (not authorization)
+title: "[SAFETY] "
+body:
+  - type: textarea
+    id: apparatus
+    attributes:
+      label: Exact equipment and operating conditions
+    validations:
+      required: true
+  - type: textarea
+    id: hazards
+    attributes:
+      label: Physical hazards and worst-case credible failures
+    validations:
+      required: true
+  - type: textarea
+    id: mitigations
+    attributes:
+      label: Mitigations, emergency procedures and qualified reviewers
+    validations:
+      required: true
+  - type: dropdown
+    id: status
+    attributes:
+      label: Review status (not permission)
+      options:
+        - Awaiting qualified review
+        - Redesign required
+        - Declined
+    validations:
+      required: true

@@ -1,0 +1,29 @@
+name: Research Question
+description: Scientific literature question (not a physical result)
+title: "[RESEARCH] "
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Precise scientific question
+      description: How would the answer relate to intact macroscopic object transfer?
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Original primary sources and DOI links
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Proven results, theoretical assumptions, and non-claims
+    validations:
+      required: true
+  - type: textarea
+    id: falsifier
+    attributes:
+      label: Falsifiable test or critical next research step
+    validations:
+      required: true

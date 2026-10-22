@@ -1,0 +1,33 @@
+name: PhaseGate Research Integrity
+
+on:
+  push:
+    branches:
+      - main
+      - 'research/**'
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  research-integrity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate source hypothesis and experiment registry
+        run: python tools/validate_research.py
+      - name: Offline regression tests
+        run: python -m unittest discover -s tests -v
+      - name: Post honest research inventory
+        if: always()
+        run: python tools/research_summary.py >> "$GITHUB_STEP_SUMMARY"

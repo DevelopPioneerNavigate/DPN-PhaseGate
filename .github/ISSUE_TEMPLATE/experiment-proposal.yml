@@ -1,0 +1,35 @@
+name: Experiment Proposal
+description: Preregistered proposal; issue does not authorize physical work
+title: "[EXPERIMENT] "
+body:
+  - type: input
+    id: hypothesis
+    attributes:
+      label: Registered H-PG hypothesis ID
+      placeholder: H-PG-001
+    validations:
+      required: true
+  - type: textarea
+    id: protocol
+    attributes:
+      label: Protocol, predictions, null model, controls and thresholds
+    validations:
+      required: true
+  - type: textarea
+    id: instruments
+    attributes:
+      label: Calibration, sensors, timestamping, object identity and independent witnesses
+    validations:
+      required: true
+  - type: textarea
+    id: risk
+    attributes:
+      label: Qualified safety approval, risk assessment, stop conditions
+    validations:
+      required: true
+  - type: textarea
+    id: data
+    attributes:
+      label: Raw evidence storage and SHA-256 provenance plan
+    validations:
+      required: true

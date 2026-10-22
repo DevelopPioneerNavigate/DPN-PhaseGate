@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DPN PhaseGate actual experiments manifest",
+  "type": "object",
+  "required": [
+    "version",
+    "experiments"
+  ],
+  "properties": {
+    "version": {
+      "const": 1
+    },
+    "experiments": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PG-[0-9]{8}-[0-9]{3}$"
+      }
+    }
+  },
+  "additionalProperties": false
+}

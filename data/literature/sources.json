@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "reviewed_on": "2026-10-22",
+  "sources": [
+    {
+      "id": "SRC-001",
+      "title": "Teleporting an unknown quantum state via dual classical and Einstein-Podolsky-Rosen channels",
+      "authors": "Bennett et al.",
+      "year": 1993,
+      "type": "peer_reviewed",
+      "doi": "10.1103/PhysRevLett.70.1895",
+      "url": "https://doi.org/10.1103/PhysRevLett.70.1895",
+      "claim": "Quantum-state teleportation protocol using entanglement and classical communication.",
+      "non_claim": "Not transport of a macroscopic object."
+    },
+    {
+      "id": "SRC-002",
+      "title": "Quantum teleportation",
+      "authors": "IBM Quantum Learning",
+      "year": null,
+      "type": "institutional_explainer",
+      "doi": null,
+      "url": "https://qiskit.qotlabs.org/learning/courses/basics-of-quantum-information/entanglement-in-action/quantum-teleportation",
+      "claim": "Quantum teleportation transfers quantum information rather than matter.",
+      "non_claim": "No spatial aperture transmitting physical matter."
+    },
+    {
+      "id": "SRC-003",
+      "title": "Wormholes, Time Travel, and Faster-Than-Speed-of-Light Theories",
+      "authors": "NASA Goddard Cosmicopia",
+      "year": null,
+      "type": "institutional_explainer",
+      "doi": null,
+      "url": "https://science.gsfc.nasa.gov/attic/cosmicopia.gsfc.nasa.gov/qa_sp_sl.html",
+      "claim": "No observed wormhole or known physical construction mechanism.",
+      "non_claim": "Not empirical proof wormholes are physically realizable."
+    },
+    {
+      "id": "SRC-004",
+      "title": "Traversable wormholes via a double trace deformation",
+      "authors": "Gao, Jafferis and Wall",
+      "year": 2017,
+      "type": "peer_reviewed",
+      "doi": "10.1007/JHEP12(2017)151",
+      "url": "https://doi.org/10.1007/JHEP12(2017)151",
+      "claim": "Theoretical traversability in a specified gravitational and holographic setting.",
+      "non_claim": "Does not describe a built physical portal."
+    },
+    {
+      "id": "SRC-005",
+      "title": "Traversable wormhole dynamics on a quantum processor",
+      "authors": "Jafferis et al.",
+      "year": 2022,
+      "type": "peer_reviewed",
+      "doi": "10.1038/s41586-022-05424-3",
+      "url": "https://doi.org/10.1038/s41586-022-05424-3",
+      "claim": "Quantum processor reproduced predicted information dynamics in a model.",
+      "non_claim": "No physical spacetime rupture or macroscopic object transfer."
+    },
+    {
+      "id": "SRC-006",
+      "title": "Wormhole 2022 experimental Q&A",
+      "authors": "Caltech InQNET",
+      "year": 2022,
+      "type": "institutional_explainer",
+      "doi": null,
+      "url": "https://inqnet.caltech.edu/wormhole2022/",
+      "claim": "Research team states no physical rupture of spacetime was made.",
+      "non_claim": "The result is not an actual traversable ambient-spacetime portal."
+    }
+  ]
+}
