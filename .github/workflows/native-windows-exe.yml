@@ -31,6 +31,8 @@ jobs:
           python tools/validate_research.py
           python -m unittest discover -s tests -v
           python tools/validate_readme.py
+      - name: Compile Pico 2 MicroPython firmware syntax
+        run: python -m py_compile firmware/pico2_hx711/main.py
       - name: Smoke-test real native Qt window and capture screenshot
         shell: pwsh
         run: |
@@ -59,14 +61,14 @@ jobs:
       - name: Publish the downloadable EXE
         uses: actions/upload-artifact@v4
         with:
-          name: DPN-PhaseGate-Native-Windows-v0.6
+          name: DPN-PhaseGate-Native-Windows-v0.7
           path: dist/DPN-PhaseGate.exe
           if-no-files-found: error
           retention-days: 30
       - name: Publish a screenshot of the actual Qt application
         uses: actions/upload-artifact@v4
         with:
-          name: DPN-PhaseGate-Native-Preview-v0.6
+          name: DPN-PhaseGate-Native-Preview-v0.7
           path: build/PhaseGate-Native-Preview.png
           if-no-files-found: error
           retention-days: 30
