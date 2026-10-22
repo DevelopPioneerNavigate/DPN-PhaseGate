@@ -13,7 +13,7 @@ from PySide6.QtCore import Qt, QThread, Signal, QRectF, QPointF
 from PySide6.QtGui import QPainter, QColor, QPen, QFont
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QComboBox, QFileDialog,
-    QMessageBox, QLabel, QSpinBox, QFrame
+    QMessageBox, QLabel, QSpinBox, QFrame, QCheckBox
 )
 from desktop.aurora import LabBanner
 from desktop.widgets import Surface, panel_layout, text_label
@@ -26,9 +26,9 @@ from desktop.reference_event import (
 class ReferenceWorker(QThread):
     done=Signal(object, str)
 
-    def __init__(self,a,b,region_a,region_b,contrast,parent=None):
+    def __init__(self,a,b,region_a,region_b,contrast,same_epoch,parent=None):
         super().__init__(parent)
-        self.args=(a,b,region_a,region_b,float(contrast))
+        self.args=(a,b,region_a,region_b,float(contrast),bool(same_epoch))
 
     def run(self):
         try:
@@ -154,6 +154,14 @@ class ReferenceEventLab(QWidget):
         self.analyze.clicked.connect(self.start)
         options.addWidget(self.analyze)
         sv.addLayout(options)
+        self.same_epoch=QCheckBox(
+            "I confirm both captures used the SAME HOST without reboot and share an "
+            "overlapping monotonic clock epoch (operator declaration; not independently verified).")
+        self.same_epoch.setChecked(False)
+        sv.addWidget(self.same_epoch)
+        sv.addWidget(text_label(
+            "Unchecked = no B−A time difference reported. A declaration alone never proves "
+            "exposure synchronization or shared-flash identity.",11,"amber"))
         col.addWidget(setup)
         graph=Surface("referenceChart")
         gv=panel_layout(graph,16,8)
@@ -214,7 +222,7 @@ class ReferenceEventLab(QWidget):
         self.worker=ReferenceWorker(
             self.directories["A"],self.directories["B"],
             self.regions["A"].currentData(),self.regions["B"].currentData(),
-            self.contrast.value(),self)
+            self.contrast.value(),self.same_epoch.isChecked(),self)
         self.worker.done.connect(self.finished_analysis)
         self.worker.start()
 
@@ -266,4 +274,4 @@ class ReferenceEventLab(QWidget):
     def shutdown(self):
         task=self.worker
         if task is not None and task.isRunning():
-            task.wait(5000)
+            task.wait()  # do not destroy a running QThread during large hash reviews
