@@ -6,6 +6,12 @@
 
 > **Scientific status:** Physical two-way transport of intact objects is **not demonstrated**. PG-01 is a conceptual *measurement* station design, not a working portal.
 
+## NEW / v1.0 Native camera observation and receipt-time audit
+
+<img src="../assets/pg01-optical-evidence-v1.0.svg" width="100%" alt="Dual opt-in USB cameras, local JPEG bench recording, SHA-256 evidence and honest unsynchronized timing limits"/>
+
+**[Open the Optical Evidence v1.0 guide →](engineering/PG01-OPTICAL-EVIDENCE-v1.0.md)**. Host post-read receipt timestamps are not exposure timestamps; no cross-station timing has been validated.
+
 ## NEW / Calibration and independent witness evidence
 
 <img src="../assets/pg01-calibration-evidence-v0.8.svg" width="100%" alt="DPN PhaseGate v0.8 metrology, witness recordings and bench data provenance"/>
