@@ -3,3 +3,6 @@ pyinstaller==6.22.3
 
 # USB serial sensor ingestion. No remote services or network features.
 pyserial==3.5
+
+# Native local USB video capture, opt-in. Headless avoids a second Qt backend.
+opencv-python-headless==4.11.0.86
