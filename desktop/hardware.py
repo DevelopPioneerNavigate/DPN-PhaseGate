@@ -9,6 +9,7 @@ import hashlib
 import json
 import queue
 import re
+import secrets
 import threading
 import time
 from dataclasses import asdict, dataclass
@@ -99,6 +100,7 @@ class AcquisitionEvent:
     kind: str                 # sample / connection / error / ended
     station: str
     port: str
+    session_id: str = ""
     detail: str = ""
     sample: Frame | None = None
     host_utc: str = ""
@@ -119,6 +121,7 @@ class SerialReader:
         if not isinstance(port, str) or not 1 <= len(port) <= 160 or any(x in port for x in ("\r", "\n", "\0")):
             raise ValueError("invalid device port")
         self.station, self.port, self.events = station, port, events
+        self.session_id = secrets.token_hex(12)
         self.serial_factory = serial_factory
         self.monotonic = monotonic
         self._stop = threading.Event()
@@ -130,6 +133,7 @@ class SerialReader:
 
     def _publish(self, kind, detail="", frame=None):
         ev = AcquisitionEvent(kind=kind, station=self.station, port=self.port,
+                              session_id=self.session_id,
                               detail=detail, sample=frame, host_utc=utc_now(),
                               host_monotonic_ns=time.monotonic_ns())
         try:
@@ -257,6 +261,7 @@ class BenchRecorder:
         if event.kind not in ("sample", "error", "connection", "ended"):
             return
         self.append({"kind":event.kind,"station":event.station,"port":event.port,
+                     "connection_session":event.session_id,
                      "host_utc":event.host_utc,"host_monotonic_ns":event.host_monotonic_ns,
                      "detail":event.detail,
                      "sample":asdict(event.sample) if event.sample else None})
