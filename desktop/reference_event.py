@@ -180,9 +180,11 @@ def build_review(source_a,source_b,region_a="CENTER",region_b="CENTER",contrast=
     b=inspect_capture(source_b,region_b)
     result=compare_reference_events(a,b,contrast)
     result["created_utc"]=datetime.now(timezone.utc).isoformat().replace("+00:00","Z")
-    result["calculation"]="Each ROI's grayscale mean; first five frames set a robust dark baseline; "
-                          ">=2 consecutive bright frames identify a host arrival transition. "
-                          "No physical camera timing or matter transfer estimated."
+    result["calculation"]=(
+        "Each ROI's grayscale mean; first five frames set a robust dark baseline; "
+        ">=2 consecutive bright frames identify a host arrival transition. "
+        "No physical camera timing or matter transfer estimated."
+    )
     return {"comparison":result,"trace_a":a,"trace_b":b}
 
 
