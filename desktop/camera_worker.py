@@ -17,7 +17,7 @@ from desktop.optical import Arrival, OpticalBenchWriter, OpticalError
 
 
 class CameraWorker(QThread):
-    preview = Signal(str, bytes, int)   # station, compressed JPEG, post-read monotonic ns
+    preview = Signal(str, bytes, object)   # station, compressed JPEG, Python int64+ monotonic ns
     state = Signal(str, str)            # station, explicit state text
     record_state = Signal(str, bool, str) # station, enabled, detail
 
