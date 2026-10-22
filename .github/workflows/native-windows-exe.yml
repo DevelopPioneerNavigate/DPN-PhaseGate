@@ -1,0 +1,70 @@
+name: PhaseGate Native Windows EXE
+
+on:
+  push:
+    branches:
+      - main
+      - "feature/native-**"
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows-executable:
+    runs-on: windows-latest
+    timeout-minutes: 40
+    steps:
+      - name: Checkout DPN PhaseGate
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install official Qt Widgets and EXE bundler
+        run: python -m pip install -r desktop/requirements.txt
+      - name: Validate scientific records, Python tests and documentation
+        run: |
+          python tools/validate_research.py
+          python -m unittest discover -s tests -v
+          python tools/validate_readme.py
+      - name: Smoke-test real native Qt window and capture screenshot
+        shell: pwsh
+        run: |
+          $env:QT_QPA_PLATFORM = "offscreen"
+          python launch_phasegate.py --smoke-test --screenshot build/PhaseGate-Native-Preview.png
+          if ($LASTEXITCODE -ne 0) { throw "Native Qt smoke test failed" }
+          if (-not (Test-Path "build/PhaseGate-Native-Preview.png")) { throw "Missing screenshot" }
+      - name: Generate DPN PhaseGate Windows application icon
+        run: python tools/generate_desktop_icon.py
+      - name: Build a real standalone Windows EXE
+        shell: pwsh
+        run: |
+          python -m PyInstaller --noconfirm --clean --onefile --windowed --name "DPN-PhaseGate" --icon "build/phasegate.ico" --add-data "data;data" launch_phasegate.py
+          if ($LASTEXITCODE -ne 0) { throw "Windows EXE build failed" }
+          if (-not (Test-Path "dist/DPN-PhaseGate.exe")) { throw "EXE not produced" }
+          Get-Item "dist/DPN-PhaseGate.exe" | Select-Object Name,Length
+      - name: Start and inspect the packaged EXE
+        shell: pwsh
+        run: |
+          $env:QT_QPA_PLATFORM = "offscreen"
+          $exe = (Resolve-Path "dist/DPN-PhaseGate.exe").Path
+          $p = Start-Process -FilePath $exe -ArgumentList "--self-test" -Wait -PassThru
+          if ($p.ExitCode -ne 0) { throw "Packaged EXE failed self-test: $($p.ExitCode)" }
+      - name: Publish the downloadable EXE
+        uses: actions/upload-artifact@v4
+        with:
+          name: DPN-PhaseGate-Native-Windows-v0.6
+          path: dist/DPN-PhaseGate.exe
+          if-no-files-found: error
+          retention-days: 30
+      - name: Publish a screenshot of the actual Qt application
+        uses: actions/upload-artifact@v4
+        with:
+          name: DPN-PhaseGate-Native-Preview-v0.6
+          path: build/PhaseGate-Native-Preview.png
+          if-no-files-found: error
+          retention-days: 30

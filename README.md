@@ -41,7 +41,26 @@ The complete research library now has visual guides, labelled concept blueprints
 
 **[Open the complete PhaseGate Visual Research Atlas →](docs/VISUAL-ATLAS.md)**
 
-### PG-01 Research Console v0.5
+### Native Windows App — PhaseGate Research Operations v0.6
+
+**Major upgrade:** the primary PhaseGate software is now a **true PySide6/Qt native Windows desktop application**, replacing the basic browser console as our development focus. Animated orbital graphics, seven functional screens, diagnostics, source explorer, custom icon, real window controls, research inventory and offline operation. **All station telemetry remains clearly marked as SYNTHETIC**; no portal or connected instruments exist.
+
+| Download | Preview | Engineering |
+|---|---|---|
+| **[Native Windows EXE builds](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/native-windows-exe.yml)** — open a successful run, download the v0.6 artifact, extract and launch DPN-PhaseGate.exe | **[Native UI screenshot artifact](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/native-windows-exe.yml)** — included in successful Windows builds | [Native desktop manual](desktop/README.md) · [Hardware blueprint](docs/engineering/PG01-PROTOTYPE-SPECS-v0.5.md) |
+
+The application is a compiled **standalone .exe**, not a browser wrapper. Existing v0.5 browser code remains under [legacy console/](console/README.md) for historical reference.
+
+For development with Python 3.12+ on Windows:
+
+```powershell
+python -m pip install -r desktop/requirements.txt
+python -m desktop
+```
+
+CI smoke-tests Qt screens and uploads the screenshot plus actual Windows executable after packaging.
+
+### PG-01 Research Console v0.5 — Legacy Browser Prototype
 
 **Now implemented:** a responsive, locally running DPN-themed demonstration console. It shows two **simulated** measurement stations, a moving synthetic chart, project record counts, demo audit events and a clearly marked synthetic-only export. No hardware, cameras, transfer events or actual experiment logging are connected.
 
