@@ -1,4 +1,13 @@
 # PG-01 Paired Evidence Station Architecture v0.2
+
+**[Blueprint gallery](PG-01-BLUEPRINTS.md) · [Implementation plan](PG01-IMPLEMENTATION-PLAN.md) · [Visual Atlas](../VISUAL-ATLAS.md)**
+
+<img src="../../assets/pg01-blueprint-front.svg" width="100%" alt="Station design: concept, not construction-ready"/>
+
+> **Visual guide:** The drawing identifies the independently inspectable enclosure, mass platform, camera and local logger. Dimensions, logic voltages and safety approvals have not been selected.
+
+---
+
 **Maturity:** paper architecture / integration design; **no functioning hardware built**.
 **Purpose:** instrument claims with independent measurements and controlled null trials. **Neither station can physically teleport matter** using this design.
 
