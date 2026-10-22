@@ -135,7 +135,8 @@ class GateField(QWidget):
         p.drawText(QRectF(134,82,102,20),Qt.AlignmentFlag.AlignLeft,"NODE  B  /  SIM")
         p.setPen(qcolor("#E7EFFF",235))
         p.setFont(QFont("Consolas",11,QFont.Weight.Bold))
-        p.drawText(QRectF(-96,-14,192,30),Qt.AlignmentFlag.AlignCenter,"PG // 01")
+        p.drawText(QRectF(-96,-14,192,30),Qt.AlignmentFlag.AlignCenter,
+                   getattr(self,"scene_label","PG // 01"))
         p.setPen(qcolor("#8EA8D3",245))
         p.setFont(QFont("Consolas",8))
         p.drawText(QRectF(-120,19,240,19),Qt.AlignmentFlag.AlignCenter,
@@ -300,3 +301,59 @@ class CommandPalette(QDialog):
         if item is not None:
             self.chosen.emit(item.text())
             self.accept()
+
+
+
+class LabBanner(QFrame):
+    """Compact diagrammatic operations banner shown on technical workstations."""
+    def __init__(self,title,subtext,accent="#66DDEA",parent=None):
+        super().__init__(parent)
+        self.title=title
+        self.subtext=subtext
+        self.accent=accent
+        self.setMinimumHeight(112)
+        self.setMaximumHeight(126)
+        self.setObjectName("labBanner")
+
+    def paintEvent(self,event):
+        p=QPainter(self)
+        p.setRenderHint(QPainter.RenderHint.Antialiasing)
+        w,h=self.width(),self.height()
+        r=QRectF(1,1,w-2,h-2)
+        path=QPainterPath()
+        path.addRoundedRect(r,16,16)
+        background=QLinearGradient(0,0,w,h)
+        background.setColorAt(0,qcolor("#1A2A43"))
+        background.setColorAt(1,qcolor("#232342"))
+        p.fillPath(path,background)
+        p.save()
+        p.setClipPath(path)
+        p.setPen(QPen(qcolor(self.accent,58),1))
+        for x in range(0,w,38):
+            p.drawLine(x,0,x+75,h)
+        # double pulse waves on right: ornamental only, never real instrument data
+        p.setPen(QPen(qcolor(self.accent,205),2))
+        start=w-295
+        for shift in (0,12):
+            previous=None
+            for x in range(0,276,5):
+                y=52+shift+math.sin(x*.10)*11 + math.sin(x*.035)*5
+                now=QPointF(start+x,y)
+                if previous:
+                    p.drawLine(previous,now)
+                previous=now
+        p.restore()
+        p.setPen(QPen(qcolor("#647FA4",220),1))
+        p.drawPath(path)
+        p.setFont(QFont("Segoe UI",15,QFont.Weight.Bold))
+        p.setPen(qcolor("#F1F6FF"))
+        p.drawText(QRectF(22,20,max(260,w-315),32),
+                   Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignVCenter,self.title)
+        p.setFont(QFont("Segoe UI",10))
+        p.setPen(qcolor("#A9BDD7"))
+        p.drawText(QRectF(22,53,max(260,w-310),36),
+                   Qt.TextFlag.TextWordWrap|Qt.AlignmentFlag.AlignTop,self.subtext)
+        p.setFont(QFont("Consolas",9,QFont.Weight.DemiBold))
+        p.setPen(qcolor(self.accent))
+        p.drawText(QRectF(w-186,14,161,19),Qt.AlignmentFlag.AlignRight,"DPN / PG-01   v0.9")
+        p.end()
