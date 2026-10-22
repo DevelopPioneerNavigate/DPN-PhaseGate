@@ -41,6 +41,18 @@ The complete research library now has visual guides, labelled concept blueprints
 
 **[Open the complete PhaseGate Visual Research Atlas →](docs/VISUAL-ATLAS.md)**
 
+### AURORA v0.9 — A Completely Reimagined Native Windows Experience
+
+**A genuine native Qt application, completely redesigned** around DPN's research identity: a luminous 3D-style orbital *concept artwork*, modern mission control, scientific readiness rail, expressive cyan/violet engineering panels, fast page search, immersive fullscreen mode, and stronger styling across the Hardware and Evidence Labs.
+
+| Get v0.9 standalone Windows EXE | Inspect actual native UI screenshots | Design + operating guide |
+|---|---|---|
+| **[Download latest successful AURORA v0.9 EXE build](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/native-windows-exe.yml)** | **[Screenshots appear as v0.9 Preview artifact in the same successful run](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/native-windows-exe.yml)** | [AURORA v0.9 design architecture](docs/design/AURORA-v0.9.md) |
+
+**Functional UX:** `Ctrl+K` opens destination search, `Ctrl+1–9` changes pages, `F11` toggles fullscreen, and on-screen launch actions open real internal workspaces. No web server or browser is used. The program's underlying USB RAW acquisition, unreviewed calibration estimation, local bench captures and witness-custody functions remain intact.
+
+**Science disclosure:** Cinematic energy fields and diagnostic waveforms are explicitly *synthetic artwork*; no physical portal, actual object transfer, synchronized sensor clocks or measured optical evidence has been demonstrated.
+
 ### PG-01 v0.8 — Calibration & Witness Evidence Lab
 
 <img src="assets/pg01-calibration-evidence-v0.8.svg" width="100%" alt="DPN technology visual engineering map showing USB sensor counts, station calibration, independent witness files and separate bench records"/>
