@@ -1,4 +1,16 @@
-# DPN PhaseGate v0.7 — Real USB Instrument Monitoring
+# DPN PhaseGate v0.8 — Calibration, USB Quality & Witness Evidence
+
+[**New: v0.8 Illustrated Calibration + Witness Guide**](../docs/engineering/PG01-CALIBRATION-AND-WITNESS-v0.8.md)
+
+<img src="../assets/pg01-calibration-evidence-v0.8.svg" width="100%" alt="Native PhaseGate calibration, raw USB, witness and unverified evidence pathways"/>
+
+**What is new in the native Windows EXE:** ninth screen **Calibration & Evidence**, station-specific CSV-to-bench-calibration profiles with checksummed parameters and expiration, honest range-limited estimated grams displayed separately from real raw USB counts, USB arrival-jitter diagnostics, and a consent-gated locally selected witness file inventory with SHA-256. Videos are never copied or uploaded and cameras are not activated.
+
+**Get the native Windows v0.8 EXE:** open the [Windows build workflow](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/native-windows-exe.yml) and download the `DPN-PhaseGate-Native-Windows-v0.8` artifact from the latest successful run. The preview artifact includes three actual Qt screenshots (main, Hardware Lab and Calibration & Evidence Lab). Hardware calibration and timing alignment remain physically unverified.
+
+---
+
+## v0.7 Foundation — Real USB Instrument Monitoring
 
 [Main repository](../README.md) · [Firmware and flashing](../firmware/pico2_hx711/README.md) · [PG-01 electrical design review](../docs/engineering/PG01-PROTOTYPE-SPECS-v0.5.md) · [Visual atlas](../docs/VISUAL-ATLAS.md)
 
