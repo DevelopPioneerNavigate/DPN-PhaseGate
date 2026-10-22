@@ -21,6 +21,7 @@ from desktop.model import VERSION, MODE, DISCLAIMER, DOC_BASE, inventory, litera
 from desktop.widgets import C, Surface, Metric, OrbitalGate, Station, TrendChart, text_label, panel_layout
 from desktop.hardware_page import HardwareLab
 from desktop.evidence_page import EvidenceLab
+from desktop.optical_page import OpticalLab
 from desktop.aurora import AuroraHero, PipelineRail, CommandPalette
 
 
@@ -89,7 +90,11 @@ class ResearchWindow(QMainWindow):
             key=QShortcut(QKeySequence("Ctrl+"+str(i)),self)
             key.activated.connect(lambda label=name:self.navigate(label))
             self._keyboard_shortcuts.append(key)
-
+        if len(self.pages)==10:
+            key=QShortcut(QKeySequence("Ctrl+0"),self)
+            key.activated.connect(lambda:self.navigate(self.pages[9]))
+            self._keyboard_shortcuts.append(key)
+ 
     def apply_theme(self):
         self.setStyleSheet("""
         QMainWindow { background:#080E1A; }
@@ -168,6 +173,7 @@ class ResearchWindow(QMainWindow):
         rail_col.addWidget(text_label("  NAVIGATION  /  CTRL + K",10,"muted",True))
         for name,ico in [
             ("Command Center","◈"),("Station Matrix","◎"),("Hardware Lab","▦"),
+            ("Optical Evidence","◉"),
             ("Calibration & Evidence","◇"),
             ("Signal Analytics","⌁"),("Research Vault","▣"),
             ("Experiment Ledger","▤"),("System Diagnostics","⚙"),
@@ -219,6 +225,7 @@ class ResearchWindow(QMainWindow):
             ("Command Center",self.overview_page()),
             ("Station Matrix",self.stations_page()),
             ("Hardware Lab",self.hardware_page()),
+            ("Optical Evidence",self.optical_page()),
             ("Calibration & Evidence",self.evidence_page()),
             ("Signal Analytics",self.analytics_page()),
             ("Research Vault",self.research_page()),
@@ -362,6 +369,10 @@ class ResearchWindow(QMainWindow):
     def hardware_page(self):
         self.hardware_lab = HardwareLab()
         return self.hardware_lab
+
+    def optical_page(self):
+        self.optical_lab=OpticalLab()
+        return self.optical_lab
 
     def evidence_page(self):
         self.evidence_lab=EvidenceLab()
@@ -634,6 +645,8 @@ class ResearchWindow(QMainWindow):
             self.hardware_lab.shutdown()
         if hasattr(self,"evidence_lab"):
             self.evidence_lab.shutdown()
+        if hasattr(self,"optical_lab"):
+            self.optical_lab.shutdown()
         super().closeEvent(event)
 
 
