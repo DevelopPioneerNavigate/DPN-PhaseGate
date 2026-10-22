@@ -4,6 +4,8 @@
 
 > **Design boundary:** PhaseGate has not built a physical teleportation mechanism, demonstrated physical-object transport, or connected/validated cameras during this software development. This program is for safe bench observation and data integrity, not matter transfer.
 
+<img src="../../assets/pg01-optical-evidence-v1.0.svg" width="100%" alt="V1.0 native optical evidence system: two operator-permission cameras, a Qt preview, local bench media hashes and non-sync timing indicators"/>
+
 ## Optical system block diagram
 
 ```text
