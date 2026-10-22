@@ -1,4 +1,13 @@
 # PhaseGate research data
+
+**[Visual Atlas](../docs/VISUAL-ATLAS.md) · [Evidence workflow](../docs/physics/EVIDENCE-WORKFLOW.md) · [Run manifest](experiments/manifest.json)**
+
+<img src="../assets/pg01-dataflow-diagram.svg" width="100%" alt="Raw evidence and manifest lifecycle"/>
+
+> **Visual guide:** Hash evidence helps detect changes but cannot prove an original file was truthful. Real experimental runs and synthetic examples remain separate.
+
+---
+
 - literature/sources.json: source IDs, bibliographies, supported narrow claims and explicit non-claims.
 - hypotheses/hypotheses.json: falsifiable statement/prediction with source cross-references.
 - experiments/manifest.json: **actual conducted runs only** (starts with zero).
