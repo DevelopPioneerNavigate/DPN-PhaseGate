@@ -45,7 +45,7 @@ The complete research library now has visual guides, labelled concept blueprints
 
 <img src="assets/pg01-reference-event-v1.1.svg" width="100%" alt="DPN native reference event analysis workflow comparing hash-verified dual-camera light changes without claiming physical synchronization"/>
 
-**New eleventh native screen:** reference-light brightness detection on **existing** consented A/B BENCH camera captures, audit of original frame hashes, original-frame-index charts, honest host-after-read interval brackets and separate BENCH-only analysis exports. The app still **does not** infer a synchronized camera exposure, authenticate the original scene or demonstrate physical-object transfer.
+**New eleventh native screen:** reference-light brightness detection on **existing** consented A/B BENCH camera captures, audit of original frame hashes, original-frame-index charts, host-after-read interval brackets **only after an explicit same-host/no-reboot declaration and overlapping capture check**, and separate BENCH-only analysis exports. The app still **does not** infer a synchronized camera exposure, authenticate the original scene or demonstrate physical-object transfer.
 
 | Windows standalone v1.1 | Guided evidence procedure | Reference analysis source |
 |---|---|---|
