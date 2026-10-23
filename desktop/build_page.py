@@ -22,6 +22,7 @@ from desktop.build_plan import (
 )
 from desktop.widgets import Surface, text_label, panel_layout
 from desktop.window_helpers import button
+from desktop.manufacturing import evaluate_project, cutlist_report
 
 
 class TwinGateDrawing(QWidget):
@@ -177,6 +178,7 @@ class BuildLab(QWidget):
         self._create_parts_tab()
         self._create_tasks_tab()
         self._create_release_tab()
+        self._create_geometry_tab()
 
     def _table(self,headers):
         t=QTableWidget()
@@ -244,6 +246,53 @@ class BuildLab(QWidget):
                                "This app cannot sign off safety or experimental physics. "
                                "No entries are added to the scientific experiment manifest.",11))
         self.tabs.addTab(host,"03  ACCEPTANCE GATES")
+
+    def _create_geometry_tab(self):
+        host=QWidget()
+        v=QVBoxLayout(host)
+        v.setSpacing(8)
+        v.addWidget(text_label("MECHANICAL QA / PRELIMINARY DIMENSIONAL FIT CHECK",12,"cyan",True))
+        v.addWidget(text_label(
+            "Numerical checks confirm bounding geometry only. They are NOT structural "
+            "FEA, fabrication approval, machine guarding certification or an "
+            "electrical signoff.",11,"muted"))
+        self.clearance_table=self._table(
+            ["Check","Interface / clearance","Calculated","Required","Result"])
+        self.clearance_table.setColumnWidth(0,67)
+        self.clearance_table.setColumnWidth(1,245)
+        self.clearance_table.setColumnWidth(2,110)
+        self.clearance_table.setColumnWidth(3,95)
+        v.addWidget(self.clearance_table)
+        self.clearance_summary=text_label("CAD geometry / waiting",11,"amber",True)
+        v.addWidget(self.clearance_summary)
+        v.addWidget(text_label(
+            "G0 HOLD: independently check loads, stability, material, fasteners, camera"
+            " mounts, low-voltage wiring and protective stops BEFORE manufacturing.",11))
+        controls=QHBoxLayout()
+        rerun=button("RE-RUN GEOMETRIC REVIEW",True)
+        rerun.clicked.connect(self.refresh_geometry)
+        controls.addWidget(rerun)
+        controls.addStretch()
+        v.addLayout(controls)
+        self.tabs.addTab(host,"04  MECHANICAL QA")
+        self.refresh_geometry()
+
+    def refresh_geometry(self):
+        try:
+            result=evaluate_project()
+        except (OSError,ValueError) as exc:
+            self.clearance_summary.setText("DESIGN BLOCKED: "+str(exc)[:140])
+            self.clearance_table.setRowCount(0)
+            return
+        self.clearance_table.setRowCount(len(result["checks"]))
+        for i,c in enumerate(result["checks"]):
+            values=[c["id"],c["title"],f"{c['value_mm']:.1f} mm",
+                    f">= {c['threshold_mm']:.1f} mm",
+                    "FIT PASS" if c["pass"] else "BLOCK DESIGN"]
+            for j,value in enumerate(values):
+                self.clearance_table.setItem(i,j,self._cell(value))
+        self.clearance_summary.setText(
+            result["status"]+" / STRUCTURAL AND ELECTRICAL SIGNOFF STILL PENDING")
 
     @staticmethod
     def _cell(value):
