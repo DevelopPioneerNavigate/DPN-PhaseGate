@@ -16,6 +16,7 @@ from pathlib import Path
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from desktop.first_article import read_plan, inspection_csv
+from desktop.assembly_model import read_assembly
 from desktop.build_plan import read_progress
 
 def escape(t):
@@ -122,8 +123,38 @@ def blank_template(plan):
     return rows.getvalue()
 
 
+def trial_fastener_schedule(assembly):
+    """Provisional *counts* from physical interface manifest, no fastener approval."""
+    out=io.StringIO()
+    writer=csv.writer(out)
+    writer.writerow(["joint","candidate_part","number_of_trial_interfaces",
+                     "holes_each","candidate_clearance_d_mm","hole_pitch_mm",
+                     "nominal_hole_count","thread_selection","material_grade",
+                     "thread_engagement","torque_setting","approval"])
+    candidates={"joint_splice":"UNSELECTED M3-SCALE TRIAL",
+                "rail_clamp":"UNSELECTED M4-SCALE TRIAL",
+                "cable_clip":"UNSELECTED M3-SCALE TRIAL"}
+    for interface in assembly["interfaces"]:
+        part=interface["trial_part"]
+        import re
+        match=re.match(r"^\s*(\d+)\s+",interface["quantity"])
+        if not match:
+            raise ValueError("joint count must be explicit: "+part)
+        count=int(match.group(1))
+        if not 1<=count<=200 or part not in candidates:
+            raise ValueError("joint schedule outside revised physical prototype")
+        writer.writerow([interface["id"],part,count,2,
+                         interface["nominal_hole_diameter_mm"],interface["hole_pitch_mm"]
+                         if interface["hole_pitch_mm"] is not None else "NOT APPLICABLE",
+                         count*2,candidates[part],"REVIEW REQUIRED",
+                         "MEASURE ACTUAL FASTENER AND MATING PART",
+                         "NO TORQUE VALUE APPROVED","NOT APPROVED FOR LOAD"])
+    return out.getvalue()
+
+
 def export_drawings(destination,root=None):
     plan=read_plan(root)
+    assembly=read_assembly(root)
     target=Path(destination)
     target.mkdir(parents=True,exist_ok=True)
     result=[]
@@ -136,6 +167,10 @@ def export_drawings(destination,root=None):
     with output.open("x",encoding="utf-8-sig",newline="") as f:
         f.write(blank_template(plan))
     result.append(output)
+    schedule=target/"PG01-Trial-Interface-Fastener-Schedule.csv"
+    with schedule.open("x",encoding="utf-8-sig",newline="") as f:
+        f.write(trial_fastener_schedule(assembly))
+    result.append(schedule)
     return result
 
 
