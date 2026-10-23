@@ -25,6 +25,7 @@ from desktop.optical_page import OpticalLab
 from desktop.reference_page import ReferenceEventLab
 from desktop.aurora import AuroraHero, PipelineRail, CommandPalette
 from desktop.nexus import NexusDeck
+from desktop.build_page import BuildLab
 
 
 def ui_button(text, secondary=False):
@@ -185,6 +186,7 @@ class ResearchWindow(QMainWindow):
         screens=[
             ("Command Center","01","COMMAND\nCENTER"),
             ("Station Matrix","02","STATION\nMATRIX"),
+            ("Gate Engineering","E","GATE\nENGINEERING"),
             ("Hardware Lab","03","HARDWARE\nLAB"),
             ("Optical Evidence","04","OPTICAL\nEVIDENCE"),
             ("Reference Events","05","REFERENCE\nEVENTS"),
@@ -257,6 +259,7 @@ class ResearchWindow(QMainWindow):
         pages=[
             ("Command Center",self.overview_page()),
             ("Station Matrix",self.stations_page()),
+            ("Gate Engineering",self.build_page()),
             ("Hardware Lab",self.hardware_page()),
             ("Optical Evidence",self.optical_page()),
             ("Reference Events",self.reference_page()),
@@ -336,6 +339,10 @@ class ResearchWindow(QMainWindow):
         col.addWidget(card)
         col.addStretch()
         return host
+
+    def build_page(self):
+        self.build_lab=BuildLab()
+        return self.build_lab
 
     def hardware_page(self):
         self.hardware_lab = HardwareLab()
