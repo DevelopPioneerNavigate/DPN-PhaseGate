@@ -1,3 +1,17 @@
+# DPN PhaseGate v1.2 — NEXUS Native Windows Mission Cockpit
+
+**Complete native Qt visual reconstruction:** new compact station-workspace dock, dramatic procedural concept-field illustration, interactive operator console, condensed research data row, permanent safety footer and a redesigned Station Matrix. The application still has all 11 fully functional workspaces and a standalone EXE—**no web browser or Python installation required** at runtime.
+
+[**Visual architecture / keyboard navigation →**](../docs/design/NEXUS-v1.2.md) · [**Download latest successful Windows v1.2 EXE →**](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/native-windows-exe.yml)
+
+Use `Ctrl+K` for workspace search, `Ctrl+B` to show or hide the dock, or `F11` to present NEXUS fullscreen. Existing USB port/camera features remain deliberately opt-in, and research data categories remain separated.
+
+**Truth in visuals:** Glowing NEXUS structure and station fields are synthetic concept design, not a physical portal or a sensor waveform. There are still no verified object-transfer experiments.
+
+---
+
+## v1.1 optical research foundation
+
 # DPN PhaseGate v1.1 — Reference Event & Timing Analysis
 
 <img src="../assets/pg01-reference-event-v1.1.svg" width="100%" alt="DPN Technology PG-01 reference flash event analysis system"/>
