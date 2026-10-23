@@ -155,7 +155,9 @@ class NexusStage(QWidget):
             (10,"#72E6FA",7,32),(26,"#C18BFF",4,48),
             (43,"#57C9F1",3,30),(5,"#A76FFF",3,65)]):
             r=QRectF(222+offset,76+offset*.72,319-2*offset,328-1.44*offset)
-            p.setPen(QPen(ink(color,250),wide,cap=Qt.PenCapStyle.RoundCap))
+            arc_pen=QPen(ink(color,250),wide)
+            arc_pen.setCapStyle(Qt.PenCapStyle.RoundCap)
+            p.setPen(arc_pen)
             p.drawArc(r,int((t*(1 if j%2==0 else -.8)+j*85)*16),
                       int(theta*16))
         # vertical voltage-free decorative ribs around the ring
