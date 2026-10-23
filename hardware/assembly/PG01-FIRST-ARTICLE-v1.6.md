@@ -23,7 +23,7 @@ Rev B's earlier rail clamp used 25 mm hole pitch. Given its 21 mm central slot a
 
 ## Produce real, printable vector sheets
 
-The GitHub CAD workflow renders candidate STL parts and publishes a bundle with four **SVG inspection drawings**, a blank CSV measurement register, source JSON, OpenSCAD code, proposed BOM and integrity checks. The drawings include schematic geometry, source-derived nominal dimensions and specimen/operator/equipment fields. They are review drawings, not fully dimensioned fabrication drawings with a validated tolerance stack.
+The GitHub CAD workflow renders candidate STL parts and publishes a bundle with four **SVG inspection drawings**, a blank CSV measurement register, source JSON, OpenSCAD code, proposed BOM and integrity checks. It also generates a provisional **joint and fastener count CSV** directly from the source interface definitions: 12 two-hole ring splice interfaces (24 holes), 4 two-hole rail clamps (8 holes), and 4 two-hole cable clips (8 holes). Screw selection, material grade, washer/locking method, thread engagement and torque remain **unselected, unapproved** and must be resolved by a qualified mechanical reviewer before any assembled load. The drawings include schematic geometry, source-derived nominal dimensions and specimen/operator/equipment fields. They are review drawings, not fully dimensioned fabrication drawings with a validated tolerance stack.
 
 ```bash
 python tools/export_pg01_inspection_drawings.py --check
