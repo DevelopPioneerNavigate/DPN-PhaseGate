@@ -1,0 +1,378 @@
+{
+  "schema": "DPN-PG01-RIG-1",
+  "revision": "v0.1-design",
+  "program": "DPN PhaseGate PG-01",
+  "name": "Dual Station Metrology Rig",
+  "concept_reference": "assets/concepts/twin-gate-concept-design.png",
+  "maturity": "engineering design / no fabricated parts or qualified assembly",
+  "scope": "Two independent instrumented frames connected by a manually-operated transfer rail for measurement controls. No electromagnetic portal, levitation or matter transfer capability claimed.",
+  "dimensions_mm": {
+    "gate_outer_diameter": 360,
+    "clear_aperture_diameter": 260,
+    "gate_frame_thickness": 18,
+    "gate_center_height": 270,
+    "gate_centers_separation": 800,
+    "base_width": 420,
+    "base_depth": 270,
+    "rail_length": 1200,
+    "rail_travel_design_goal": 680,
+    "shuttle_platform_width": 100,
+    "shuttle_platform_length": 130
+  },
+  "design_limits": {
+    "supply": "isolated USB / 5V maximum nominal at the concept stage; verify every interface before power",
+    "gpio_max_nominal_v": 3.3,
+    "rail_operation": "manual / unpowered",
+    "camera_count": 2,
+    "load_cell_range_kg": "0–5 by selected sensor rating, not accuracy",
+    "payload_nominal_grams": "20–250 subject to validated load cell and carriage ratings",
+    "ring_effects": "unpowered, replaceable architectural lighting only after independent electrical review",
+    "portal_field": "undefined; no experimentally established field-generation principle"
+  },
+  "stations": [
+    {
+      "id": "A",
+      "role": "independent sensor platform at rail origin",
+      "evidence_channels": [
+        "HX711 raw load-cell counts",
+        "consented USB camera frames",
+        "host arrival timestamps",
+        "manual reference-mass test"
+      ]
+    },
+    {
+      "id": "B",
+      "role": "independent sensor platform at rail destination",
+      "evidence_channels": [
+        "HX711 raw load-cell counts",
+        "consented USB camera frames",
+        "host arrival timestamps",
+        "manual reference-mass test"
+      ]
+    }
+  ],
+  "components": [
+    {
+      "id": "PG-MECH-001",
+      "name": "Extrusion chassis + leveling feet",
+      "quantity": 1,
+      "unit": "set",
+      "stage": "structure",
+      "category": "Mechanical",
+      "specification": "20×20 mm T-slot extrusion; two station mounts and central rail anchors; verify cutting, brackets, bolt patterns and measured stiffness",
+      "procurement": "not purchased"
+    },
+    {
+      "id": "PG-MECH-002",
+      "name": "Gate A and B modular annular frames",
+      "quantity": 2,
+      "unit": "set",
+      "stage": "structure",
+      "category": "Mechanical",
+      "specification": "OD 360 mm / ID 260 mm / nominal plate 18 mm; use 6 printable segments or CNC-cut annular plates; non-load-bearing optical/sensor mounts",
+      "procurement": "not purchased"
+    },
+    {
+      "id": "PG-MECH-003",
+      "name": "Linear guide/rail and manually operated carriage",
+      "quantity": 1,
+      "unit": "set",
+      "stage": "motion",
+      "category": "Mechanical",
+      "specification": "1200 mm dual guide nominal; manually operated carriage with 680 mm design travel, hard stops and strain relief; no motor at this stage",
+      "procurement": "not purchased"
+    },
+    {
+      "id": "PG-MECH-004",
+      "name": "Payload tray and removable datum fixtures",
+      "quantity": 2,
+      "unit": "set",
+      "stage": "motion",
+      "category": "Mechanical",
+      "specification": "100×130 mm carriage tray plus reference fixture; ensure sensor platforms are isolated from rail mechanical loading",
+      "procurement": "not purchased"
+    },
+    {
+      "id": "PG-SENS-001",
+      "name": "Matched low-voltage load-cell assembly",
+      "quantity": 2,
+      "unit": "unit",
+      "stage": "instrumentation",
+      "category": "Sensor",
+      "specification": "Manufacturer-documented 5 kg rated load cell with verified mechanical mounting; raw readings only until calibration",
+      "procurement": "not purchased"
+    },
+    {
+      "id": "PG-SENS-002",
+      "name": "HX711 breakout, revision individually verified",
+      "quantity": 2,
+      "unit": "unit",
+      "stage": "instrumentation",
+      "category": "Sensor",
+      "specification": "Confirm analog VCC, digital VDD and DOUT logic levels; NEVER tie 5V digital output to Pico GPIO",
+      "procurement": "not purchased"
+    },
+    {
+      "id": "PG-CONT-001",
+      "name": "Raspberry Pi Pico 2 microcontroller",
+      "quantity": 2,
+      "unit": "unit",
+      "stage": "instrumentation",
+      "category": "Controller",
+      "specification": "MicroPython firmware with distinct A/B station ID, read-only PG1 USB frame output; 3.3V-safe GPIO",
+      "procurement": "not purchased"
+    },
+    {
+      "id": "PG-OPT-001",
+      "name": "USB cameras with stable mount",
+      "quantity": 2,
+      "unit": "unit",
+      "stage": "optical",
+      "category": "Optics",
+      "specification": "Known local USB camera devices, lockable mount, consented preview, bench JPEG recording; controlled exposure required for metrology",
+      "procurement": "not purchased"
+    },
+    {
+      "id": "PG-OPT-002",
+      "name": "Diffuse low-intensity visible reference lamp",
+      "quantity": 1,
+      "unit": "unit",
+      "stage": "optical",
+      "category": "Optics",
+      "specification": "Commercial low-voltage diffuse LED used as visual reference only, not a laser or experimental high-energy emitter",
+      "procurement": "not purchased"
+    },
+    {
+      "id": "PG-SAFE-001",
+      "name": "Transparent guard, manual hard stops and cable channel",
+      "quantity": 1,
+      "unit": "set",
+      "stage": "safety",
+      "category": "Safety",
+      "specification": "Covers pinch points and restricts access to moving carriage; manually operated; labelled access control",
+      "procurement": "not purchased"
+    },
+    {
+      "id": "PG-PC-001",
+      "name": "Windows workstation and isolated USB hub",
+      "quantity": 1,
+      "unit": "set",
+      "stage": "software",
+      "category": "Computing",
+      "specification": "Run PhaseGate NEXUS native EXE; check USB camera bandwidth, permissions, clock limitations and disk capacity",
+      "procurement": "not purchased"
+    },
+    {
+      "id": "PG-MET-001",
+      "name": "Traceable calibration reference masses",
+      "quantity": 1,
+      "unit": "set",
+      "stage": "metrology",
+      "category": "Metrology",
+      "specification": "3 or more standards with documented uncertainty, repeated trials, as-left/as-found and environmental notes",
+      "procurement": "not purchased"
+    }
+  ],
+  "work_packages": [
+    {
+      "id": "WP-01",
+      "name": "Design freeze: dimensions, tolerances, loads",
+      "stage": "design",
+      "depends_on": [],
+      "deliverables": [
+        "dimensioned CAD",
+        "drawing revision",
+        "risk review"
+      ],
+      "acceptance": "Review CAD clearances, inspect mounting tolerances and list deviations",
+      "owner": "unassigned",
+      "status": "planned"
+    },
+    {
+      "id": "WP-02",
+      "name": "Safety and supply review",
+      "stage": "safety",
+      "depends_on": [
+        "WP-01"
+      ],
+      "deliverables": [
+        "wiring approval",
+        "power budget",
+        "guard and stop checklist"
+      ],
+      "acceptance": "Qualified low-voltage electronics reviewer approves board revision, GPIO levels and isolation",
+      "owner": "unassigned",
+      "status": "planned"
+    },
+    {
+      "id": "WP-03",
+      "name": "Fabricate two unpowered gate frames",
+      "stage": "structure",
+      "depends_on": [
+        "WP-01"
+      ],
+      "deliverables": [
+        "A/B ring components",
+        "as-built measurements",
+        "fastener record"
+      ],
+      "acceptance": "Two independent stable frames, measured ID/OD, supported and square; no energized aperture",
+      "owner": "unassigned",
+      "status": "planned"
+    },
+    {
+      "id": "WP-04",
+      "name": "Install carriage rail and passive controls",
+      "stage": "motion",
+      "depends_on": [
+        "WP-02",
+        "WP-03"
+      ],
+      "deliverables": [
+        "manual shuttle",
+        "travel-limit record",
+        "guard inspection"
+      ],
+      "acceptance": "Pass manual motion/pinch clearance tests and rail hard-stop inspection",
+      "owner": "unassigned",
+      "status": "planned"
+    },
+    {
+      "id": "WP-05",
+      "name": "Bring up isolated raw sensors at A/B",
+      "stage": "instrumentation",
+      "depends_on": [
+        "WP-02",
+        "WP-03"
+      ],
+      "deliverables": [
+        "wiring map",
+        "board IDs and COM mapping",
+        "raw count logs"
+      ],
+      "acceptance": "Bounded serial data and fault handling demonstrated with a known safe test load",
+      "owner": "unassigned",
+      "status": "planned"
+    },
+    {
+      "id": "WP-06",
+      "name": "Characterize scale metrology",
+      "stage": "metrology",
+      "depends_on": [
+        "WP-05"
+      ],
+      "deliverables": [
+        "reference certificates",
+        "multi-point repeated mass runs",
+        "uncertainty report"
+      ],
+      "acceptance": "Independent reviewer evaluates bias, drift, hysteresis, noise and calibration range",
+      "owner": "unassigned",
+      "status": "planned"
+    },
+    {
+      "id": "WP-07",
+      "name": "Attach consenting optical witness stations",
+      "stage": "optical",
+      "depends_on": [
+        "WP-02",
+        "WP-03"
+      ],
+      "deliverables": [
+        "camera mount layout",
+        "privacy signoff",
+        "bench capture hashes"
+      ],
+      "acceptance": "Both images have unobstructed view of reference source; recorded time limitations declared",
+      "owner": "unassigned",
+      "status": "planned"
+    },
+    {
+      "id": "WP-08",
+      "name": "Run blinded controls and manual-transfer baseline",
+      "stage": "experiments",
+      "depends_on": [
+        "WP-04",
+        "WP-06",
+        "WP-07"
+      ],
+      "deliverables": [
+        "control plan",
+        "null and sham trials",
+        "raw archived bench results"
+      ],
+      "acceptance": "Independent witness verifies conventional shuttle transfers vs no-move controls; no unsupported transport claim",
+      "owner": "unassigned",
+      "status": "planned"
+    },
+    {
+      "id": "WP-09",
+      "name": "Physics feasibility research and falsifiable proposal",
+      "stage": "science",
+      "depends_on": [
+        "WP-08"
+      ],
+      "deliverables": [
+        "specific proposed interaction mechanism",
+        "energy/momentum budget",
+        "falsifiable predicted observations",
+        "independent review"
+      ],
+      "acceptance": "Scientific evidence supports testing a specific effect before any field-emitter prototype is commissioned",
+      "owner": "unassigned",
+      "status": "planned"
+    }
+  ],
+  "gates": [
+    {
+      "id": "G0",
+      "name": "CAD and safety reviewed",
+      "requires": [
+        "WP-01",
+        "WP-02"
+      ]
+    },
+    {
+      "id": "G1",
+      "name": "Bench mechanically assembled",
+      "requires": [
+        "WP-03",
+        "WP-04"
+      ]
+    },
+    {
+      "id": "G2",
+      "name": "Sensors calibrated and cameras qualified",
+      "requires": [
+        "WP-05",
+        "WP-06",
+        "WP-07"
+      ]
+    },
+    {
+      "id": "G3",
+      "name": "Blinded reference trials independently reviewed",
+      "requires": [
+        "WP-08"
+      ]
+    },
+    {
+      "id": "G4",
+      "name": "New physics mechanism review",
+      "requires": [
+        "WP-09"
+      ]
+    }
+  ],
+  "citations": {
+    "approved_experiments": "data/experiments/manifest.json",
+    "sensor_firmware": "firmware/pico2_hx711/main.py",
+    "optical_integrity": "desktop/optical.py",
+    "reference_analysis": "desktop/reference_event.py"
+  },
+  "caveats": [
+    "Dimensions are tentative prototype envelope values, not approved fabrication tolerances or procurement specifications.",
+    "Concept render shows idealized energetic apertures and speculative coil/power hardware; those portions are not included in the bench build.",
+    "No mechanical or electrical work is reported completed and no actual equipment has been acquired."
+  ]
+}
