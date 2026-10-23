@@ -26,7 +26,7 @@ These checks are **numerical envelope comparisons**, not a true swept-solid inte
 | Interface | Trial CAD part | Proposed hole detail | Approval needed before manufacture |
 |---|---|---|---|
 | J-01 segment joint between six ring segments | `PG01-RevB-Joint-Splice.stl` | 3.4 mm candidate through holes, 22 mm spacing | Actual approved fastener, insert geometry, loads and material |
-| J-02 rail/body attachment | `PG01-RevB-Rail-Clamp.stl` | 4.5 mm candidate holes, 25 mm spacing | Actual purchased rail profile, bolt engagement and mechanical forces |
+| J-02 rail/body attachment | `PG01-RevB-Rail-Clamp.stl` | 4.5 mm candidate holes, **34 mm spacing** (corrected in v1.6 to avoid overlapping the clamp slot) | Actual purchased rail profile, bolt engagement and mechanical forces |
 | J-03 strain-relieved low-voltage cable | `PG01-RevB-Cable-Clip.stl` | 3.4 mm attachment clearance | USB bend radius, snag/abrasion protection and insulation |
 
 Older ring, camera-bracket and tray STL models remain bundled for continuity; the Rev B CAD adds **three additional trial parts**. All six STLs are compiled with **free OpenSCAD** on GitHub Actions and automatically checked for finite triangle coordinates and coarse mesh envelopes.
