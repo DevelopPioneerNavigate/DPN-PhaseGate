@@ -285,6 +285,7 @@ class AssemblyStudio(QWidget):
         v.addWidget(self.checks)
         root.addWidget(statuses)
         status=fit_checks(self.design,self.rig["dimensions_mm"])
+        self.fits=status
         self.checks.setText("    •    ".join(
             f"{'PASS' if check['passed'] else 'HOLD'} {check['name']}: "
             f"{check['measured']:.1f}mm (goal ≥{check['target']:.1f}mm)"
