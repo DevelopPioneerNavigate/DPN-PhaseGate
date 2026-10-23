@@ -8,6 +8,8 @@ import unittest
 from pathlib import Path
 
 from desktop.build_plan import RigError, read_progress, save_progress
+from desktop.assembly_model import read_assembly
+from tools.export_pg01_inspection_drawings import trial_fastener_schedule, specimen_svg, blank_template
 from desktop.first_article import (
     read_plan, validate_plan, record_pair, review_specimen,
     inspection_csv, specimen_key, PLAN_SCHEMA
@@ -26,6 +28,24 @@ class TrialInspectionTests(unittest.TestCase):
         self.assertEqual(sum(len(p["checks"]) for p in plan["items"]),19)
         self.assertEqual(plan["items"][1]["checks"][3]["nominal_mm"],34)
         self.assertFalse(plan["inspection_policy"]["independent_approval"])
+
+    def test_proposed_fastener_schedule_never_approves_load_or_torque(self):
+        rows=list(csv.DictReader(io.StringIO(trial_fastener_schedule(read_assembly()))))
+        self.assertEqual(len(rows),3)
+        self.assertEqual(rows[1]["hole_pitch_mm"],"34")
+        self.assertTrue(all(x["torque_setting"]=="NO TORQUE VALUE APPROVED"
+                            for x in rows))
+        self.assertTrue(all(x["approval"]=="NOT APPROVED FOR LOAD" for x in rows))
+        self.assertEqual(sum(int(x["nominal_hole_count"]) for x in rows),40)
+
+    def test_generated_drawing_is_valid_svg_with_trial_hold(self):
+        from xml.etree import ElementTree as ET
+        raw=specimen_svg(self.plan["items"][0])
+        self.assertEqual(ET.fromstring(raw).tag,
+                         "{http://www.w3.org/2000/svg}svg")
+        self.assertIn("NOT APPROVED FOR FABRICATION",raw)
+        self.assertEqual(len(list(csv.DictReader(
+            io.StringIO(blank_template(self.plan))))),19)
 
     def test_empty_is_hold_not_pass(self):
         r=review_specimen(self.plan,{}, "FA-01","TEST-001")
