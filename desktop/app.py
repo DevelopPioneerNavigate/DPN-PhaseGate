@@ -12,6 +12,8 @@ def main(argv=None):
     parser.add_argument("--screenshot", type=Path, default=None)
     parser.add_argument("--screenshot-evidence", type=Path, default=None,
                         help="capture Calibration and Evidence Lab native page")
+    parser.add_argument("--screenshot-assembly", type=Path, default=None,
+                        help="capture actual interactive Qt Assembly Studio design page")
     parser.add_argument("--screenshot-build", type=Path, default=None,
                         help="capture real dimensioned PG-01 native engineering workbench")
     parser.add_argument("--screenshot-stations", type=Path, default=None,
@@ -60,7 +62,7 @@ def main(argv=None):
             if (window.rail.width() > 190 or
                 not window.nexus_deck.stage.isVisible() or
                 window.nexus_deck.stage.width() < 260 or
-                len(window.nav) != len(window.pages) or len(window.pages)!=12):
+                len(window.nav) != len(window.pages) or len(window.pages)!=13):
                 result = 9
             if args.screenshot:
                 try:
@@ -144,6 +146,27 @@ def main(argv=None):
                         raise OSError("Missing build engineering manifest in runtime")
                 except (OSError,ValueError):
                     result = 11
+            if args.screenshot_assembly:
+                try:
+                    window.navigate("Assembly Studio")
+                    application.processEvents()
+                    studio=window.assembly_studio
+                    if (len(studio.design["assemblies"])<12 or
+                        not all(c["passed"] for c in studio.fits) or
+                        not studio.canvas.isVisible()):
+                        raise OSError("Assembly Studio failed geometry or native view smoke")
+                    studio.canvas.set_explode(38)
+                    studio.choose_part("B-RING")
+                    application.processEvents()
+                    args.screenshot_assembly.parent.mkdir(parents=True,exist_ok=True)
+                    if not window.grab().save(str(args.screenshot_assembly),"PNG"):
+                        raise OSError("Assembly native screenshot missing")
+                    if args.screenshot_assembly.stat().st_size<1000:
+                        raise OSError("Assembly native screenshot empty")
+                    if window.optical_lab.workers:
+                        raise OSError("Assembly view activated a camera")
+                except (OSError,ValueError):
+                    result=12
             window.close()
             application.exit(result)
         QTimer.singleShot(900, complete)

@@ -41,6 +41,18 @@ The complete research library now has visual guides, labelled concept blueprints
 
 **[Open the complete PhaseGate Visual Research Atlas →](docs/VISUAL-ATLAS.md)**
 
+### PhaseGate v1.5 — Interactive Twin-Gate Assembly Studio
+
+**New native 13th workspace: ASSEMBLY STUDIO.** PhaseGate now renders all 15 real proposed mechanical part envelopes from revisioned XYZ coordinates rather than copying an illustration. Inspect Gate A/B segments, base mounts, the guided carriage, optics, routed low-voltage cables, sensor fixtures and hard stops with selectable **isometric/front/top** projections, six layer controls and an exploded assembly slider.
+
+A mechanical design review also caught and corrected a **real Rev A geometry flaw**: 680 mm of planned travel cannot reach stations 800 mm apart. Rev B uses **900 mm travel** and lifts the passive rail through the ring opening. Four executable clearance checks must pass before software will accept a Rev B mechanical model.
+
+| Native v1.5 EXE | Six trial-print CAD/STL parts | Dimensional design and safety limits |
+|---|---|---|
+| [Download newest Windows EXE build](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/native-windows-exe.yml) | [OpenSCAD CAD / BOM GitHub artifacts](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/pg01-cad.yml) | [PG-01 Rev B Mechanical Interfaces](hardware/assembly/PG01-REV-B-INTERFACES-v1.5.md) |
+
+The 3D-style Qt drawing is an interactive engineering study, **not a precision FEA/solid-model viewer**, and source inspection checks aren't permission to fabricate or energize equipment. No parts are known assembled or physically measured.
+
 ### PG-01 v1.4 — Dimensional Inspection & Fabrication Readiness
 
 The native **Gate Engineering Lab** now includes a fourth tab, **FIT & RECEIVING**, with five candidate dimension checks, operator attribution, evidence notes, part receiving states and local tamper-evident audit entries. No purchases or fabrication are marked completed; the dimensions and tolerances are preliminary review thresholds, not a manufacturing approval.

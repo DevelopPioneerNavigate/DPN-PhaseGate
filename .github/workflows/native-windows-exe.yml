@@ -40,7 +40,7 @@ jobs:
           $env:QT_QPA_PLATFORM = "windows"
           python -c 'from PySide6.QtWidgets import QApplication; from PySide6.QtGui import QFontDatabase; app=QApplication([]); print("Native Qt Windows font families:", len(QFontDatabase.families()))'
           if ($LASTEXITCODE -ne 0) { throw "Native Windows Qt font preflight failed" }
-          python launch_phasegate.py --smoke-test --screenshot build/PhaseGate-Native-Preview.png --screenshot-hardware build/PhaseGate-HardwareLab-Preview.png --screenshot-evidence build/PhaseGate-EvidenceLab-Preview.png --screenshot-optical build/PhaseGate-OpticalLab-Preview.png --screenshot-reference build/PhaseGate-ReferenceLab-Preview.png --screenshot-stations build/PhaseGate-StationMatrix-Preview.png --screenshot-build build/PhaseGate-Engineering-Preview.png
+          python launch_phasegate.py --smoke-test --screenshot build/PhaseGate-Native-Preview.png --screenshot-hardware build/PhaseGate-HardwareLab-Preview.png --screenshot-evidence build/PhaseGate-EvidenceLab-Preview.png --screenshot-optical build/PhaseGate-OpticalLab-Preview.png --screenshot-reference build/PhaseGate-ReferenceLab-Preview.png --screenshot-stations build/PhaseGate-StationMatrix-Preview.png --screenshot-build build/PhaseGate-Engineering-Preview.png --screenshot-assembly build/PhaseGate-AssemblyStudio-Preview.png
           if ($LASTEXITCODE -ne 0) { throw "Native Qt smoke test failed" }
           if (-not (Test-Path "build/PhaseGate-Native-Preview.png")) { throw "Missing home screenshot" }
           if (-not (Test-Path "build/PhaseGate-HardwareLab-Preview.png")) { throw "Missing native Hardware Lab screenshot" }
@@ -49,6 +49,7 @@ jobs:
           if (-not (Test-Path "build/PhaseGate-ReferenceLab-Preview.png")) { throw "Missing native Reference Lab screenshot" }
           if (-not (Test-Path "build/PhaseGate-StationMatrix-Preview.png")) { throw "Missing redesigned Station Matrix screenshot" }
           if (-not (Test-Path "build/PhaseGate-Engineering-Preview.png")) { throw "Missing native Build Lab screenshot" }
+          if (-not (Test-Path "build/PhaseGate-AssemblyStudio-Preview.png")) { throw "Missing interactive Assembly Studio screenshot" }
       - name: Generate DPN PhaseGate Windows application icon
         run: python tools/generate_desktop_icon.py
       - name: Build a real standalone Windows EXE
@@ -68,14 +69,14 @@ jobs:
       - name: Publish the downloadable EXE
         uses: actions/upload-artifact@v4
         with:
-          name: DPN-PhaseGate-Native-Windows-v1.4
+          name: DPN-PhaseGate-Native-Windows-v1.5
           path: dist/DPN-PhaseGate.exe
           if-no-files-found: error
           retention-days: 30
       - name: Publish a screenshot of the actual Qt application
         uses: actions/upload-artifact@v4
         with:
-          name: DPN-PhaseGate-Native-Preview-v1.4
+          name: DPN-PhaseGate-Native-Preview-v1.5
           path: |
             build/PhaseGate-Native-Preview.png
             build/PhaseGate-HardwareLab-Preview.png
@@ -84,5 +85,6 @@ jobs:
             build/PhaseGate-ReferenceLab-Preview.png
             build/PhaseGate-StationMatrix-Preview.png
             build/PhaseGate-Engineering-Preview.png
+            build/PhaseGate-AssemblyStudio-Preview.png
           if-no-files-found: error
           retention-days: 30

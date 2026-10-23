@@ -1,0 +1,378 @@
+{
+  "schema": "PG01-MECHANICAL-ASSEMBLY-1",
+  "revision": "v1.5-review",
+  "source_manifest": "data/engineering/pg01-rig-manifest.json",
+  "maturity": "dimensional design and offline fit checks only; no assembled or load-rated hardware",
+  "coordinate_system": "millimeters: x across gate width; y along Gate A→B transfer; z vertical above chassis datum",
+  "reference_dimensions_mm": {
+    "gate_outer_diameter": 360,
+    "gate_clear_aperture_diameter": 260,
+    "gate_center_z": 270,
+    "gate_center_separation": 800,
+    "rail_length": 1200,
+    "payload_platform_width": 100,
+    "payload_platform_length": 130
+  },
+  "geometry_mm": {
+    "gate_a_y": -400,
+    "gate_b_y": 400,
+    "rail_z": 191,
+    "carriage_tray_surface_z": 205,
+    "payload_envelope_width": 100,
+    "payload_envelope_height": 80,
+    "payload_bottom_z": 205,
+    "min_design_radial_clearance_mm": 20,
+    "rail_x_extent": 57
+  },
+  "view_layers": [
+    "STRUCTURE",
+    "MOTION",
+    "OPTICS",
+    "ROUTING",
+    "SENSORS",
+    "GUARDING"
+  ],
+  "assemblies": [
+    {
+      "id": "A-BASE",
+      "name": "Gate A footplate and extrusion stand",
+      "layer": "STRUCTURE",
+      "shape": "box",
+      "center_mm": [
+        0,
+        -400,
+        55
+      ],
+      "extent_mm": [
+        370,
+        190,
+        35
+      ],
+      "material": "20x20 extrusion and mechanical bracket envelope",
+      "review": "Footplate, anchor pattern and stiffness not yet load-rated"
+    },
+    {
+      "id": "B-BASE",
+      "name": "Gate B footplate and extrusion stand",
+      "layer": "STRUCTURE",
+      "shape": "box",
+      "center_mm": [
+        0,
+        400,
+        55
+      ],
+      "extent_mm": [
+        370,
+        190,
+        35
+      ],
+      "material": "20x20 extrusion and mechanical bracket envelope",
+      "review": "Same physical part envelope as Station A"
+    },
+    {
+      "id": "A-RING",
+      "name": "Gate A unpowered annular assembly",
+      "layer": "STRUCTURE",
+      "shape": "ring",
+      "center_mm": [
+        0,
+        -400,
+        270
+      ],
+      "diameter_mm": 360,
+      "clear_diameter_mm": 260,
+      "depth_mm": 18,
+      "material": "6 modular ring segments; non-field-generating",
+      "review": "Splice interface trial geometry only; fastener torque and loads TBD"
+    },
+    {
+      "id": "B-RING",
+      "name": "Gate B unpowered annular assembly",
+      "layer": "STRUCTURE",
+      "shape": "ring",
+      "center_mm": [
+        0,
+        400,
+        270
+      ],
+      "diameter_mm": 360,
+      "clear_diameter_mm": 260,
+      "depth_mm": 18,
+      "material": "6 modular ring segments; non-field-generating",
+      "review": "Splice interface trial geometry only; fastener torque and loads TBD"
+    },
+    {
+      "id": "RAIL-L",
+      "name": "Left manual guide",
+      "layer": "MOTION",
+      "shape": "rail",
+      "center_mm": [
+        -45,
+        0,
+        191
+      ],
+      "extent_mm": [
+        16,
+        1200,
+        19
+      ],
+      "material": "Commercial guide profile pending selection",
+      "review": "Supplier-specific bolt pattern and carriage travel still require validation"
+    },
+    {
+      "id": "RAIL-R",
+      "name": "Right manual guide",
+      "layer": "MOTION",
+      "shape": "rail",
+      "center_mm": [
+        45,
+        0,
+        191
+      ],
+      "extent_mm": [
+        16,
+        1200,
+        19
+      ],
+      "material": "Commercial guide profile pending selection",
+      "review": "Guard and mechanical stops required before physical motion"
+    },
+    {
+      "id": "CARRIAGE",
+      "name": "Manual payload carriage and fixture",
+      "layer": "MOTION",
+      "shape": "box",
+      "center_mm": [
+        0,
+        0,
+        198
+      ],
+      "extent_mm": [
+        100,
+        130,
+        14
+      ],
+      "material": "Tray with removable payload datum",
+      "review": "Maximum payload envelope 100 mm wide, 80 mm tall; pending verified tolerances"
+    },
+    {
+      "id": "OPT-A",
+      "name": "Station A USB camera bracket envelope",
+      "layer": "OPTICS",
+      "shape": "box",
+      "center_mm": [
+        -182,
+        -425,
+        395
+      ],
+      "extent_mm": [
+        34,
+        44,
+        32
+      ],
+      "material": "USB camera and non-load bearing clamp",
+      "review": "Camera field of view and consent required; no automatic access"
+    },
+    {
+      "id": "OPT-B",
+      "name": "Station B USB camera bracket envelope",
+      "layer": "OPTICS",
+      "shape": "box",
+      "center_mm": [
+        -182,
+        425,
+        395
+      ],
+      "extent_mm": [
+        34,
+        44,
+        32
+      ],
+      "material": "USB camera and non-load bearing clamp",
+      "review": "Camera device indices require physical mapping"
+    },
+    {
+      "id": "CBL-A",
+      "name": "Station A data cable route",
+      "layer": "ROUTING",
+      "shape": "route",
+      "points_mm": [
+        [
+          -182,
+          -425,
+          395
+        ],
+        [
+          -205,
+          -425,
+          300
+        ],
+        [
+          -205,
+          -400,
+          60
+        ]
+      ],
+      "material": "Low-voltage USB and strain relief",
+      "review": "Route is preliminary; segregate from moving path and verify bend radii"
+    },
+    {
+      "id": "CBL-B",
+      "name": "Station B data cable route",
+      "layer": "ROUTING",
+      "shape": "route",
+      "points_mm": [
+        [
+          -182,
+          425,
+          395
+        ],
+        [
+          -205,
+          425,
+          300
+        ],
+        [
+          -205,
+          400,
+          60
+        ]
+      ],
+      "material": "Low-voltage USB and strain relief",
+      "review": "Route is preliminary; no high-voltage field hardware"
+    },
+    {
+      "id": "SCALE-A",
+      "name": "Independent Station A reference scale",
+      "layer": "SENSORS",
+      "shape": "box",
+      "center_mm": [
+        135,
+        -400,
+        94
+      ],
+      "extent_mm": [
+        75,
+        90,
+        14
+      ],
+      "material": "Load cell / HX711/Pico 2; proposed",
+      "review": "Isolated mechanically from moving tray; not calibrated"
+    },
+    {
+      "id": "SCALE-B",
+      "name": "Independent Station B reference scale",
+      "layer": "SENSORS",
+      "shape": "box",
+      "center_mm": [
+        135,
+        400,
+        94
+      ],
+      "extent_mm": [
+        75,
+        90,
+        14
+      ],
+      "material": "Load cell / HX711/Pico 2; proposed",
+      "review": "Independent sensor wiring and calibration review required"
+    },
+    {
+      "id": "STOP-A",
+      "name": "Manual rail stop A",
+      "layer": "GUARDING",
+      "shape": "box",
+      "center_mm": [
+        0,
+        -578,
+        190
+      ],
+      "extent_mm": [
+        132,
+        18,
+        26
+      ],
+      "material": "Mechanical end stop; prototype envelope",
+      "review": "Force rating and attachment must be specified before construction"
+    },
+    {
+      "id": "STOP-B",
+      "name": "Manual rail stop B",
+      "layer": "GUARDING",
+      "shape": "box",
+      "center_mm": [
+        0,
+        578,
+        190
+      ],
+      "extent_mm": [
+        132,
+        18,
+        26
+      ],
+      "material": "Mechanical end stop; prototype envelope",
+      "review": "Cannot operate carriage without verified physical stop geometry"
+    }
+  ],
+  "interfaces": [
+    {
+      "id": "J-01",
+      "name": "Segment-to-segment splice plate",
+      "trial_part": "joint_splice",
+      "nominal_hole_diameter_mm": 3.4,
+      "hole_pitch_mm": 22,
+      "quantity": "12 trial joints across two annuli",
+      "review": "Not validated under load; select actual fasteners after print-fit tests"
+    },
+    {
+      "id": "J-02",
+      "name": "Linear rail mount block",
+      "trial_part": "rail_clamp",
+      "nominal_hole_diameter_mm": 4.5,
+      "hole_pitch_mm": 25,
+      "quantity": "4 trial clamps",
+      "review": "Not suitable until actual rail vendor profile is measured"
+    },
+    {
+      "id": "J-03",
+      "name": "Cable separation clip",
+      "trial_part": "cable_clip",
+      "nominal_hole_diameter_mm": 3.4,
+      "hole_pitch_mm": null,
+      "quantity": "4 trial clips",
+      "review": "Low-voltage routing concept only; inspect minimum bend radius"
+    }
+  ],
+  "inspection_gates": [
+    {
+      "code": "F1",
+      "title": "CAD envelope matches source manifest",
+      "authority": "offline arithmetic checks only"
+    },
+    {
+      "code": "F2",
+      "title": "Printed segment and splice dry-fit",
+      "authority": "real measurements and documented fastener review required"
+    },
+    {
+      "code": "F3",
+      "title": "Rail and carriage unobstructed travel",
+      "authority": "manual hardware testing and verified stop rating required"
+    },
+    {
+      "code": "F4",
+      "title": "Cable run and sensor isolation",
+      "authority": "qualified physical safety/strain relief inspection required"
+    },
+    {
+      "code": "F5",
+      "title": "Release candidate for assembly",
+      "authority": "independent mechanical/electrical signoff still required"
+    }
+  ],
+  "warnings": [
+    "Depicted optic pods and cable paths are layouts, not verified wiring or calibrated positions.",
+    "Geometric radial clearance is necessary but not sufficient for moving-object safety, collision-free travel or manufacturing acceptance.",
+    "No field emitter, energetic aperture, powered actuator or validated object-transfer physics exists in this engineering revision."
+  ]
+}

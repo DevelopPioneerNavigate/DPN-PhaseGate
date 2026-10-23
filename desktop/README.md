@@ -1,3 +1,15 @@
+# DPN PhaseGate v1.5 — Assembly Studio / Physical Gate Engineering
+
+**New 13th native workspace:** an interactive XYZ-based assembly view of the two-gate PG-01 Rev B machine. Hide/show six engineering groups, select 15 physical part envelopes, explode the assembly and switch between isometric, front and top views. The view is derived from source-controlled engineering geometry and checked against the existing physical rig manifest.
+
+**Corrected geometry:** proposed rail travel is 900 mm rather than the earlier 680 mm, so it spans Gate A and Gate B centers 800 mm apart. The passive rail has been lifted into the gate clear opening; automated radial clearance and end-reserve checks fail if these design relationships become invalid.
+
+[Detailed dimensions and joint interfaces](../hardware/assembly/PG01-REV-B-INTERFACES-v1.5.md) · [Interactive assembly source](assembly_page.py) · [New OpenSCAD interface CAD](../hardware/cad/pg01_assembly_v1_5.scad) · [GitHub release artifacts](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/native-windows-exe.yml)
+
+The viewer is an **unbuilt engineering design**; no instrument control, automatic fabrication, proof of a portal field, or physical safety approval is implied.
+
+---
+
 # DPN PhaseGate v1.4 — Fabrication Readiness
 
 The native Gate Engineering workspace now includes a **FIT & RECEIVING** tab to enter actual measurements from manufactured parts and log component receiving states. All entries require human operator identification and an evidence reference, remain marked **not independently verified**, and persist locally. Actual parts are not assumed bought or assembled.

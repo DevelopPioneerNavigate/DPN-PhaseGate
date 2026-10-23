@@ -13,7 +13,7 @@ Mechanical risks include tipping, pinch points, rotating/ sliding carriage conta
 ### WP-01 — Geometry design review
 - [ ] Inspect exact clearance envelope, floor/bench space, three-dimensional collision limits and camera views.
 - [ ] Validate outside ring diameter 360 mm / clear opening 260 mm, two rings at 800 mm spacing.
-- [ ] Confirm 1200 mm guide fit and actual 680 mm usable travel with hard stops and guards.
+- [ ] Confirm 1200 mm guide fit and actual 900 mm usable travel with hard stops and guards.
 - [ ] Determine and record material/process choice and realistic dimensional tolerance.
 - [ ] Resolve actual fastener hole patterns by qualified mechanical analysis; original OpenSCAD holes are provisional.
 - [ ] Assign CAD revision and sign physical integration dimensions.

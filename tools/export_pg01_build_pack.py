@@ -6,6 +6,8 @@ No purchases, equipment operations, test results or approved experiments.
 from __future__ import annotations
 
 import argparse
+import csv
+import io
 import hashlib
 import json
 import sys
@@ -13,29 +15,45 @@ from pathlib import Path
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from desktop.build_plan import export_bom_csv, read_manifest, validate_manifest
+from desktop.assembly_model import read_assembly, fit_checks
 
 
 def pack(target,root=None):
     doc=read_manifest(root)
+    model=read_assembly(root)
+    results=fit_checks(model,doc["dimensions_mm"])
+    if not all(x["passed"] for x in results):
+        raise ValueError("PG-01 fit-check holds present; no engineering pack released")
+    fit_csv=io.StringIO()
+    rows=csv.writer(fit_csv)
+    rows.writerow(["gate","calculated_mm","design_threshold_mm","status","meaning"])
+    for item in results:
+        rows.writerow([item["name"],item["measured"],item["target"],
+                       "PRELIMINARY PASS" if item["passed"] else "HOLD",
+                       "envelope math only / no physical mechanical approval"])
     target=Path(target)
     target.mkdir(parents=True,exist_ok=True)
     bom=target/"PG01-proposed-BOM.csv"
     tasks=target/"PG01-workpackages.json"
     sources=target/"PG01-manifest-snapshot.json"
+    assembly=target/"PG01-assembly-revision-v1.5.json"
+    fitfile=target/"PG01-fit-checks-v1.5.csv"
     for filename,content in (
         (bom,export_bom_csv(doc).encode("utf-8-sig")),
         (tasks,(json.dumps({
             "notice":"PROPOSED ENGINEERING / NO ASSEMBLY OR PROCUREMENT VERIFIED",
             "work_packages":doc["work_packages"],"gates":doc["gates"]},
             indent=2)+"\n").encode("utf-8")),
-        (sources,(json.dumps(doc,indent=2)+"\n").encode("utf-8"))
+        (sources,(json.dumps(doc,indent=2)+"\n").encode("utf-8")),
+        (assembly,(json.dumps(model,indent=2)+"\n").encode("utf-8")),
+        (fitfile,fit_csv.getvalue().encode("utf-8-sig"))
     ):
         if filename.exists():
             raise FileExistsError("existing build pack file: "+str(filename))
         filename.write_bytes(content)
     digest=target/"SHA256SUMS.txt"
     with digest.open("x",encoding="ascii") as f:
-        for path in (bom,tasks,sources):
+        for path in (bom,tasks,sources,assembly,fitfile):
             f.write(hashlib.sha256(path.read_bytes()).hexdigest()+
                     "  "+path.name+"\n")
     return target
@@ -47,7 +65,11 @@ def main(argv=None):
     parser.add_argument("--out",type=Path,default=Path("build/pg01-engineering-pack"))
     args=parser.parse_args(argv)
     doc=read_manifest()
+    model=read_assembly()
     if args.check:
+        checks=fit_checks(model,doc["dimensions_mm"])
+        print("PG-01 ASSEMBLY FIT MODEL: "+", ".join(
+            c["name"]+"="+str(c["measured"])+"mm" for c in checks))
         print("PG-01 ENGINEERING MANIFEST VALID: components=%d workpackages=%d gates=%d"%
               (len(doc["components"]),len(doc["work_packages"]),len(doc["gates"])))
         print("ALL PROCUREMENT/ASSEMBLY STATES REMAIN UNVERIFIED")

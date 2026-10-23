@@ -1,3 +1,13 @@
+## PG-01 Rev B / v1.5 — Mechanical Assembly & Digital Twin
+
+[**Rev B engineering / correction report**](assembly/PG01-REV-B-INTERFACES-v1.5.md) · [**Interactive source-model geometry**](../data/engineering/pg01-assembly-v1.5.json) · [**New interface STL source**](cad/pg01_assembly_v1_5.scad)
+
+The initial draft's 680 mm requested manual carriage travel was shorter than the 800 mm station spacing; the Rev B proposal now uses **900 mm** travel with a **191 mm** passive rail vertical center and **205 mm** tray top. The Windows app adds the **Assembly Studio** to select 15 part envelopes, show/hide mechanical subsystems, explode the design and view validated mathematical clearance results. The CAD pipeline now creates **six printable trial STLs**, including additional splice, rail clamp and cable clip samples.
+
+**Mechanical hold point:** preliminary envelope calculations are not finite-element, pinch, shock, fastening, cable-bend or real assembly qualification. Physical items remain unpurchased and unbuilt.
+
+---
+
 # DPN PhaseGate — PG-01 Physical Test Rig
 
 **Revision:** v0.1 / bench hardware work breakdown  
@@ -21,7 +31,7 @@ The first version tests **instrument reliability, carriage transfer controls, ma
 | Gate spacing | 800 mm nominal center-to-center |
 | Reference center elevation | 270 mm above assembly datum |
 | Manual linear guide | 1200 mm design envelope, **unpowered** |
-| Target carriage travel | 680 mm, subject to actual end-stop and bearing selection |
+| Target carriage travel | 900 mm, subject to actual end-stop and bearing selection |
 | Shuttle platform | 100 × 130 mm |
 | Initial test object | 20–250 grams by controlled standard, conditioned on load-cell capabilities |
 | Independent scales | 2 × reviewed 5 kg bridge load cell + separate HX711 + Pico 2 |

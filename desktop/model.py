@@ -9,7 +9,7 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-VERSION = "1.4.0"
+VERSION = "1.5.0"
 MODE = "SYNTHETIC"
 DISCLAIMER = (
     "SIMULATED CHARTS — optional LIVE USB RAW bench measurements in Hardware Lab. "
