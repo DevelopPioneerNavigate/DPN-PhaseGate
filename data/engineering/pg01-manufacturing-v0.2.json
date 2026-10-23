@@ -1,0 +1,126 @@
+{
+  "schema": "DPN-PG01-MECH-ICD-2",
+  "revision": "v0.2-review",
+  "description": "Corrected dual-gate physical geometry, manual carriage reach and independent metrology interface control",
+  "review_state": "PRELIMINARY FIT CHECK — NOT FABRICATION APPROVED",
+  "unit": "mm",
+  "source_rig_manifest": "data/engineering/pg01-rig-manifest.json",
+  "geometry": {
+    "rail_axis": "Y",
+    "gate_plane": "XZ",
+    "gate_centres_y_mm": [
+      -400,
+      400
+    ],
+    "gate_ring_center_height_mm": 270,
+    "aperture_radius_mm": 130,
+    "rail_length_mm": 1200,
+    "rail_guide_center_height_mm": 183,
+    "rail_guide_width_mm": 15,
+    "rail_guide_height_mm": 14,
+    "rail_guide_centres_x_mm": [
+      -45,
+      45
+    ],
+    "shuttle_center_span_y_mm": [
+      -420,
+      420
+    ],
+    "shuttle_platform_width_x_mm": 100,
+    "shuttle_platform_length_y_mm": 130,
+    "shuttle_tray_bottom_z_mm": 211,
+    "shuttle_tray_thickness_mm": 8,
+    "sample_height_allowance_mm": 80,
+    "safety_clearance_required_mm": 12,
+    "rail_endstop_centres_y_mm": [
+      -540,
+      540
+    ],
+    "nominal_frame_clearance_mm": 0.45
+  },
+  "manufacture": [
+    {
+      "id": "PART-01",
+      "item": "Modular annular ring segment",
+      "qty": 12,
+      "fit_test": "CGAL manifold mesh, OD/ID/radial thickness and on-bed size",
+      "manufacture": "printed prototype only",
+      "release": "HOLD — material and joint strength not analyzed"
+    },
+    {
+      "id": "PART-02",
+      "item": "Alignment pin gauge coupon",
+      "qty": 2,
+      "fit_test": "Compare selected fastener hole fit and slip-fit ranges",
+      "manufacture": "printed prototype only",
+      "release": "HOLD — hole sizing / process unvalidated"
+    },
+    {
+      "id": "PART-03",
+      "item": "Optical camera bracket",
+      "qty": 2,
+      "fit_test": "camera mount and clamp deflection",
+      "manufacture": "printed prototype only",
+      "release": "HOLD — actual selected camera mechanical spec pending"
+    },
+    {
+      "id": "PART-04",
+      "item": "Manual carriage tray",
+      "qty": 1,
+      "fit_test": "payload footprint and required opening clearance",
+      "manufacture": "printed prototype only",
+      "release": "HOLD — carriage connection and bearings pending"
+    },
+    {
+      "id": "PART-05",
+      "item": "Mechanical stop flag / bumper trial",
+      "qty": 2,
+      "fit_test": "kinematic range and operator-safe displacement envelope",
+      "manufacture": "printed prototype only",
+      "release": "HOLD — not a rated protective stop"
+    }
+  ],
+  "engineering_gates": [
+    {
+      "id": "M1",
+      "name": "Reach both gate planes",
+      "metric": "Shuttle center travel ≥ 800 mm (distance A to B)",
+      "automated": true
+    },
+    {
+      "id": "M2",
+      "name": "Rail pair clears both circular apertures",
+      "metric": "Bottom clearance ≥ 12 mm at outside edge of rail cross-sections",
+      "automated": true
+    },
+    {
+      "id": "M3",
+      "name": "Carriage and 80 mm sample clear the aperture",
+      "metric": "Tray and load envelope through 260 mm opening ≥ 12 mm to inner edge",
+      "automated": true
+    },
+    {
+      "id": "M4",
+      "name": "Rail keeps carriage within endstops",
+      "metric": "Carriage ±420 mm with 65 mm half-length stays inside ±540 mm stops",
+      "automated": true
+    },
+    {
+      "id": "M5",
+      "name": "Printer fit-check size",
+      "metric": "Component mesh bounds ≤ 250 mm; printable orientation verified by slicing",
+      "automated": true
+    },
+    {
+      "id": "M6",
+      "name": "Independent frame stability, loads and physical guarding",
+      "metric": "Structural, fastener and electrical review evidence required",
+      "automated": false
+    }
+  ],
+  "reference_only": [
+    "Frame interface and extrusion cut lengths depend on approved supplier and mount, not derived here as final purchasing lengths.",
+    "Mechanical FEA, center-of-gravity/tipping, guard loads, dimensional tolerances, assembly bolts and metrological traceability remain open.",
+    "Concept glowing ring not an approved power or field-generation device."
+  ]
+}
