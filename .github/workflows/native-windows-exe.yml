@@ -68,14 +68,14 @@ jobs:
       - name: Publish the downloadable EXE
         uses: actions/upload-artifact@v4
         with:
-          name: DPN-PhaseGate-Native-Windows-v1.3
+          name: DPN-PhaseGate-Native-Windows-v1.4
           path: dist/DPN-PhaseGate.exe
           if-no-files-found: error
           retention-days: 30
       - name: Publish a screenshot of the actual Qt application
         uses: actions/upload-artifact@v4
         with:
-          name: DPN-PhaseGate-Native-Preview-v1.3
+          name: DPN-PhaseGate-Native-Preview-v1.4
           path: |
             build/PhaseGate-Native-Preview.png
             build/PhaseGate-HardwareLab-Preview.png

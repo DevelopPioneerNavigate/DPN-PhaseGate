@@ -1,3 +1,9 @@
+# DPN PhaseGate v1.4 — Fabrication Readiness
+
+The native Gate Engineering workspace now includes a **FIT & RECEIVING** tab to enter actual measurements from manufactured parts and log component receiving states. All entries require human operator identification and an evidence reference, remain marked **not independently verified**, and persist locally. Actual parts are not assumed bought or assembled.
+
+Use a qualified mechanical review to approve fabrication tolerance and measurement tools before treating trial ranges as manufacturing limits.
+
 # DPN PhaseGate v1.3 — Gate Engineering & Physical Build Workbench
 
 **The native Windows EXE now has a twelfth workspace — Gate Engineering.** It loads the actual PG-01 project specification directly from the bundled source-controlled engineering manifest, draws the dimensioned Gate A/B rig, shows all 12 component groups and 9 dependency-linked build work packages, and allows responsible operators to record progress with an evidence note. All assembly progress begins as **planned**, and review gates never auto-approve safety.
