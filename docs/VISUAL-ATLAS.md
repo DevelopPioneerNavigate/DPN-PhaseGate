@@ -6,6 +6,12 @@
 
 > **Scientific status:** Physical two-way transport of intact objects is **not demonstrated**. PG-01 is a conceptual *measurement* station design, not a working portal.
 
+## NEW / v1.3 Real Gate A / Gate B bench rig
+
+<img src="../assets/pg01-build-physical-rig-v0.1.svg" width="100%" alt="Proposed physical DPN PhaseGate bench rig with two independent frame/sensor stations and a guarded manual carriage"/>
+
+We now have [parametric 3D CAD, part exports and a physical assembly plan](../hardware/README.md), plus a working native Windows engineering workbench to record the build.
+
 ## NEW / v1.1 Reference flash and host timing analysis
 
 <img src="../assets/pg01-reference-event-v1.1.svg" width="100%" alt="Reference flash detection with two SHA-256 verified camera streams and unsynchronized host receipt timing"/>

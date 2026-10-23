@@ -12,6 +12,8 @@ def main(argv=None):
     parser.add_argument("--screenshot", type=Path, default=None)
     parser.add_argument("--screenshot-evidence", type=Path, default=None,
                         help="capture Calibration and Evidence Lab native page")
+    parser.add_argument("--screenshot-build", type=Path, default=None,
+                        help="capture real dimensioned PG-01 native engineering workbench")
     parser.add_argument("--screenshot-stations", type=Path, default=None,
                         help="render the redesigned native station matrix")
     parser.add_argument("--screenshot-reference", type=Path, default=None,
@@ -58,7 +60,7 @@ def main(argv=None):
             if (window.rail.width() > 190 or
                 not window.nexus_deck.stage.isVisible() or
                 window.nexus_deck.stage.width() < 260 or
-                len(window.nav) != len(window.pages) or len(window.pages)!=11):
+                len(window.nav) != len(window.pages) or len(window.pages)!=12):
                 result = 9
             if args.screenshot:
                 try:
@@ -129,6 +131,19 @@ def main(argv=None):
                         raise OSError("Station Matrix screenshot empty")
                 except (OSError, ValueError):
                     result = 10
+            if args.screenshot_build:
+                try:
+                    window.navigate("Gate Engineering")
+                    application.processEvents()
+                    args.screenshot_build.parent.mkdir(parents=True, exist_ok=True)
+                    if not window.grab().save(str(args.screenshot_build), "PNG"):
+                        raise OSError("Native Build Lab screenshot missing")
+                    if args.screenshot_build.stat().st_size < 1000:
+                        raise OSError("Build Lab screenshot empty")
+                    if not window.build_lab.manifest["components"]:
+                        raise OSError("Missing build engineering manifest in runtime")
+                except (OSError,ValueError):
+                    result = 11
             window.close()
             application.exit(result)
         QTimer.singleShot(900, complete)

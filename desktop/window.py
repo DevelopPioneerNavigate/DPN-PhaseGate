@@ -25,6 +25,7 @@ from desktop.optical_page import OpticalLab
 from desktop.reference_page import ReferenceEventLab
 from desktop.aurora import AuroraHero, PipelineRail, CommandPalette
 from desktop.nexus import NexusDeck
+from desktop.build_page import BuildLab
 
 
 def ui_button(text, secondary=False):
@@ -149,6 +150,18 @@ class ResearchWindow(QMainWindow):
         QComboBox:hover,QLineEdit:hover,QTextEdit:hover {border-color:#7ABCE9;}
         QComboBox QAbstractItemView {background:#132440;selection-background-color:#59438A;}
         QCheckBox {spacing:9px;}
+        QTabWidget#engineeringTabs::pane {border:1px solid #365775;border-radius:9px;
+          background:#0B192D;top:-1px;}
+        QTabWidget#engineeringTabs QTabBar::tab {background:#17283E;
+          color:#A7C8E2;padding:11px 17px;border:1px solid #2D4967;
+          border-bottom:0;min-width:100px;}
+        QTabWidget#engineeringTabs QTabBar::tab:hover {background:#294061;color:#ECF7FF;}
+        QTabWidget#engineeringTabs QTabBar::tab:selected {background:#243B5A;
+          border-top:2px solid #B48BFE;color:#FFFFFF;}
+        QTabWidget#engineeringTabs > QWidget {background:#0B192D;}
+        QTableWidget {background:#101D31;color:#DCEBFB;border:1px solid #3A5879;}
+        QTableWidget::item {background:transparent;color:#D6E5F8;padding:5px;}
+        QTableWidget::item:selected {background:#493D79;color:#FFFFFF;}
         QDialog#commandPalette {background:#0F1C30;border:1px solid #8D73CB;}
         QLineEdit#paletteSearch {font-size:16px;padding:14px;}
         QListWidget#paletteList {background:#12223B;font-size:13px;padding:8px;}
@@ -185,15 +198,16 @@ class ResearchWindow(QMainWindow):
         screens=[
             ("Command Center","01","COMMAND\nCENTER"),
             ("Station Matrix","02","STATION\nMATRIX"),
-            ("Hardware Lab","03","HARDWARE\nLAB"),
-            ("Optical Evidence","04","OPTICAL\nEVIDENCE"),
-            ("Reference Events","05","REFERENCE\nEVENTS"),
-            ("Calibration & Evidence","06","CALIBRATION\n& EVIDENCE"),
-            ("Signal Analytics","07","SIGNAL\nANALYTICS"),
-            ("Research Vault","08","RESEARCH\nVAULT"),
-            ("Experiment Ledger","09","EXPERIMENT\nLEDGER"),
-            ("System Diagnostics","10","SYSTEM\nDIAGNOSTICS"),
-            ("Preferences","11","PREFERENCES"),
+            ("Gate Engineering","03","GATE\nENGINEERING"),
+            ("Hardware Lab","04","HARDWARE\nLAB"),
+            ("Optical Evidence","05","OPTICAL\nEVIDENCE"),
+            ("Reference Events","06","REFERENCE\nEVENTS"),
+            ("Calibration & Evidence","07","CALIBRATION\n& EVIDENCE"),
+            ("Signal Analytics","08","SIGNAL\nANALYTICS"),
+            ("Research Vault","09","RESEARCH\nVAULT"),
+            ("Experiment Ledger","10","EXPERIMENT\nLEDGER"),
+            ("System Diagnostics","11","SYSTEM\nDIAGNOSTICS"),
+            ("Preferences","12","PREFERENCES"),
         ]
         for name,n,title in screens:
             btn=QPushButton(n+"  "+title.replace("\n"," "))
@@ -257,6 +271,7 @@ class ResearchWindow(QMainWindow):
         pages=[
             ("Command Center",self.overview_page()),
             ("Station Matrix",self.stations_page()),
+            ("Gate Engineering",self.build_page()),
             ("Hardware Lab",self.hardware_page()),
             ("Optical Evidence",self.optical_page()),
             ("Reference Events",self.reference_page()),
@@ -336,6 +351,10 @@ class ResearchWindow(QMainWindow):
         col.addWidget(card)
         col.addStretch()
         return host
+
+    def build_page(self):
+        self.build_lab=BuildLab()
+        return self.build_lab
 
     def hardware_page(self):
         self.hardware_lab = HardwareLab()

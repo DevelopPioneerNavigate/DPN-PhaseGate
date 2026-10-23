@@ -282,8 +282,8 @@ class NexusDeck(QWidget):
         cv.setContentsMargins(17,17,17,15)
         cv.setSpacing(10)
         cv.addWidget(label("OPERATIONS  /  PG-01",11,"#D5B4FF",True))
-        cv.addWidget(label("STATION LINK MAP",20,"#F6F8FF",True))
-        cv.addWidget(label("Physical instruments are never connected by this display.",10))
+        cv.addWidget(label("GATE A / GATE B TEST RIG",17,"#F6F8FF",True))
+        cv.addWidget(label("Rev A: independent sensors + manual rail, CAD and assembly review.",10))
         for station,title,color in (
             ("A","SOURCE / BENCH","#6AE8EF"),
             ("B","DESTINATION / BENCH","#BC8BFF")):
@@ -306,6 +306,10 @@ class NexusDeck(QWidget):
             contents.addWidget(label("NO AUTO-CONNECTION",9,"#C4A6CB"))
             cr.addLayout(contents,1)
             cv.addWidget(cell)
+        cv.addWidget(SectionLine("PHYSICAL MACHINE BUILD","CAD / assembly / parts / validation"))
+        construction=action("OPEN GATE ENGINEERING   ↗")
+        construction.clicked.connect(lambda:self.route.emit("Gate Engineering"))
+        cv.addWidget(construction)
         cv.addWidget(SectionLine("REAL USB INSTRUMENTS","Choose & connect manually"))
         btn=action("OPEN HARDWARE LAB     ↗")
         btn.clicked.connect(lambda:self.route.emit("Hardware Lab"))
@@ -315,7 +319,7 @@ class NexusDeck(QWidget):
         btn2.clicked.connect(lambda:self.route.emit("Optical Evidence"))
         cv.addWidget(btn2)
         cv.addStretch()
-        cv.addWidget(label("DATA CLASS   /   VISUALIZATION ONLY",9,"#FFCE9E",True))
+        cv.addWidget(label("REV A: ENGINEERING DESIGN / NO ASSEMBLY YET",9,"#FFCE9E",True))
         mid.addWidget(controls,4)
         root.addLayout(mid,1)
         # Bottom row is not decorative: sourced counts from actual research data

@@ -1,3 +1,15 @@
+# DPN PhaseGate v1.3 — Gate Engineering & Physical Build Workbench
+
+**The native Windows EXE now has a twelfth workspace — Gate Engineering.** It loads the actual PG-01 project specification directly from the bundled source-controlled engineering manifest, draws the dimensioned Gate A/B rig, shows all 12 component groups and 9 dependency-linked build work packages, and allows responsible operators to record progress with an evidence note. All assembly progress begins as **planned**, and review gates never auto-approve safety.
+
+[Physical rig proposal](../hardware/README.md) · [Assembly instructions](../hardware/assembly/PG01-ASSEMBLY-PLAN.md) · [Free OpenSCAD CAD](../hardware/cad/pg01_bench.scad) · [Download printable trial parts](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/pg01-cad.yml)
+
+**Windows download:** open the [v1.3 native EXE workflow](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/native-windows-exe.yml), select a green run and download `DPN-PhaseGate-Native-Windows-v1.3`. There is an extra real Qt screenshot of Gate Engineering in the v1.3 preview bundle.
+
+**Actual fabrication and safety review are still ahead.** An approved electrical/structural prototype and a scientifically established transport mechanism cannot be inferred from a concept drawing. This software provides a practical path to measure and verify the assembly.
+
+---
+
 # DPN PhaseGate v1.2 — NEXUS Native Windows Mission Cockpit
 
 **Complete native Qt visual reconstruction:** new compact station-workspace dock, dramatic procedural concept-field illustration, interactive operator console, condensed research data row, permanent safety footer and a redesigned Station Matrix. The application still has all 11 fully functional workspaces and a standalone EXE—**no web browser or Python installation required** at runtime.
