@@ -16,7 +16,7 @@
   "geometry_mm": {
     "gate_a_y": -400,
     "gate_b_y": 400,
-    "rail_z": 174,
+    "rail_z": 191,
     "carriage_tray_surface_z": 205,
     "payload_envelope_width": 100,
     "payload_envelope_height": 80,
@@ -109,7 +109,7 @@
       "center_mm": [
         -45,
         0,
-        174
+        191
       ],
       "extent_mm": [
         16,
@@ -127,7 +127,7 @@
       "center_mm": [
         45,
         0,
-        174
+        191
       ],
       "extent_mm": [
         16,
