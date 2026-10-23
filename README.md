@@ -41,6 +41,16 @@ The complete research library now has visual guides, labelled concept blueprints
 
 **[Open the complete PhaseGate Visual Research Atlas →](docs/VISUAL-ATLAS.md)**
 
+### NEXUS v1.2 — A Full Native Windows UI Reconstruction
+
+**The previous dashboard architecture has been replaced.** PhaseGate's new NEXUS interface uses a compact mission dock, a much larger bespoke 3D-style *conceptual* reactor illustration, an interactive station operations console, an integrated scientific registry dashboard, distinctive DPN Obsidian styling and a permanent research-safety footer.
+
+| Windows v1.2 EXE | Actual redesigned native screenshots | Full rebuild details |
+|---|---|---|
+| **[Download the latest successful PhaseGate v1.2 build](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/native-windows-exe.yml)** | [Six original Qt screenshot artifacts from the same build](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/native-windows-exe.yml) | [NEXUS native interface design](docs/design/NEXUS-v1.2.md) |
+
+**Working commands:** `Ctrl+K` navigation search, `Ctrl+B` show/hide the navigation dock, `F11` full-screen mode. The home screen opens actual Hardware, Optical and Reference Event workspaces. The visualization remains original **synthetic concept art**; it does not prove a physical matter-transfer mechanism.
+
 ### PG-01 v1.1 — Reference Event & Timing Analysis
 
 <img src="assets/pg01-reference-event-v1.1.svg" width="100%" alt="DPN native reference event analysis workflow comparing hash-verified dual-camera light changes without claiming physical synchronization"/>
