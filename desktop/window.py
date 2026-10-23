@@ -357,6 +357,7 @@ class ResearchWindow(QMainWindow):
 
     def build_page(self):
         self.build_lab=BuildLab()
+        self.build_lab.open_assembly.connect(lambda:self.navigate("Assembly Studio"))
         return self.build_lab
 
     def assembly_page(self):
