@@ -186,6 +186,15 @@ class BuildLab(QWidget):
         self._create_release_tab()
         self._create_fabrication_tab()
         self._create_first_article_tab()
+        self.tabs.currentChanged.connect(self.update_engineering_layout)
+
+    def update_engineering_layout(self,index):
+        """Use a dedicated focused measurement workspace instead of hiding
+        the actual first-article table below the full-sized overview drawing."""
+        focused=(index==4)
+        self.drawing.setVisible(not focused)
+        self.status.setVisible(not focused)
+        self.gates.setVisible(not focused)
 
     def _table(self,headers):
         t=QTableWidget()
