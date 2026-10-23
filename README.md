@@ -8,7 +8,7 @@
 
 [![Research Integrity](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/research-integrity.yml/badge.svg?branch=main)](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/research-integrity.yml)
 ![Stage](https://img.shields.io/badge/PROGRAM-RESEARCH%20%26%20DESIGN-8965E8?style=flat-square)
-![Prototype](https://img.shields.io/badge/PG--01-PAPER%20DESIGN-32BCD5?style=flat-square)
+![Prototype](https://img.shields.io/badge/PG--01-CAD%20%2B%20BENCH%20PLAN-32BCD5?style=flat-square)
 ![Physical Transfer](https://img.shields.io/badge/MATTER%20TRANSFER-UNVERIFIED-DF9E69?style=flat-square)
 
 **[VISUAL ATLAS](docs/VISUAL-ATLAS.md)** · **[PROJECT OVERVIEW](docs/PROJECT-OVERVIEW.md)** · **[START HERE](docs/START-HERE.md)** · **[ENGINEERING](docs/engineering/PG-01-architecture.md)** · **[RESEARCH DATA](data/README.md)** · **[ISSUES](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/issues)**
@@ -40,6 +40,21 @@ The complete research library now has visual guides, labelled concept blueprints
 <img src="assets/phasegate-research-pipeline.svg" alt="From literature and hypotheses to experimental records and independent review" width="100%">
 
 **[Open the complete PhaseGate Visual Research Atlas →](docs/VISUAL-ATLAS.md)**
+
+### PhaseGate v1.3 — From Industrial Concept to a Physical Engineering Build
+
+<img src="assets/pg01-build-physical-rig-v0.1.svg" width="100%" alt="PG-01 dimensioned Gate A and Gate B modular frame prototype, manual payload rail, independent sensors and staged build review"/>
+
+**We are developing a physical test rig, not only rendering a machine.** The first build is a low-voltage, two-station metrology chassis: six-piece modular rings, mechanically supported Gate A/B frames, a manually moved central payload tray, separate raw mass sensors, consented optical witnesses and a traceable engineering assembly log.
+
+| Machine design | Real parts & CAD | Windows construction application |
+|---|---|---|
+| [PG-01 Physical Hardware Plan](hardware/README.md) | [Parametric OpenSCAD CAD](hardware/cad/pg01_bench.scad) · [Versioned Engineering BOM](data/engineering/pg01-rig-manifest.json) | [Gate Engineering Lab](desktop/build_page.py) |
+| [Detailed Assembly Milestones](hardware/assembly/PG01-ASSEMBLY-PLAN.md) | [CAD → STL Downloads](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/pg01-cad.yml) | [Latest Windows v1.3 EXE](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/native-windows-exe.yml) |
+
+**Natively implemented:** Gate Engineering workspace with dimensioned machine schematic, material list, assembly task dependencies, manual progress/evidence recording, acceptance gates and CSV export. GitHub Actions uses **free OpenSCAD** to build provisional ring-segment, camera-bracket and payload-tray STL files for 3D-print fit checks; it also exports a BOM/assembly pack.
+
+**What is still physical work:** purchasing parts, qualified power design, manufacturing, assembly, optical alignment, calibration and independent controls. Dimensions are proposed engineering envelopes, not fabrication approvals. The dramatic energized aperture in our visual target is a proposed research objective—**no working field-generation or object-transport mechanism is established or claimed**.
 
 ### NEXUS v1.2 — A Full Native Windows UI Reconstruction
 
