@@ -291,13 +291,13 @@ class BuildLab(QWidget):
         self.article_part=QComboBox()
         for part in self.article_plan["items"]:
             self.article_part.addItem(part["id"]+"  "+part["name"],part["id"])
-        self.article_part.currentIndexChanged.connect(self.refresh_article)
         selector.addWidget(self.article_part,2)
         selector.addWidget(text_label("Physical specimen ID",10,"muted"))
         self.article_specimen=QLineEdit()
         self.article_specimen.setText("TRIAL-001")
         self.article_specimen.setMaxLength(32)
         self.article_specimen.textChanged.connect(self.refresh_article)
+        self.article_part.currentIndexChanged.connect(self.refresh_article)
         selector.addWidget(self.article_specimen,1)
         v.addLayout(selector)
         self.article_table=self._table([
