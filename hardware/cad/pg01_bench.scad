@@ -9,10 +9,10 @@
 // openscad -o build/gate_segment.stl -D 'part="ring_segment"' pg01_bench.scad
 // Use -D 'part="camera_bracket"' for a printable trial bracket.
 
-part="assembly"; // [assembly,ring_segment,camera_bracket,payload_tray]
+part="assembly"; // [assembly,ring_segment,camera_bracket,payload_tray,fit_coupon,stop_flag]
 $fn=60;
 
-// Reference from data/engineering/pg01-rig-manifest.json revision v0.1
+// Reference from data/engineering/pg01-rig-manifest.json revision v0.2 and pg01-manufacturing-v0.2.json
 outer_d=360;
 aperture_d=260;
 segment_count=6;
@@ -21,6 +21,12 @@ segment_radial=(outer_d-aperture_d)/2;
 gate_separation=800;             // nominal gate center-to-center
 gate_center_z=270;
 rail_length=1200;
+rail_center_z=183;            // corrected: rail passes through clear aperture
+rail_cross_height=14;
+tray_bottom_z=211;
+station_visit_y=420;         // center visits ±420; gate centers ±400
+endstop_y=540;
+minimum_clearance=12;
 rail_spacing=90;
 platform_w=100;
 platform_l=130;
@@ -83,20 +89,49 @@ module gate_support(gate_y=0){
   extrusion_at([0,gate_y,gate_center_z-outer_d/2-13],[330,22,22]);
   translate([0,gate_y,gate_center_z])
     rotate([90,0,0]) gate_ring();
-  // A/B independent load-sensor platform on frame base, not on rail.
-  extrusion_at([0,gate_y-42,base_z+18],[145,120,8],[.18,.42,.48]);
+  // Independent metrology plate is OUTSIDE the ring opening and isolated
+  // from the carriage support; payload is manually moved onto the scale.
+  extrusion_at([178,gate_y,205],[120,120,8],[.18,.42,.48]);
+  extrusion_at([178,gate_y,100],[24,30,188],[.29,.42,.55]);
 }
 
 module rail() {
-  // Two separated passive guides. Proper carriage/bearing/stop selection is
-  // a separate rated hardware work package; geometry is illustrative.
+  // Real geometric fix: the former rail z=27 and payload z=56 were BELOW
+  // the 260mm clear aperture. Guide center z=183 puts all guide corners
+  // inside the aperture with a provisional >=12mm radial buffer.
   for(x=[-rail_spacing/2,rail_spacing/2]){
-    extrusion_at([x,0,27],[15,rail_length,18],[.5,.59,.66]);
-    for(y=[-rail_length/2+20,rail_length/2-20])
-      extrusion_at([x,y,38],[28,14,22],[.85,.52,.19]); // stop placeholders
+    extrusion_at([x,0,rail_center_z],[15,rail_length,rail_cross_height],[.5,.59,.66]);
+    for(y=[-endstop_y,endstop_y])
+      extrusion_at([x,y,rail_center_z+19],[23,14,26],[.85,.52,.19]); // trial stop placeholders only
+    for(y=[-520,0,520])  // never cross a ring plane with full-height support legs
+      extrusion_at([x,y,rail_center_z/2],[20,20,rail_center_z],[.35,.43,.52]);
   }
-  extrusion_at([0,0,46],[platform_w,platform_l,12],[.31,.46,.57]);
-  translate([0,0,56]) payload_tray();
+  extrusion_at([0,0,202],[platform_w,platform_l,18],[.31,.46,.57]);
+  translate([0,0,tray_bottom_z+4]) payload_tray();
+}
+
+
+// Printed tolerance coupon gives practical hole fit feedback before ordering
+// or printing twelve structural-looking segments. It is NOT proof of strength.
+module fit_coupon() {
+  difference(){
+    cube([66,29,7],center=true);
+    for(i=[0:3])
+      translate([-24+i*16,0,0])
+        cylinder(h=12,d=3.2+i*.2,center=true,$fn=32);
+  }
+}
+
+module stop_flag() {
+  // Fit-check geometry only. Commercially rated hard stops must be selected.
+  difference(){
+    union(){
+      cube([50,25,8],center=true);
+      translate([0,8,14]) cube([50,9,22],center=true);
+    }
+    for(x=[-17,17])
+      translate([x,-6,0]) cylinder(h=16,d=3.5,center=true,$fn=28);
+  }
 }
 
 module assembly(){
@@ -119,4 +154,6 @@ if(part=="assembly") assembly();
 else if(part=="ring_segment") ring_segment();
 else if(part=="camera_bracket") sensor_bracket();
 else if(part=="payload_tray") payload_tray();
+else if(part=="fit_coupon") fit_coupon();
+else if(part=="stop_flag") stop_flag();
 else echo("ERROR: unknown CAD part");
