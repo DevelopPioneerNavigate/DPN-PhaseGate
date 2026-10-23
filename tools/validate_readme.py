@@ -20,6 +20,7 @@ PAGE_PATHS = (
     "docs/engineering/PG01-OPTICAL-EVIDENCE-v1.0.md",
     "docs/engineering/PG01-REFERENCE-EVENT-v1.1.md",
     "docs/design/NEXUS-v1.2.md",
+    "hardware/assembly/PG01-REV-B-INTERFACES-v1.5.md",
     "docs/physics/PHYSICS-COMMAND.md",
     "docs/physics/EVIDENCE-WORKFLOW.md",
     "docs/safety/SAFETY-COMMAND.md",
