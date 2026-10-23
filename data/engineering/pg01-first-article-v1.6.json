@@ -1,0 +1,188 @@
+{
+  "schema": "PG01-FIRST-ARTICLE-1",
+  "revision": "1.6-candidate",
+  "status": "NOT FABRICATED / TRIAL FIT CHECK ONLY",
+  "assembly_ref": "data/engineering/pg01-assembly-v1.5.json",
+  "cad_ref": "hardware/cad/pg01_assembly_v1_5.scad",
+  "items": [
+    {
+      "id": "FA-01",
+      "name": "Joint splice plate",
+      "cad_part": "joint_splice",
+      "cad_file": "hardware/cad/pg01_assembly_v1_5.scad",
+      "purpose": "Candidate annular segment alignment blank; no structural load rating",
+      "checks": [
+        {
+          "id": "L",
+          "label": "Overall length",
+          "nominal_mm": 48,
+          "tolerance_mm": 0.7
+        },
+        {
+          "id": "W",
+          "label": "Overall width",
+          "nominal_mm": 22,
+          "tolerance_mm": 0.6
+        },
+        {
+          "id": "T",
+          "label": "Main plate thickness",
+          "nominal_mm": 6,
+          "tolerance_mm": 0.5
+        },
+        {
+          "id": "P",
+          "label": "Two-hole center spacing",
+          "nominal_mm": 22,
+          "tolerance_mm": 0.4
+        },
+        {
+          "id": "D",
+          "label": "Through-hole diameter",
+          "nominal_mm": 3.4,
+          "tolerance_mm": 0.35
+        }
+      ],
+      "hold_points": [
+        "Printed fit only; no approved screw thread/torque",
+        "A confirmed measurement may still hide poor mating fit or weak layer adhesion"
+      ]
+    },
+    {
+      "id": "FA-02",
+      "name": "Rail clamp prototype",
+      "cad_part": "rail_clamp",
+      "cad_file": "hardware/cad/pg01_assembly_v1_5.scad",
+      "purpose": "Fit-check guide mounting envelope; requires a selected vendor rail",
+      "checks": [
+        {
+          "id": "L",
+          "label": "Overall length",
+          "nominal_mm": 55,
+          "tolerance_mm": 0.7
+        },
+        {
+          "id": "W",
+          "label": "Overall width",
+          "nominal_mm": 42,
+          "tolerance_mm": 0.7
+        },
+        {
+          "id": "T",
+          "label": "Body thickness",
+          "nominal_mm": 13,
+          "tolerance_mm": 0.5
+        },
+        {
+          "id": "P",
+          "label": "Two-hole center spacing",
+          "nominal_mm": 25,
+          "tolerance_mm": 0.4
+        },
+        {
+          "id": "D",
+          "label": "Through-hole diameter",
+          "nominal_mm": 4.5,
+          "tolerance_mm": 0.35
+        }
+      ],
+      "hold_points": [
+        "Vendor rail fit unverified",
+        "Model slots intersect proposed mounting holes; inspect topology and revise geometry before interpreting hole checks"
+      ]
+    },
+    {
+      "id": "FA-03",
+      "name": "Low-voltage cable clip",
+      "cad_part": "cable_clip",
+      "cad_file": "hardware/cad/pg01_assembly_v1_5.scad",
+      "purpose": "Routing trial only; verify cable diameter, abrasion and bend allowance",
+      "checks": [
+        {
+          "id": "L",
+          "label": "Base length",
+          "nominal_mm": 44,
+          "tolerance_mm": 0.7
+        },
+        {
+          "id": "W",
+          "label": "Base width",
+          "nominal_mm": 24,
+          "tolerance_mm": 0.5
+        },
+        {
+          "id": "P",
+          "label": "Mount hole center spacing",
+          "nominal_mm": 32,
+          "tolerance_mm": 0.5
+        },
+        {
+          "id": "D",
+          "label": "Through-hole diameter",
+          "nominal_mm": 3.4,
+          "tolerance_mm": 0.35
+        },
+        {
+          "id": "S",
+          "label": "Open saddle width",
+          "nominal_mm": 12,
+          "tolerance_mm": 0.6
+        }
+      ],
+      "hold_points": [
+        "Actual cable pinch stress and chafing unverified",
+        "Clip is not an electrical strain-relief certificate"
+      ]
+    },
+    {
+      "id": "FA-04",
+      "name": "Gate ring segment",
+      "cad_part": "ring_segment",
+      "cad_file": "hardware/cad/pg01_bench.scad",
+      "purpose": "60 degree annular appearance and fit trial, not the load-bearing field assembly",
+      "checks": [
+        {
+          "id": "OD",
+          "label": "Parent ring outer diameter (derived arc)",
+          "nominal_mm": 360,
+          "tolerance_mm": 1
+        },
+        {
+          "id": "ID",
+          "label": "Parent clear diameter (derived arc)",
+          "nominal_mm": 260,
+          "tolerance_mm": 1
+        },
+        {
+          "id": "R",
+          "label": "Radial wall width",
+          "nominal_mm": 50,
+          "tolerance_mm": 0.75
+        },
+        {
+          "id": "Z",
+          "label": "Axial depth",
+          "nominal_mm": 18,
+          "tolerance_mm": 0.5
+        }
+      ],
+      "hold_points": [
+        "Diameter cannot be reliably measured from a single chord without a fixture",
+        "Hole/plate overlap and mating clearances require drawing revision and physical dry fit"
+      ]
+    }
+  ],
+  "inspection_policy": {
+    "replicates_required": 2,
+    "required_fields": [
+      "measured_mm",
+      "operator",
+      "equipment_id",
+      "evidence_ref"
+    ],
+    "independent_approval": false,
+    "safety_approval": false,
+    "report_label": "OPERATOR FIRST-ARTICLE OBSERVATION ONLY",
+    "acceptance_statement": "Within-trial-range is not manufacturing approval, fitted assembly, structural safety, or independent verification"
+  }
+}
