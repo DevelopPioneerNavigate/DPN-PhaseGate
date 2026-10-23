@@ -21,6 +21,7 @@ from desktop.build_plan import (
     report_status, task_status, gate_review, export_bom_csv
 )
 from desktop.widgets import Surface, text_label, panel_layout
+from desktop.fabrication import MEASUREMENTS, RECEIVING, prepare, update_receiving, inspect_dimension, fabrication_summary
 from desktop.window_helpers import button
 
 
@@ -177,6 +178,7 @@ class BuildLab(QWidget):
         self._create_parts_tab()
         self._create_tasks_tab()
         self._create_release_tab()
+        self._create_fabrication_tab()
 
     def _table(self,headers):
         t=QTableWidget()
@@ -245,6 +247,96 @@ class BuildLab(QWidget):
                                "No entries are added to the scientific experiment manifest.",11))
         self.tabs.addTab(host,"03  ACCEPTANCE GATES")
 
+    def _create_fabrication_tab(self):
+        host=QWidget()
+        v=QVBoxLayout(host)
+        v.setSpacing(8)
+        v.addWidget(text_label("REV A FABRICATION INSPECTION / UNAPPROVED PROPOSED TOLERANCES",11,"amber",True))
+        self.measure_table=self._table(["Dimension","Nominal ± trial mm","Latest mm","Deviation","Evidence status"])
+        for i,key in enumerate(MEASUREMENTS):
+            self.measure_table.insertRow(i)
+            nominal,tol=MEASUREMENTS[key]
+            for j,datum in enumerate([key,f"{nominal:.1f} ± {tol:.1f}","NOT MEASURED","—","UNREVIEWED"]):
+                self.measure_table.setItem(i,j,self._cell(datum))
+        v.addWidget(self.measure_table)
+        self.receiving_table=self._table(["Component ID","Name","Receiving / QC state"])
+        v.addWidget(self.receiving_table)
+        row=QHBoxLayout()
+        measure=button("RECORD DIMENSION CHECK")
+        measure.clicked.connect(self.record_dimension)
+        receive=button("RECORD COMPONENT RECEIPT",True)
+        receive.clicked.connect(self.record_receipt)
+        row.addWidget(measure)
+        row.addWidget(receive)
+        row.addStretch()
+        v.addLayout(row)
+        self.tabs.addTab(host,"04  FIT & RECEIVING")
+
+    def _inspection_dialog(self,title,fields):
+        dialog=QDialog(self)
+        dialog.setWindowTitle(title)
+        layout=QVBoxLayout(dialog)
+        controls={}
+        for key,placeholder in fields:
+            layout.addWidget(text_label(key,11,"cyan",True))
+            entry=QLineEdit()
+            entry.setPlaceholderText(placeholder)
+            entry.setMaxLength(400)
+            layout.addWidget(entry)
+            controls[key]=entry
+        actions=QDialogButtonBox(QDialogButtonBox.StandardButton.Ok|
+                                  QDialogButtonBox.StandardButton.Cancel)
+        actions.accepted.connect(dialog.accept)
+        actions.rejected.connect(dialog.reject)
+        layout.addWidget(actions)
+        return dialog,controls
+
+    def record_dimension(self):
+        if self.progress_error:
+            QMessageBox.warning(self,"Build ledger invalid","Repair the local build log before writing.")
+            return
+        row=self.measure_table.currentRow()
+        if row<0:
+            QMessageBox.information(self,"Select a dimension","Choose an inspection dimension first.")
+            return
+        key=list(MEASUREMENTS)[row]
+        dialog,fields=self._inspection_dialog("Inspect "+key,[
+            ("Measured millimeters","Enter actual physical measurement"),
+            ("Operator","Who measured it?"),
+            ("Evidence reference","Caliper ID / calibration and inspection note")])
+        if dialog.exec()!=QDialog.DialogCode.Accepted:return
+        try:
+            inspect_dimension(self.manifest,self.progress,key,
+                float(fields["Measured millimeters"].text()),fields["Operator"].text(),
+                fields["Evidence reference"].text())
+            save_progress(self.progress)
+            self.refresh()
+        except (ValueError,OSError,RigError) as exc:
+            QMessageBox.warning(self,"Inspection not recorded",str(exc))
+
+    def record_receipt(self):
+        if self.progress_error:
+            QMessageBox.warning(self,"Build ledger invalid","Repair the local build log before writing.")
+            return
+        row=self.receiving_table.currentRow()
+        if row<0:
+            QMessageBox.information(self,"Select an item","Choose a component first.")
+            return
+        comp=self.manifest["components"][row]
+        dialog,fields=self._inspection_dialog("Receive "+comp["id"],[
+            ("Receiving state","quoted / ordered / received_uninspected / inspected_accepted / rejected"),
+            ("Operator","Who checked the item?"),
+            ("Evidence reference","Invoice / inspection photo / receiving record")])
+        if dialog.exec()!=QDialog.DialogCode.Accepted:return
+        try:
+            update_receiving(self.manifest,self.progress,comp["id"],
+                fields["Receiving state"].text().strip(),
+                fields["Operator"].text(),fields["Evidence reference"].text())
+            save_progress(self.progress)
+            self.refresh()
+        except (ValueError,OSError,RigError) as exc:
+            QMessageBox.warning(self,"Receiving record not saved",str(exc))
+
     @staticmethod
     def _cell(value):
         return QTableWidgetItem(str(value))
@@ -282,6 +374,22 @@ class BuildLab(QWidget):
         else:
             self.status.setText(f"WORK PACKAGES: {done}/{len(tasks)} OPERATOR-REPORTED COMPLETE")
         self.gates.setText(f"REVIEW GATES: {count}/{len(gates)} SELF-REPORTED • 0 INDEPENDENTLY APPROVED")
+        prepare(self.progress)
+        for i,key in enumerate(MEASUREMENTS):
+            entries=self.progress["dimensional_inspections"].get(key,{}).get("history",[])
+            if entries:
+                last=entries[-1]
+                self.measure_table.setItem(i,2,self._cell(last["observed_mm"]))
+                self.measure_table.setItem(i,3,self._cell(last["deviation_mm"]))
+                self.measure_table.setItem(i,4,self._cell(
+                    "WITHIN TRIAL RANGE / UNREVIEWED" if last["within_candidate_range"]
+                    else "OUTSIDE TRIAL RANGE / REVIEW"))
+        self.receiving_table.setRowCount(len(self.manifest["components"]))
+        for i,comp in enumerate(self.manifest["components"]):
+            state=self.progress["component_receiving"].get(comp["id"],{}).get("status","not_ordered")
+            for j,val in enumerate([comp["id"],comp["name"],state.upper()]):
+                self.receiving_table.setItem(i,j,self._cell(val))
+
 
     def log_selected(self):
         if self.progress_error:
