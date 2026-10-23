@@ -195,7 +195,7 @@ class NexusStage(QWidget):
         p.setPen(QPen(ink("#376080",171),1.3))
         p.drawPath(path)
         # Independent text overlay, no source data passed to artwork.
-        self.draw_label(p,"NEXUS / CONCEPT FIELD",25,35,11,"#6EE3F4",True)
+        self.draw_label(p,getattr(self,"scene_label","NEXUS / CONCEPT FIELD"),25,35,11,"#6EE3F4",True)
         self.draw_label(p,"PROCEDURAL VISUALIZATION   •   NO HARDWARE DRIVE",25,55,8,"#87A6C9")
         self.draw_label(p,"FIELD A",26,181,9,"#86DBF3",True)
         self.draw_label(p,"FIELD B",569,329,9,"#BE95FF",True)
