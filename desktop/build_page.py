@@ -22,6 +22,8 @@ from desktop.build_plan import (
 )
 from desktop.widgets import Surface, text_label, panel_layout
 from desktop.fabrication import MEASUREMENTS, RECEIVING, prepare, update_receiving, inspect_dimension, fabrication_summary
+from desktop.first_article import read_plan, record_pair, review_specimen, inspection_csv
+from desktop.model import VERSION
 from desktop.window_helpers import button
 
 
@@ -133,6 +135,7 @@ class BuildLab(QWidget):
     def __init__(self,parent=None):
         super().__init__(parent)
         self.manifest=read_manifest()
+        self.article_plan=read_plan()
         self.progress_error=None
         try:self.progress=read_progress()
         except RigError as exc:
@@ -145,7 +148,7 @@ class BuildLab(QWidget):
         col=QVBoxLayout(self)
         col.setContentsMargins(27,22,27,22)
         col.setSpacing(11)
-        col.addWidget(text_label("PG-01   /   STRUCTURAL ENGINEERING   /   BUILD REVISION v0.1",10,"cyan",True))
+        col.addWidget(text_label(f"PG-01   /   MECHANICAL FABRICATION   /   BUILD SOFTWARE v{VERSION}",10,"cyan",True))
         h=QHBoxLayout()
         title=QVBoxLayout()
         title.addWidget(text_label("GATE ENGINEERING LAB",28,"text",True))
@@ -183,6 +186,16 @@ class BuildLab(QWidget):
         self._create_tasks_tab()
         self._create_release_tab()
         self._create_fabrication_tab()
+        self._create_first_article_tab()
+        self.tabs.currentChanged.connect(self.update_engineering_layout)
+
+    def update_engineering_layout(self,index):
+        """Use a dedicated focused measurement workspace instead of hiding
+        the actual first-article table below the full-sized overview drawing."""
+        focused=(index==4)
+        self.drawing.setVisible(not focused)
+        self.status.setVisible(not focused)
+        self.gates.setVisible(not focused)
 
     def _table(self,headers):
         t=QTableWidget()
@@ -275,6 +288,137 @@ class BuildLab(QWidget):
         row.addStretch()
         v.addLayout(row)
         self.tabs.addTab(host,"04  FIT & RECEIVING")
+
+    def _create_first_article_tab(self):
+        host=QWidget()
+        v=QVBoxLayout(host)
+        v.setSpacing(7)
+        v.addWidget(text_label(
+            "FIRST-ARTICLE FIT STUDY / REQUIRES TWO REAL OBSERVATIONS PER DIMENSION",
+            11,"cyan",True))
+        selector=QHBoxLayout()
+        selector.addWidget(text_label("Trial part",11,"muted"))
+        self.article_part=QComboBox()
+        for part in self.article_plan["items"]:
+            self.article_part.addItem(part["id"]+"  "+part["name"],part["id"])
+        selector.addWidget(self.article_part,2)
+        selector.addWidget(text_label("Physical specimen ID",10,"muted"))
+        self.article_specimen=QLineEdit()
+        self.article_specimen.setText("TRIAL-001")
+        self.article_specimen.setMaxLength(32)
+        self.article_specimen.textChanged.connect(self.refresh_article)
+        self.article_part.currentIndexChanged.connect(self.refresh_article)
+        selector.addWidget(self.article_specimen,1)
+        v.addLayout(selector)
+        self.article_table=self._table([
+            "Feature","Nominal mm","Trial ± mm","Observed mean","Trial status"
+        ])
+        self.article_table.setColumnWidth(0,270)
+        self.article_table.setColumnWidth(1,95)
+        self.article_table.setColumnWidth(2,85)
+        self.article_table.setColumnWidth(3,115)
+        self.article_table.setMinimumHeight(175)
+        self.article_table.setMaximumHeight(222)
+        v.addWidget(self.article_table)
+        self.article_state=text_label(
+            "HOLD / NO FIRST-PART OBSERVATIONS • NOT INDEPENDENTLY VERIFIED",
+            11,"amber",True)
+        v.addWidget(self.article_state)
+        actions=QHBoxLayout()
+        record=button("RECORD SELECTED FEATURE (2 READINGS)")
+        record.clicked.connect(self.record_article_feature)
+        actions.addWidget(record)
+        export=button("EXPORT INSPECTION CSV",True)
+        export.clicked.connect(self.export_article)
+        actions.addWidget(export)
+        actions.addStretch()
+        v.addLayout(actions)
+        v.addWidget(text_label(
+            "Candidate tolerances are review thresholds only. Passing ALL features "
+            "never authorizes fabrication, load-bearing use or electrical operation.",
+            10,"amber"))
+        self.tabs.addTab(host,"05  FIRST ARTICLE")
+
+    def refresh_article(self,*_):
+        if not hasattr(self,"article_part"):
+            return
+        part_id=self.article_part.currentData()
+        if not part_id:
+            return
+        part=next(x for x in self.article_plan["items"] if x["id"]==part_id)
+        specimen=self.article_specimen.text().strip()
+        # While typing an incomplete identifier keep the table visible without
+        # accidentally treating old measurements as belonging to another part.
+        from desktop.first_article import SPECIMEN_RE
+        valid=bool(SPECIMEN_RE.fullmatch(specimen))
+        review=review_specimen(self.article_plan,self.progress,part_id,specimen) if valid else None
+        self.article_table.setRowCount(len(part["checks"]))
+        for i,c in enumerate(part["checks"]):
+            observed=review["rows"][i] if review else None
+            state=("WITHIN TRIAL / REVIEW" if observed and observed["within_trial_range"]
+                   else "HOLD / MISSING OR OUTSIDE")
+            vals=[c["id"]+" · "+c["label"],c["nominal_mm"],"±"+str(c["tolerance_mm"]),
+                  observed["mean_mm"] if observed and observed["mean_mm"] is not None else "—",state]
+            for j,val in enumerate(vals):
+                self.article_table.setItem(i,j,self._cell(val))
+        self.article_state.setText(
+            review["status"] if review else "HOLD / SPECIMEN IDENTIFIER INCOMPLETE")
+        self.article_state.setToolTip(
+            "This is an operator trial range review, not a qualified independent signoff.")
+
+    def record_article_feature(self):
+        if self.progress_error:
+            QMessageBox.warning(self,"Build ledger integrity failure",
+                "Original log failed its checksum. No inspection will be recorded.")
+            return
+        row=self.article_table.currentRow()
+        if row<0:
+            QMessageBox.information(self,"Select dimension",
+                "Select the physical feature to inspect first.")
+            return
+        part_id=self.article_part.currentData()
+        part=next(x for x in self.article_plan["items"] if x["id"]==part_id)
+        check=part["checks"][row]
+        dialog,fields=self._inspection_dialog(
+            "First article / "+part_id+" / "+check["id"],
+            [("Measured 1 (mm)","First actual caliper reading"),
+             ("Measured 2 (mm)","Second actual caliper reading"),
+             ("Operator","Name of person taking measurements"),
+             ("Measuring tool ID","Actual caliper or measuring equipment identifier"),
+             ("Evidence reference","Photo / bench notebook record, at least 10 characters")])
+        if dialog.exec()!=QDialog.DialogCode.Accepted:
+            return
+        import copy
+        pending=copy.deepcopy(self.progress)
+        try:
+            result=record_pair(self.article_plan,pending,part_id,
+                self.article_specimen.text().strip(),check["id"],
+                float(fields["Measured 1 (mm)"].text()),
+                float(fields["Measured 2 (mm)"].text()),
+                fields["Operator"].text(),fields["Measuring tool ID"].text(),
+                fields["Evidence reference"].text())
+            save_progress(pending)
+            self.progress=pending
+            self.refresh_article()
+        except (RigError,ValueError,OSError) as exc:
+            QMessageBox.warning(self,"Observation rejected",str(exc))
+
+    def export_article(self):
+        folder=str(Path.home()/"Documents"/"PG01_FirstArticle_Inspection.csv")
+        destination,_=QFileDialog.getSaveFileName(
+            self,"Export unverified first-article observations",folder,
+            "Comma-separated values (*.csv)")
+        if not destination:
+            return
+        path=Path(destination)
+        try:
+            with path.open("x",encoding="utf-8-sig",newline="") as f:
+                f.write(inspection_csv(self.article_plan,self.progress))
+        except (OSError,ValueError,RigError) as exc:
+            QMessageBox.warning(self,"Inspection CSV not saved",str(exc))
+            return
+        QMessageBox.information(self,"Unverified fit-check CSV saved",
+            "Operator observations exported. No part is independently approved.")
 
     def _inspection_dialog(self,title,fields):
         dialog=QDialog(self)
@@ -388,6 +532,7 @@ class BuildLab(QWidget):
                 self.measure_table.setItem(i,4,self._cell(
                     "WITHIN TRIAL RANGE / UNREVIEWED" if last["within_candidate_range"]
                     else "OUTSIDE TRIAL RANGE / REVIEW"))
+        self.refresh_article()
         self.receiving_table.setRowCount(len(self.manifest["components"]))
         for i,comp in enumerate(self.manifest["components"]):
             state=self.progress["component_receiving"].get(comp["id"],{}).get("status","not_ordered")

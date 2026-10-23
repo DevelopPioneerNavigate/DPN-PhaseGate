@@ -40,6 +40,8 @@ jobs:
           python tools/export_pg01_build_pack.py --check
           python -m unittest discover -s tests -p test_build_plan.py -v
           python -m unittest discover -s tests -p test_assembly_model.py -v
+          python -m unittest discover -s tests -p test_first_article.py -v
+          python tools/export_pg01_inspection_drawings.py --check
       - name: Render actual printable trial STL geometry
         shell: bash
         run: |
@@ -54,14 +56,16 @@ jobs:
       - name: Create proposed manufacturing documentation pack
         run: |
           python tools/export_pg01_build_pack.py --out build/pg01-cad/PG01-Proposed-Engineering-Pack
+          python tools/export_pg01_inspection_drawings.py --out build/pg01-cad/PG01-FirstArticle-Drawings
           cp hardware/cad/pg01_bench.scad build/pg01-cad/
           cp hardware/cad/pg01_assembly_v1_5.scad build/pg01-cad/
           cp data/engineering/pg01-assembly-v1.5.json build/pg01-cad/
+          cp data/engineering/pg01-first-article-v1.6.json build/pg01-cad/
           cp assets/pg01-build-physical-rig-v0.1.svg build/pg01-cad/
       - name: Publish CAD parts and proposed BOM
         uses: actions/upload-artifact@v4
         with:
-          name: PG01-RevB-CAD-Assembly-BOM-v1.5
+          name: PG01-FirstArticle-CAD-Drawings-BOM-v1.6
           path: build/pg01-cad/
           if-no-files-found: error
           retention-days: 30

@@ -38,7 +38,8 @@ module rail_clamp(){
         cube([55,42,13],center=true);
         translate([0,0,5])
             cube([21,48,11],center=true);
-        for(x=[-12.5,12.5])
+        // Keep 4.5mm mounting bores clear of the 21mm-wide rail groove.
+        for(x=[-17,17])
             translate([x,0,0])
                 cylinder(d=4.5,h=25,center=true);
     }

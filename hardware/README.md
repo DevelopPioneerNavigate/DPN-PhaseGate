@@ -1,3 +1,11 @@
+## New v1.6 — Trial manufacturing cards and dimensional evidence
+
+**Gate Engineering / 05 FIRST ARTICLE** adds real operator-measured specimen records, paired actual dimensional readings, HOLD status for missing/out-of-range features, and a local CSV evidence export. [Inspection manual](assembly/PG01-FIRST-ARTICLE-v1.6.md) · [SVG/CSV export tool](../tools/export_pg01_inspection_drawings.py).
+
+The trial rail-clamp bore locations were corrected to avoid the earlier bore/slot overlap. All parts remain candidates for engineering dry-fit review, not manufacturing approval or certified safety.
+
+---
+
 ## PG-01 Rev B / v1.5 — Mechanical Assembly & Digital Twin
 
 [**Rev B engineering / correction report**](assembly/PG01-REV-B-INTERFACES-v1.5.md) · [**Interactive source-model geometry**](../data/engineering/pg01-assembly-v1.5.json) · [**New interface STL source**](cad/pg01_assembly_v1_5.scad)
