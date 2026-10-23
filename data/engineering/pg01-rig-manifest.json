@@ -3,7 +3,7 @@
   "revision": "v0.1-design",
   "program": "DPN PhaseGate PG-01",
   "name": "Dual Station Metrology Rig",
-  "concept_reference": "assets/concepts/twin-gate-concept-design.png",
+  "concept_reference": "assets/pg01-build-physical-rig-v0.1.svg",
   "maturity": "engineering design / no fabricated parts or qualified assembly",
   "scope": "Two independent instrumented frames connected by a manually-operated transfer rail for measurement controls. No electromagnetic portal, levitation or matter transfer capability claimed.",
   "dimensions_mm": {
