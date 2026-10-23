@@ -17,7 +17,7 @@ MEASUREMENTS={
  "clear_aperture_diameter":(260.0,1.0),
  "gate_centers_separation":(800.0,2.0),
  "rail_length":(1200.0,3.0),
- "rail_travel_design_goal":(680.0,3.0),
+ "rail_travel_design_goal":(900.0,3.0),
 }
 RECEIVING={"not_ordered","quoted","ordered","received_uninspected","inspected_accepted","rejected"}
 MAX_HISTORY=80
