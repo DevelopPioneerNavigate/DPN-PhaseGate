@@ -41,6 +41,16 @@ The complete research library now has visual guides, labelled concept blueprints
 
 **[Open the complete PhaseGate Visual Research Atlas →](docs/VISUAL-ATLAS.md)**
 
+### PhaseGate v1.6 — First-Article Inspection & Trial Manufacturing Cards
+
+**A new fifth Gate Engineering tab can now record real first-part inspection data**, not just component receiving. Each candidate printed part has a source-controlled inspection card with nominal dimensions, proposed trial screening limits, two independent manual readings per feature, specimen and tool IDs, operator attribution, and source-evidence references. Missing or out-of-range data remain **HOLD**. A full set of in-range observations remains **operator review only**, never automatic fabrication or safety approval.
+
+A geometric issue was also corrected in the trial rail clamp: the original proposed mounting bores encroached on the guide slot, so the candidate 25 mm hole pitch was revised to **34 mm** and checked against source-controlled CAD and inspection specifications.
+
+[First-article engineering procedure](hardware/assembly/PG01-FIRST-ARTICLE-v1.6.md) · [Inspection card source](data/engineering/pg01-first-article-v1.6.json) · [Printable SVG drawing generator](tools/export_pg01_inspection_drawings.py) · [CAD and inspection build pack](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/pg01-cad.yml) · [Native Windows EXE](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/native-windows-exe.yml)
+
+Physical inspection, structural ratings and qualified production drawings are **still required**. No components are represented as purchased, fabricated or independently accepted.
+
 ### PhaseGate v1.5 — Interactive Twin-Gate Assembly Studio
 
 **New native 13th workspace: ASSEMBLY STUDIO.** PhaseGate now renders all 15 real proposed mechanical part envelopes from revisioned XYZ coordinates rather than copying an illustration. Inspect Gate A/B segments, base mounts, the guided carriage, optics, routed low-voltage cables, sensor fixtures and hard stops with selectable **isometric/front/top** projections, six layer controls and an exploded assembly slider.
