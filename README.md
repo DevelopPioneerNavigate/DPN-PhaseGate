@@ -41,6 +41,12 @@ The complete research library now has visual guides, labelled concept blueprints
 
 **[Open the complete PhaseGate Visual Research Atlas →](docs/VISUAL-ATLAS.md)**
 
+### PG-01 v1.4 — Dimensional Inspection & Fabrication Readiness
+
+The native **Gate Engineering Lab** now includes a fourth tab, **FIT & RECEIVING**, with five candidate dimension checks, operator attribution, evidence notes, part receiving states and local tamper-evident audit entries. No purchases or fabrication are marked completed; the dimensions and tolerances are preliminary review thresholds, not a manufacturing approval.
+
+[Fabrication readiness code](desktop/fabrication.py) · [Test suite](tests/test_fabrication.py) · [Build CAD workflow](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/pg01-cad.yml)
+
 ### PhaseGate v1.3 — From Industrial Concept to a Physical Engineering Build
 
 <img src="assets/pg01-build-physical-rig-v0.1.svg" width="100%" alt="PG-01 dimensioned Gate A and Gate B modular frame prototype, manual payload rail, independent sensors and staged build review"/>
