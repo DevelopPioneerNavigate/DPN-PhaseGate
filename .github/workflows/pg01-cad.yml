@@ -39,6 +39,7 @@ jobs:
         run: |
           python tools/export_pg01_build_pack.py --check
           python -m unittest discover -s tests -p test_build_plan.py -v
+          python -m unittest discover -s tests -p test_assembly_model.py -v
       - name: Render actual printable trial STL geometry
         shell: bash
         run: |
@@ -46,16 +47,21 @@ jobs:
           openscad -o build/pg01-cad/PG01-Gate-Ring-Segment.stl --export-format asciistl -D 'part="ring_segment"' hardware/cad/pg01_bench.scad
           openscad -o build/pg01-cad/PG01-Camera-Bracket.stl --export-format asciistl -D 'part="camera_bracket"' hardware/cad/pg01_bench.scad
           openscad -o build/pg01-cad/PG01-Payload-Tray.stl --export-format asciistl -D 'part="payload_tray"' hardware/cad/pg01_bench.scad
+          openscad -o build/pg01-cad/PG01-RevB-Joint-Splice.stl --export-format asciistl -D 'part="joint_splice"' hardware/cad/pg01_assembly_v1_5.scad
+          openscad -o build/pg01-cad/PG01-RevB-Rail-Clamp.stl --export-format asciistl -D 'part="rail_clamp"' hardware/cad/pg01_assembly_v1_5.scad
+          openscad -o build/pg01-cad/PG01-RevB-Cable-Clip.stl --export-format asciistl -D 'part="cable_clip"' hardware/cad/pg01_assembly_v1_5.scad
           python tools/validate_pg01_stls.py build/pg01-cad/*.stl
       - name: Create proposed manufacturing documentation pack
         run: |
           python tools/export_pg01_build_pack.py --out build/pg01-cad/PG01-Proposed-Engineering-Pack
           cp hardware/cad/pg01_bench.scad build/pg01-cad/
+          cp hardware/cad/pg01_assembly_v1_5.scad build/pg01-cad/
+          cp data/engineering/pg01-assembly-v1.5.json build/pg01-cad/
           cp assets/pg01-build-physical-rig-v0.1.svg build/pg01-cad/
       - name: Publish CAD parts and proposed BOM
         uses: actions/upload-artifact@v4
         with:
-          name: PG01-Bench-Proposed-CAD-BOM-v0.1
+          name: PG01-RevB-CAD-Assembly-BOM-v1.5
           path: build/pg01-cad/
           if-no-files-found: error
           retention-days: 30
