@@ -4,7 +4,7 @@
 **Owner:** DPN Technology / develop · pioneer · navigate  
 **State:** CAD and software development. **No components have been purchased, manufactured, assembled, electrically qualified or tested through this work.**
 
-![Physical PG-01 dimensioned engineering blueprint](../../assets/pg01-build-physical-rig-v0.1.svg)
+![Physical PG-01 dimensioned engineering blueprint](../assets/pg01-build-physical-rig-v0.1.svg)
 
 ## Mission: make the first two-gate laboratory apparatus we can actually inspect and measure
 
@@ -35,9 +35,9 @@ The first version tests **instrument reliability, carriage transfer controls, ma
 | Deliverable | Direct source |
 |---|---|
 | Parametric 3D model with separate printable fit-check outputs | [OpenSCAD CAD](cad/pg01_bench.scad) |
-| Two-camera / two-station layout | [Physical rig dimension diagram](../../assets/pg01-build-physical-rig-v0.1.svg) |
-| Machines-readable engineering BOM, stages and gate conditions | [Rig manifest](../../data/engineering/pg01-rig-manifest.json) |
-| Real Windows app construction workspace | [Build and Engineering Lab code](../../desktop/build_page.py) |
+| Two-camera / two-station layout | [Physical rig dimension diagram](../assets/pg01-build-physical-rig-v0.1.svg) |
+| Machines-readable engineering BOM, stages and gate conditions | [Rig manifest](../data/engineering/pg01-rig-manifest.json) |
+| Real Windows app construction workspace | [Build and Engineering Lab code](../desktop/build_page.py) |
 | Electrical verification | [Pico 2/HX711 review](electrical/PG01-ELECTRICAL-REVIEW.md) |
 | Construction sequence and acceptance checklists | [Assembly procedure](assembly/PG01-ASSEMBLY-PLAN.md) |
 | Download STL/CAD/BOM file pack | [PG-01 Parametric CAD & Build Packet runs](https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/actions/workflows/pg01-cad.yml) |
