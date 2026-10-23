@@ -329,9 +329,9 @@
       "name": "Linear rail mount block",
       "trial_part": "rail_clamp",
       "nominal_hole_diameter_mm": 4.5,
-      "hole_pitch_mm": 25,
+      "hole_pitch_mm": 34,
       "quantity": "4 trial clamps",
-      "review": "Not suitable until actual rail vendor profile is measured"
+      "review": "Trial groove and mounting bores separated in revised CAD. Actual rail fit/fastener rating still unverified."
     },
     {
       "id": "J-03",
