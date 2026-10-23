@@ -14,6 +14,8 @@ def main(argv=None):
                         help="capture Calibration and Evidence Lab native page")
     parser.add_argument("--screenshot-assembly", type=Path, default=None,
                         help="capture actual interactive Qt Assembly Studio design page")
+    parser.add_argument("--screenshot-inspection", type=Path, default=None,
+                        help="capture actual first-article native inspection table without fabricated readings")
     parser.add_argument("--screenshot-build", type=Path, default=None,
                         help="capture real dimensioned PG-01 native engineering workbench")
     parser.add_argument("--screenshot-stations", type=Path, default=None,
@@ -167,6 +169,25 @@ def main(argv=None):
                         raise OSError("Assembly view activated a camera")
                 except (OSError,ValueError):
                     result=12
+            if args.screenshot_inspection:
+                try:
+                    window.navigate("Gate Engineering")
+                    window.build_lab.tabs.setCurrentIndex(4)
+                    application.processEvents()
+                    from desktop.first_article import review_specimen
+                    plan=window.build_lab.article_plan
+                    test=review_specimen(plan,{},"FA-01","UNBUILT-001")
+                    if test["complete_candidate_fit_review"] or test["independently_approved"]:
+                        raise OSError("Inspection unexpectedly approved an unbuilt part")
+                    if window.build_lab.article_table.rowCount()!=len(plan["items"][0]["checks"]):
+                        raise OSError("Inspection table row count disagrees with drawing")
+                    args.screenshot_inspection.parent.mkdir(parents=True,exist_ok=True)
+                    if not window.grab().save(str(args.screenshot_inspection),"PNG"):
+                        raise OSError("First-article screenshot missing")
+                    if args.screenshot_inspection.stat().st_size<1000:
+                        raise OSError("First-article screenshot empty")
+                except (OSError,ValueError):
+                    result=13
             window.close()
             application.exit(result)
         QTimer.singleShot(900, complete)
