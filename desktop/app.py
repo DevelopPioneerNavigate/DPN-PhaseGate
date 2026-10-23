@@ -12,6 +12,8 @@ def main(argv=None):
     parser.add_argument("--screenshot", type=Path, default=None)
     parser.add_argument("--screenshot-evidence", type=Path, default=None,
                         help="capture Calibration and Evidence Lab native page")
+    parser.add_argument("--screenshot-stations", type=Path, default=None,
+                        help="render the redesigned native station matrix")
     parser.add_argument("--screenshot-reference", type=Path, default=None,
                         help="capture offline Reference Event Lab with no camera access")
     parser.add_argument("--screenshot-optical", type=Path, default=None,
@@ -51,6 +53,13 @@ def main(argv=None):
                     result = 6
             window.navigate("Command Center")
             application.processEvents()
+            # Functional & structural UX gate: real native stage, slim instrument
+            # dock and actions must exist in the rendered application.
+            if (window.rail.width() > 190 or
+                not window.nexus_deck.stage.isVisible() or
+                window.nexus_deck.stage.width() < 260 or
+                len(window.nav) != len(window.pages) or len(window.pages)!=11):
+                result = 9
             if args.screenshot:
                 try:
                     args.screenshot.parent.mkdir(parents=True, exist_ok=True)
@@ -109,6 +118,17 @@ def main(argv=None):
                         raise OSError("Camera opened during reference smoke test")
                 except (OSError,ValueError):
                     result = 8
+            if args.screenshot_stations:
+                try:
+                    window.navigate("Station Matrix")
+                    application.processEvents()
+                    args.screenshot_stations.parent.mkdir(parents=True, exist_ok=True)
+                    if not window.grab().save(str(args.screenshot_stations),"PNG"):
+                        raise OSError("Station Matrix screenshot missing")
+                    if args.screenshot_stations.stat().st_size < 1000:
+                        raise OSError("Station Matrix screenshot empty")
+                except (OSError, ValueError):
+                    result = 10
             window.close()
             application.exit(result)
         QTimer.singleShot(900, complete)
