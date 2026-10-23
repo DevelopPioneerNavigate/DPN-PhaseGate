@@ -23,6 +23,7 @@ from desktop.build_plan import (
 from desktop.widgets import Surface, text_label, panel_layout
 from desktop.fabrication import MEASUREMENTS, RECEIVING, prepare, update_receiving, inspect_dimension, fabrication_summary
 from desktop.first_article import read_plan, record_pair, review_specimen, inspection_csv
+from desktop.model import VERSION
 from desktop.window_helpers import button
 
 
@@ -147,7 +148,7 @@ class BuildLab(QWidget):
         col=QVBoxLayout(self)
         col.setContentsMargins(27,22,27,22)
         col.setSpacing(11)
-        col.addWidget(text_label("PG-01   /   STRUCTURAL ENGINEERING   /   BUILD REVISION v0.1",10,"cyan",True))
+        col.addWidget(text_label(f"PG-01   /   MECHANICAL FABRICATION   /   BUILD SOFTWARE v{VERSION}",10,"cyan",True))
         h=QHBoxLayout()
         title=QVBoxLayout()
         title.addWidget(text_label("GATE ENGINEERING LAB",28,"text",True))
@@ -316,7 +317,9 @@ class BuildLab(QWidget):
         self.article_table.setColumnWidth(1,95)
         self.article_table.setColumnWidth(2,85)
         self.article_table.setColumnWidth(3,115)
-        v.addWidget(self.article_table,1)
+        self.article_table.setMinimumHeight(175)
+        self.article_table.setMaximumHeight(222)
+        v.addWidget(self.article_table)
         self.article_state=text_label(
             "HOLD / NO FIRST-PART OBSERVATIONS • NOT INDEPENDENTLY VERIFIED",
             11,"amber",True)
