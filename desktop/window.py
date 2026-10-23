@@ -150,6 +150,13 @@ class ResearchWindow(QMainWindow):
            border-radius:7px;padding:8px;selection-background-color:#8059B8;}
         QComboBox:hover,QLineEdit:hover,QTextEdit:hover {border-color:#7ABCE9;}
         QComboBox QAbstractItemView {background:#132440;selection-background-color:#59438A;}
+        QListWidget {background:#0B1C31;color:#DDEAFF;border:1px solid #365574;
+          border-radius:8px;outline:none;padding:5px;font-size:11px;}
+        QListWidget::item {color:#D7E5F7;background:transparent;padding:6px;
+          border-bottom:1px solid #243B54;}
+        QListWidget::item:hover {background:#1E3651;color:#FFFFFF;}
+        QListWidget::item:selected {background:#3F356A;color:#FFFFFF;
+          border-left:3px solid #B18AFF;}
         QCheckBox {spacing:9px;}
         QTabWidget#engineeringTabs::pane {border:1px solid #365775;border-radius:9px;
           background:#0B192D;top:-1px;}
