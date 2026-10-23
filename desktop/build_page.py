@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from PySide6.QtCore import Qt, QRectF, QPointF, QUrl
+from PySide6.QtCore import Qt, QRectF, QPointF, QUrl, Signal
 from PySide6.QtGui import QColor, QPainter, QPen, QFont, QBrush, QLinearGradient, QDesktopServices
 from PySide6.QtWidgets import (
     QWidget, QFrame, QVBoxLayout, QHBoxLayout, QTableWidget, QTableWidgetItem,
@@ -129,6 +129,7 @@ class ProgressDialog(QDialog):
 
 
 class BuildLab(QWidget):
+    open_assembly=Signal()
     def __init__(self,parent=None):
         super().__init__(parent)
         self.manifest=read_manifest()
@@ -155,6 +156,9 @@ class BuildLab(QWidget):
         source.clicked.connect(lambda:QDesktopServices.openUrl(
             QUrl("https://github.com/DevelopPioneerNavigate/DPN-PhaseGate/blob/main/hardware/cad/pg01_bench.scad")))
         h.addWidget(source)
+        studio=button("OPEN 3D ASSEMBLY STUDIO   ↗")
+        studio.clicked.connect(lambda:self.open_assembly.emit())
+        h.addWidget(studio)
         col.addLayout(h)
         cap=Surface("buildDisclaimer")
         cap_col=panel_layout(cap,11,5)
