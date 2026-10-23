@@ -76,7 +76,7 @@
         {
           "id": "P",
           "label": "Two-hole center spacing",
-          "nominal_mm": 25,
+          "nominal_mm": 34,
           "tolerance_mm": 0.4
         },
         {
