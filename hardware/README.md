@@ -21,7 +21,7 @@ The first version tests **instrument reliability, carriage transfer controls, ma
 | Gate spacing | 800 mm nominal center-to-center |
 | Reference center elevation | 270 mm above assembly datum |
 | Manual linear guide | 1200 mm design envelope, **unpowered** |
-| Target carriage travel | 680 mm, subject to actual end-stop and bearing selection |
+| Target carriage travel | 900 mm, subject to actual end-stop and bearing selection |
 | Shuttle platform | 100 × 130 mm |
 | Initial test object | 20–250 grams by controlled standard, conditioned on load-cell capabilities |
 | Independent scales | 2 × reviewed 5 kg bridge load cell + separate HX711 + Pico 2 |
