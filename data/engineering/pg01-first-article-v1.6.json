@@ -87,8 +87,8 @@
         }
       ],
       "hold_points": [
-        "Vendor rail fit unverified",
-        "Model slots intersect proposed mounting holes; inspect topology and revise geometry before interpreting hole checks"
+        "Purchased guide rail profile remains unverified; require physical dry fit",
+        "Bores moved to 34 mm pitch to clear the groove; confirm web thickness, orientation and load capacity"
       ]
     },
     {
