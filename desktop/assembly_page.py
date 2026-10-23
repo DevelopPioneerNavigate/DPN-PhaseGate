@@ -75,12 +75,12 @@ class AssemblyCanvas(QWidget):
         zoom=self.zoom/100.0
         if self.orientation=="FRONT":
             return QPointF(0.47*self.width()+x*zoom*1.15+y*zoom*.35,
-                           self.height()*.77-z*zoom*.88)
+                           self.height()*.94-z*zoom*.88)
         if self.orientation=="TOP":
             return QPointF(0.48*self.width()+x*zoom*1.03+y*zoom*.43,
                            self.height()*.53+y*zoom*.24)
-        return QPointF(0.48*self.width()+x*zoom*.84+y*zoom*.39,
-                       self.height()*.79-z*zoom*.76+y*zoom*.08)
+        return QPointF(0.50*self.width()+x*zoom*.84+y*zoom*.39,
+                       self.height()*.93-z*zoom*.76+y*zoom*.08)
 
     def _draw_box(self,p,part):
         x,y,z=self._xyz(part,part["center_mm"])
@@ -232,7 +232,7 @@ class AssemblyStudio(QWidget):
         row.addWidget(text_label("ZOOM",10,"cyan",True))
         self.zoom=QSlider(Qt.Orientation.Horizontal)
         self.zoom.setRange(65,120)
-        self.zoom.setValue(88)
+        self.zoom.setValue(78)
         self.zoom.setMaximumWidth(125)
         row.addWidget(self.zoom)
         root.addLayout(row)
@@ -286,7 +286,7 @@ class AssemblyStudio(QWidget):
         root.addWidget(statuses)
         status=fit_checks(self.design,self.rig["dimensions_mm"])
         self.fits=status
-        self.checks.setText("    •    ".join(
+        self.checks.setText("\n".join(
             f"{'PASS' if check['passed'] else 'HOLD'} {check['name']}: "
             f"{check['measured']:.1f}mm (goal ≥{check['target']:.1f}mm)"
             for check in status))
