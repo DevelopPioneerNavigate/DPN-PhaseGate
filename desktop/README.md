@@ -1,3 +1,11 @@
+# DPN PhaseGate v1.6 — First-Article Inspection Lab
+
+Under **Gate Engineering → 05 FIRST ARTICLE**, select a trial CAD part and a physical specimen, record **two actually observed dimensions** for a feature with a responsible operator, measurement-tool ID and physical evidence reference. Missing/failed observations remain HOLD. Even with all readings in the candidate range, the part is labelled **TRIAL DIMENSIONS RECORDED / PHYSICAL REVIEW REQUIRED**, not manufactured or independently certified.
+
+The related source-controlled engineering sheets and printable SVG inspection cards are documented in [PG-01 First-Article v1.6](../hardware/assembly/PG01-FIRST-ARTICLE-v1.6.md). The free OpenSCAD GitHub workflow exports the candidate parts alongside inspection sheets and empty measurement templates. The displayed figures are **proposed dimensions**, not physical test results.
+
+---
+
 # DPN PhaseGate v1.5 — Assembly Studio / Physical Gate Engineering
 
 **New 13th native workspace:** an interactive XYZ-based assembly view of the two-gate PG-01 Rev B machine. Hide/show six engineering groups, select 15 physical part envelopes, explode the assembly and switch between isometric, front and top views. The view is derived from source-controlled engineering geometry and checked against the existing physical rig manifest.
