@@ -26,6 +26,7 @@ from desktop.reference_page import ReferenceEventLab
 from desktop.aurora import AuroraHero, PipelineRail, CommandPalette
 from desktop.nexus import NexusDeck
 from desktop.build_page import BuildLab
+from desktop.assembly_page import AssemblyStudio
 
 
 def ui_button(text, secondary=False):
@@ -199,15 +200,16 @@ class ResearchWindow(QMainWindow):
             ("Command Center","01","COMMAND\nCENTER"),
             ("Station Matrix","02","STATION\nMATRIX"),
             ("Gate Engineering","03","GATE\nENGINEERING"),
-            ("Hardware Lab","04","HARDWARE\nLAB"),
-            ("Optical Evidence","05","OPTICAL\nEVIDENCE"),
-            ("Reference Events","06","REFERENCE\nEVENTS"),
-            ("Calibration & Evidence","07","CALIBRATION\n& EVIDENCE"),
-            ("Signal Analytics","08","SIGNAL\nANALYTICS"),
-            ("Research Vault","09","RESEARCH\nVAULT"),
-            ("Experiment Ledger","10","EXPERIMENT\nLEDGER"),
-            ("System Diagnostics","11","SYSTEM\nDIAGNOSTICS"),
-            ("Preferences","12","PREFERENCES"),
+            ("Assembly Studio","04","ASSEMBLY\nSTUDIO"),
+            ("Hardware Lab","05","HARDWARE\nLAB"),
+            ("Optical Evidence","06","OPTICAL\nEVIDENCE"),
+            ("Reference Events","07","REFERENCE\nEVENTS"),
+            ("Calibration & Evidence","08","CALIBRATION\n& EVIDENCE"),
+            ("Signal Analytics","09","SIGNAL\nANALYTICS"),
+            ("Research Vault","10","RESEARCH\nVAULT"),
+            ("Experiment Ledger","11","EXPERIMENT\nLEDGER"),
+            ("System Diagnostics","12","SYSTEM\nDIAGNOSTICS"),
+            ("Preferences","13","PREFERENCES"),
         ]
         for name,n,title in screens:
             btn=QPushButton(n+"  "+title.replace("\n"," "))
@@ -272,6 +274,7 @@ class ResearchWindow(QMainWindow):
             ("Command Center",self.overview_page()),
             ("Station Matrix",self.stations_page()),
             ("Gate Engineering",self.build_page()),
+            ("Assembly Studio",self.assembly_page()),
             ("Hardware Lab",self.hardware_page()),
             ("Optical Evidence",self.optical_page()),
             ("Reference Events",self.reference_page()),
@@ -355,6 +358,10 @@ class ResearchWindow(QMainWindow):
     def build_page(self):
         self.build_lab=BuildLab()
         return self.build_lab
+
+    def assembly_page(self):
+        self.assembly_studio=AssemblyStudio()
+        return self.assembly_studio
 
     def hardware_page(self):
         self.hardware_lab = HardwareLab()
