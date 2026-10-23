@@ -6,10 +6,10 @@ from PySide6.QtGui import QColor, QPen, QBrush, QPainter, QFont, QConicalGradien
 from PySide6.QtWidgets import QFrame, QLabel, QVBoxLayout, QHBoxLayout, QWidget, QSizePolicy
 
 
-C = {"bg": "#0A0F1C", "surface": "#18243A", "surface2": "#1C3049",
-     "border": "#354668", "violet": "#BC8DFF", "cyan": "#64DFF2",
-     "text": "#F1F6FF", "muted": "#A2B4D1", "amber": "#FFC392",
-     "green": "#6AE8C7"}
+C = {"bg": "#07101B", "surface": "#111E32", "surface2": "#1A2A43",
+     "border": "#344B68", "violet": "#C399FF", "cyan": "#6FE2F0",
+     "text": "#F4F7FF", "muted": "#AEC0D7", "amber": "#FFCA94",
+     "green": "#65EBCB"}
 
 
 def color(hexval, alpha=None):
@@ -39,8 +39,8 @@ class Surface(QFrame):
         super().__init__(parent)
         self.setObjectName(name)
         self.setStyleSheet("#%s {background:qlineargradient(x1:0,y1:0,x2:1,y2:1,"
-                           "stop:0 #1B2942, stop:1 #111C30); "
-                           "border:1px solid #354765;border-radius:17px;}" % name)
+                           "stop:0 #172740, stop:1 #101B2F); "
+                           "border:1px solid #3A5270;border-radius:13px;}" % name)
 
 
 class Metric(Surface):
@@ -56,17 +56,18 @@ class Metric(Surface):
         col.addStretch()
 
 
-from desktop.aurora import GateField
+from desktop.nexus import NexusStage
 
 
-class OrbitalGate(GateField):
-    """Luminous native field illustration; entirely synthetic concept art."""
+class OrbitalGate(NexusStage):
+    """Premium, native 3D-style concept scene reused on the station matrix."""
     def __init__(self, station="A", compact=False, parent=None):
         super().__init__(parent)
         self.station=station
-        self.scene_label="STATION "+station
+        self.scene_label="STATION "+station+" / CONCEPT"
         self.compact=compact
-        self.setMinimumHeight(230 if not compact else 155)
+        self.setMinimumSize(260,245 if not compact else 180)
+
 
 
 class Station(Surface):
